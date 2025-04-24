@@ -8,8 +8,8 @@ execute:
 book:
   title: "Final project"
   author:
-    - Jiangnan Wan
-    - AUTHOR2 (UNI2)
+    - Jiangnan Wan(jw4638)
+    - Jinglei Lou (jl6954)
   repo-url: https://github.com/Ceeecilllia/ceci-airquality-book
   date: today
   page-footer:
