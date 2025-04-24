@@ -4,4 +4,4 @@
 # Introduction
 My new chapter edit 🚀
 # This line is added to test auto merge ✨
-# auto merge 测试成功啦 💫
+# This line is for final auto-merge test 🚀
