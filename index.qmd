@@ -1,7 +1,10 @@
-# Introduction
-#my new branch
-# draft edit by Ceci
-# Introduction
-My new chapter edit 🚀
-# This line is added to test auto merge ✨
-# auto merge 测试成功啦 💫
+# Evaluating LIME Explanations on Heart Disease Prediction Models
+
+In healthcare, it is critical to understand how models make predictions — especially when diagnosing heart disease. LIME (Local Interpretable Model-agnostic Explanations) offers human-friendly explanations even for complex models.
+
+This project aims to evaluate the reliability of LIME explanations across different model types, including interpretable models such as decision trees and more complex models like neural networks.
+
+We will answer the following research questions:
+- Does LIME provide faithful explanations for interpretable models?
+- How do LIME's feature rankings compare across different models?
+- Can LIME be considered trustworthy for medical prediction tasks?

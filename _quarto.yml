@@ -19,8 +19,8 @@ book:
   chapters:
     - index.qmd
     - data.qmd
-    - results.qmd
-    - d3graph.qmd
+    - models.qmd
+    - lime_analysis.qmd
     - conclusion.qmd
 
 format:

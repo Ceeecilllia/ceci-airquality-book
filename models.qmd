@@ -1,0 +1,33 @@
+# Models
+
+We trained four different models using the preprocessed heart disease dataset:
+
+- Decision Tree
+- Random Forest
+- Support Vector Machine (SVM)
+- Neural Network
+
+Each model was evaluated on a held-out test set using accuracy and AUC.
+
+## Model Training Overview
+
+Below is a summary of the methods and tools used:
+
+- Models were implemented using the `tidymodels` framework in R.
+- The dataset was split into training (70%) and test (30%) sets.
+- Preprocessing (e.g., normalization or dummy variable creation) was applied using `recipes`.
+- Each model used 10-fold cross-validation for tuning (if applicable).
+
+## Model 1: Decision Tree
+
+> You can insert code chunk here like:
+
+```r
+# Decision Tree with rpart
+library(tidymodels)
+
+tree_spec <- decision_tree() %>%
+  set_engine("rpart") %>%
+  set_mode("classification")
+
+# Add recipe and workflow, then fit the model

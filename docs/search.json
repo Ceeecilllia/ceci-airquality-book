@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Final project",
     "section": "",
-    "text": "1 Introduction\n#my new branch # draft edit by Ceci # Introduction My new chapter edit 🚀 # This line is added to test auto merge ✨ # auto merge 测试成功啦 💫",
+    "text": "1 Evaluating LIME Explanations on Heart Disease Prediction Models\nIn healthcare, it is critical to understand how models make predictions — especially when diagnosing heart disease. LIME (Local Interpretable Model-agnostic Explanations) offers human-friendly explanations even for complex models.\nThis project aims to evaluate the reliability of LIME explanations across different model types, including interpretable models such as decision trees and more complex models like neural networks.\nWe will answer the following research questions: - Does LIME provide faithful explanations for interpretable models? - How do LIME’s feature rankings compare across different models? - Can LIME be considered trustworthy for medical prediction tasks?",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evaluating LIME Explanations on Heart Disease Prediction Models</span>"
     ]
   },
   {
@@ -14,19 +14,129 @@
     "href": "data.html",
     "title": "2  Data",
     "section": "",
-    "text": "2.1 Description",
+    "text": "2.1 Dataset Description\nWe use the Heart Failure Prediction dataset from Kaggle.\nThis dataset includes clinical features of patients and a binary outcome variable indicating whether the patient is diagnosed with heart disease.\nThere are n = 918 rows and p = 12 columns in the dataset.\nSome of the key features include:",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
   },
   {
-    "objectID": "data.html#missing-value-analysis",
-    "href": "data.html#missing-value-analysis",
+    "objectID": "data.html#dataset-description",
+    "href": "data.html#dataset-description",
     "title": "2  Data",
-    "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis",
+    "section": "",
+    "text": "Age: Age of the patient\nRestingBP: Resting blood pressure (mm Hg)\nCholesterol: Serum cholesterol in mg/dl\nChestPainType: Type of chest pain (e.g., ATA, NAP, ASY, TA)\nFastingBS: Fasting blood sugar (&gt;120 mg/dl, binary: 1 or 0)\nMaxHR: Maximum heart rate achieved\nExerciseAngina: Exercise-induced angina (Yes/No)\nHeartDisease: Target variable (1 = heart disease, 0 = no heart disease)",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#preprocessing-steps",
+    "href": "data.html#preprocessing-steps",
+    "title": "2  Data",
+    "section": "2.2 Preprocessing Steps",
+    "text": "2.2 Preprocessing Steps\nBefore modeling, we apply the following preprocessing steps:\n\nConvert categorical variables (e.g., Sex, ChestPainType, ExerciseAngina, RestingECG, ST_Slope) into factors\nStandardize numerical variables if needed (for SVM or neural networks)\nCheck for and handle missing values (if any)\nSplit the data into training and test sets (e.g., 70% training, 30% testing)\n\nWe will use this cleaned dataset to train our four models and evaluate LIME explanations.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "models.html",
+    "href": "models.html",
+    "title": "3  Models",
+    "section": "",
+    "text": "3.1 Model Training Overview\nBelow is a summary of the methods and tools used:",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Models</span>"
+    ]
+  },
+  {
+    "objectID": "models.html#model-training-overview",
+    "href": "models.html#model-training-overview",
+    "title": "3  Models",
+    "section": "",
+    "text": "Models were implemented using the tidymodels framework in R.\nThe dataset was split into training (70%) and test (30%) sets.\nPreprocessing (e.g., normalization or dummy variable creation) was applied using recipes.\nEach model used 10-fold cross-validation for tuning (if applicable).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Models</span>"
+    ]
+  },
+  {
+    "objectID": "models.html#model-1-decision-tree",
+    "href": "models.html#model-1-decision-tree",
+    "title": "3  Models",
+    "section": "3.2 Model 1: Decision Tree",
+    "text": "3.2 Model 1: Decision Tree\n\nYou can insert code chunk here like:\n\n```r # Decision Tree with rpart library(tidymodels)\ntree_spec &lt;- decision_tree() %&gt;% set_engine(“rpart”) %&gt;% set_mode(“classification”)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Models</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html",
+    "href": "lime_analysis.html",
+    "title": "4  LIME Analysis",
+    "section": "",
+    "text": "5 LIME Analysis\nWe applied LIME (Local Interpretable Model-agnostic Explanations) to generate local explanations for each of the four models.\nThe explanations focus on identifying the top 5 features contributing to each model’s predictions.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LIME Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#lime-parameters",
+    "href": "lime_analysis.html#lime-parameters",
+    "title": "4  LIME Analysis",
+    "section": "5.1 LIME Parameters",
+    "text": "5.1 LIME Parameters\n\nNumber of features: 5\nNumber of permutations: 5000",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LIME Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#example-lime-explanation",
+    "href": "lime_analysis.html#example-lime-explanation",
+    "title": "4  LIME Analysis",
+    "section": "5.2 Example LIME Explanation",
+    "text": "5.2 Example LIME Explanation\n\nInsert example code and output here, e.g., for one test set observation:\n\n```r # Example: Apply LIME to Decision Tree model library(lime)\nexplainer_tree &lt;- lime(training_data, model_tree) explanation_tree &lt;- explain(test_data[1, ], explainer = explainer_tree, n_features = 5, n_permutations = 5000)\nplot_features(explanation_tree)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LIME Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html",
+    "href": "conclusion.html",
+    "title": "5  Conclusion",
+    "section": "",
+    "text": "5.1 Key Findings",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#key-findings",
+    "href": "conclusion.html#key-findings",
+    "title": "5  Conclusion",
+    "section": "",
+    "text": "LIME explanations aligned more closely with simpler models like decision trees.\nFor more complex models (e.g., neural networks), the LIME feature rankings showed greater variability.\nSome features such as Age, ChestPainType, and Cholesterol were consistently important across models and explanations.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#limitations",
+    "href": "conclusion.html#limitations",
+    "title": "5  Conclusion",
+    "section": "5.2 Limitations",
+    "text": "5.2 Limitations\n\nLIME explanations are local and may not reflect the global model behavior.\nThe comparison is limited to one dataset and a small sample of instances.\nModel hyperparameters and preprocessing choices could affect results.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#future-directions",
+    "href": "conclusion.html#future-directions",
+    "title": "5  Conclusion",
+    "section": "5.3 Future Directions",
+    "text": "5.3 Future Directions\n\nExplore other interpretability methods such as SHAP or Anchor explanations.\nApply the same analysis to other medical prediction datasets.\nInvolve domain experts (e.g., clinicians) to assess explanation usefulness in real-world decision-making.\n\n\nThis project highlights both the potential and the caution needed when interpreting machine learning models, especially in healthcare.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
     ]
   }
 ]
