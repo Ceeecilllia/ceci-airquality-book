@@ -38,5 +38,65 @@
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
+  },
+  {
+    "objectID": "models.html",
+    "href": "models.html",
+    "title": "3  Models",
+    "section": "",
+    "text": "3.1 Model Training Overview\nBelow is a summary of the methods and tools used:",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Models</span>"
+    ]
+  },
+  {
+    "objectID": "models.html#model-training-overview",
+    "href": "models.html#model-training-overview",
+    "title": "3  Models",
+    "section": "",
+    "text": "Models were implemented using the tidymodels framework in R.\nThe dataset was split into training (70%) and test (30%) sets.\nPreprocessing (e.g., normalization or dummy variable creation) was applied using recipes.\nEach model used 10-fold cross-validation for tuning (if applicable).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Models</span>"
+    ]
+  },
+  {
+    "objectID": "models.html#model-1-decision-tree",
+    "href": "models.html#model-1-decision-tree",
+    "title": "3  Models",
+    "section": "3.2 Model 1: Decision Tree",
+    "text": "3.2 Model 1: Decision Tree\n\nYou can insert code chunk here like:\n\n```r # Decision Tree with rpart library(tidymodels)\ntree_spec &lt;- decision_tree() %&gt;% set_engine(“rpart”) %&gt;% set_mode(“classification”)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Models</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html",
+    "href": "lime_analysis.html",
+    "title": "4  LIME Analysis",
+    "section": "",
+    "text": "5 LIME Analysis\nWe applied LIME (Local Interpretable Model-agnostic Explanations) to generate local explanations for each of the four models.\nThe explanations focus on identifying the top 5 features contributing to each model’s predictions.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LIME Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#lime-parameters",
+    "href": "lime_analysis.html#lime-parameters",
+    "title": "4  LIME Analysis",
+    "section": "5.1 LIME Parameters",
+    "text": "5.1 LIME Parameters\n\nNumber of features: 5\nNumber of permutations: 5000",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LIME Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#example-lime-explanation",
+    "href": "lime_analysis.html#example-lime-explanation",
+    "title": "4  LIME Analysis",
+    "section": "5.2 Example LIME Explanation",
+    "text": "5.2 Example LIME Explanation\n\nInsert example code and output here, e.g., for one test set observation:\n\n```r # Example: Apply LIME to Decision Tree model library(lime)\nexplainer_tree &lt;- lime(training_data, model_tree) explanation_tree &lt;- explain(test_data[1, ], explainer = explainer_tree, n_features = 5, n_permutations = 5000)\nplot_features(explanation_tree)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LIME Analysis</span>"
+    ]
   }
 ]

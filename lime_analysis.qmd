@@ -1,0 +1,25 @@
+---
+title: "LIME Analysis"
+editor: visual
+---
+
+# LIME Analysis
+
+We applied LIME (Local Interpretable Model-agnostic Explanations) to generate local explanations for each of the four models.
+
+The explanations focus on identifying the top 5 features contributing to each model's predictions.
+
+## LIME Parameters
+
+-   Number of features: 5
+-   Number of permutations: 5000
+
+## Example LIME Explanation
+
+> Insert example code and output here, e.g., for one test set observation:
+
+\`\`\`r \# Example: Apply LIME to Decision Tree model library(lime)
+
+explainer_tree \<- lime(training_data, model_tree) explanation_tree \<- explain(test_data\[1, \], explainer = explainer_tree, n_features = 5, n_permutations = 5000)
+
+plot_features(explanation_tree)

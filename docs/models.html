@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Results – Final project</title>
+<title>3&nbsp; Models – Final project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./d3graph.html" rel="next">
+<link href="./lime_analysis.html" rel="next">
 <link href="./data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./models.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Results</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./models.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -124,13 +124,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./models.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./d3graph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive graph</span></span></a>
+  <a href="./lime_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">LIME Analysis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -144,15 +144,23 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#model-training-overview" id="toc-model-training-overview" class="nav-link active" data-scroll-target="#model-training-overview"><span class="header-section-number">3.1</span> Model Training Overview</a></li>
+  <li><a href="#model-1-decision-tree" id="toc-model-1-decision-tree" class="nav-link" data-scroll-target="#model-1-decision-tree"><span class="header-section-number">3.2</span> Model 1: Decision Tree</a></li>
+  <li><a href="#add-recipe-and-workflow-then-fit-the-model" id="toc-add-recipe-and-workflow-then-fit-the-model" class="nav-link" data-scroll-target="#add-recipe-and-workflow-then-fit-the-model"><span class="header-section-number">4</span> Add recipe and workflow, then fit the model</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/models.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Results</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models</span></h1>
 </div>
 
 
@@ -169,8 +177,37 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>We trained four different models using the preprocessed heart disease dataset:</p>
+<ul>
+<li>Decision Tree</li>
+<li>Random Forest</li>
+<li>Support Vector Machine (SVM)</li>
+<li>Neural Network</li>
+</ul>
+<p>Each model was evaluated on a held-out test set using accuracy and AUC.</p>
+<section id="model-training-overview" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="model-training-overview"><span class="header-section-number">3.1</span> Model Training Overview</h2>
+<p>Below is a summary of the methods and tools used:</p>
+<ul>
+<li>Models were implemented using the <code>tidymodels</code> framework in R.</li>
+<li>The dataset was split into training (70%) and test (30%) sets.</li>
+<li>Preprocessing (e.g., normalization or dummy variable creation) was applied using <code>recipes</code>.</li>
+<li>Each model used 10-fold cross-validation for tuning (if applicable).</li>
+</ul>
+</section>
+<section id="model-1-decision-tree" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="model-1-decision-tree"><span class="header-section-number">3.2</span> Model 1: Decision Tree</h2>
+<blockquote class="blockquote">
+<p>You can insert code chunk here like:</p>
+</blockquote>
+<p>```r # Decision Tree with rpart library(tidymodels)</p>
+<p>tree_spec &lt;- decision_tree() %&gt;% set_engine(“rpart”) %&gt;% set_mode(“classification”)</p>
+</section>
+<section id="add-recipe-and-workflow-then-fit-the-model" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Add recipe and workflow, then fit the model</h1>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -600,8 +637,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./d3graph.html" class="pagination-link" aria-label="Interactive graph">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive graph</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./lime_analysis.html" class="pagination-link" aria-label="LIME Analysis">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">LIME Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -613,7 +650,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/models.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/models.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
