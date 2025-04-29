@@ -14,17 +14,27 @@
     "href": "data.html",
     "title": "2  Data",
     "section": "",
-    "text": "2.1 Description",
+    "text": "2.1 Dataset Description\nWe use the Heart Failure Prediction dataset from Kaggle.\nThis dataset includes clinical features of patients and a binary outcome variable indicating whether the patient is diagnosed with heart disease.\nThere are n = 918 rows and p = 12 columns in the dataset.\nSome of the key features include:",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
   },
   {
-    "objectID": "data.html#missing-value-analysis",
-    "href": "data.html#missing-value-analysis",
+    "objectID": "data.html#dataset-description",
+    "href": "data.html#dataset-description",
     "title": "2  Data",
-    "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis",
+    "section": "",
+    "text": "Age: Age of the patient\nRestingBP: Resting blood pressure (mm Hg)\nCholesterol: Serum cholesterol in mg/dl\nChestPainType: Type of chest pain (e.g., ATA, NAP, ASY, TA)\nFastingBS: Fasting blood sugar (&gt;120 mg/dl, binary: 1 or 0)\nMaxHR: Maximum heart rate achieved\nExerciseAngina: Exercise-induced angina (Yes/No)\nHeartDisease: Target variable (1 = heart disease, 0 = no heart disease)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#preprocessing-steps",
+    "href": "data.html#preprocessing-steps",
+    "title": "2  Data",
+    "section": "2.2 Preprocessing Steps",
+    "text": "2.2 Preprocessing Steps\nBefore modeling, we apply the following preprocessing steps:\n\nConvert categorical variables (e.g., Sex, ChestPainType, ExerciseAngina, RestingECG, ST_Slope) into factors\nStandardize numerical variables if needed (for SVM or neural networks)\nCheck for and handle missing values (if any)\nSplit the data into training and test sets (e.g., 70% training, 30% testing)\n\nWe will use this cleaned dataset to train our four models and evaluate LIME explanations.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]

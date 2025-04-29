@@ -1,5 +1,29 @@
 # Data
 
-## Description
+## Dataset Description
 
-## Missing value analysis
+We use the **Heart Failure Prediction** dataset from [Kaggle](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction).  
+This dataset includes clinical features of patients and a binary outcome variable indicating whether the patient is diagnosed with heart disease.
+
+There are `n = 918` rows and `p = 12` columns in the dataset.  
+Some of the key features include:
+
+- `Age`: Age of the patient
+- `RestingBP`: Resting blood pressure (mm Hg)
+- `Cholesterol`: Serum cholesterol in mg/dl
+- `ChestPainType`: Type of chest pain (e.g., ATA, NAP, ASY, TA)
+- `FastingBS`: Fasting blood sugar (>120 mg/dl, binary: 1 or 0)
+- `MaxHR`: Maximum heart rate achieved
+- `ExerciseAngina`: Exercise-induced angina (Yes/No)
+- `HeartDisease`: Target variable (1 = heart disease, 0 = no heart disease)
+
+## Preprocessing Steps
+
+Before modeling, we apply the following preprocessing steps:
+
+- Convert categorical variables (e.g., `Sex`, `ChestPainType`, `ExerciseAngina`, `RestingECG`, `ST_Slope`) into factors
+- Standardize numerical variables if needed (for SVM or neural networks)
+- Check for and handle missing values (if any)
+- Split the data into training and test sets (e.g., 70% training, 30% testing)
+
+We will use this cleaned dataset to train our four models and evaluate LIME explanations.

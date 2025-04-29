@@ -149,8 +149,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">2.1</span> Description</a></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</a></li>
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link active" data-scroll-target="#dataset-description"><span class="header-section-number">2.1</span> Dataset Description</a></li>
+  <li><a href="#preprocessing-steps" id="toc-preprocessing-steps" class="nav-link" data-scroll-target="#preprocessing-steps"><span class="header-section-number">2.2</span> Preprocessing Steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -176,11 +176,33 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="description" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
+<section id="dataset-description" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="dataset-description"><span class="header-section-number">2.1</span> Dataset Description</h2>
+<p>We use the <strong>Heart Failure Prediction</strong> dataset from <a href="https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction">Kaggle</a>.<br>
+This dataset includes clinical features of patients and a binary outcome variable indicating whether the patient is diagnosed with heart disease.</p>
+<p>There are <code>n = 918</code> rows and <code>p = 12</code> columns in the dataset.<br>
+Some of the key features include:</p>
+<ul>
+<li><code>Age</code>: Age of the patient</li>
+<li><code>RestingBP</code>: Resting blood pressure (mm Hg)</li>
+<li><code>Cholesterol</code>: Serum cholesterol in mg/dl</li>
+<li><code>ChestPainType</code>: Type of chest pain (e.g., ATA, NAP, ASY, TA)</li>
+<li><code>FastingBS</code>: Fasting blood sugar (&gt;120 mg/dl, binary: 1 or 0)</li>
+<li><code>MaxHR</code>: Maximum heart rate achieved</li>
+<li><code>ExerciseAngina</code>: Exercise-induced angina (Yes/No)</li>
+<li><code>HeartDisease</code>: Target variable (1 = heart disease, 0 = no heart disease)</li>
+</ul>
 </section>
-<section id="missing-value-analysis" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</h2>
+<section id="preprocessing-steps" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="preprocessing-steps"><span class="header-section-number">2.2</span> Preprocessing Steps</h2>
+<p>Before modeling, we apply the following preprocessing steps:</p>
+<ul>
+<li>Convert categorical variables (e.g., <code>Sex</code>, <code>ChestPainType</code>, <code>ExerciseAngina</code>, <code>RestingECG</code>, <code>ST_Slope</code>) into factors</li>
+<li>Standardize numerical variables if needed (for SVM or neural networks)</li>
+<li>Check for and handle missing values (if any)</li>
+<li>Split the data into training and test sets (e.g., 70% training, 30% testing)</li>
+</ul>
+<p>We will use this cleaned dataset to train our four models and evaluate LIME explanations.</p>
 
 
 </section>
