@@ -98,5 +98,45 @@
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>LIME Analysis</span>"
     ]
+  },
+  {
+    "objectID": "conclusion.html",
+    "href": "conclusion.html",
+    "title": "5  Conclusion",
+    "section": "",
+    "text": "5.1 Key Findings",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#key-findings",
+    "href": "conclusion.html#key-findings",
+    "title": "5  Conclusion",
+    "section": "",
+    "text": "LIME explanations aligned more closely with simpler models like decision trees.\nFor more complex models (e.g., neural networks), the LIME feature rankings showed greater variability.\nSome features such as Age, ChestPainType, and Cholesterol were consistently important across models and explanations.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#limitations",
+    "href": "conclusion.html#limitations",
+    "title": "5  Conclusion",
+    "section": "5.2 Limitations",
+    "text": "5.2 Limitations\n\nLIME explanations are local and may not reflect the global model behavior.\nThe comparison is limited to one dataset and a small sample of instances.\nModel hyperparameters and preprocessing choices could affect results.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#future-directions",
+    "href": "conclusion.html#future-directions",
+    "title": "5  Conclusion",
+    "section": "5.3 Future Directions",
+    "text": "5.3 Future Directions\n\nExplore other interpretability methods such as SHAP or Anchor explanations.\nApply the same analysis to other medical prediction datasets.\nInvolve domain experts (e.g., clinicians) to assess explanation usefulness in real-world decision-making.\n\n\nThis project highlights both the potential and the caution needed when interpreting machine learning models, especially in healthcare.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
   }
 ]

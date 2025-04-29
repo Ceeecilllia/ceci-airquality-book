@@ -1,1 +1,34 @@
 # Conclusion
+
+In this project, we explored the use of LIME (Local Interpretable Model-agnostic Explanations) to interpret machine learning models for predicting heart disease.
+
+We trained and evaluated four models:
+- Decision Tree
+- Random Forest
+- Support Vector Machine (SVM)
+- Neural Network
+
+We then applied LIME to generate local explanations and compared them to model-based feature importance.
+
+## Key Findings
+
+- LIME explanations aligned more closely with simpler models like decision trees.
+- For more complex models (e.g., neural networks), the LIME feature rankings showed greater variability.
+- Some features such as `Age`, `ChestPainType`, and `Cholesterol` were consistently important across models and explanations.
+
+## Limitations
+
+- LIME explanations are local and may not reflect the global model behavior.
+- The comparison is limited to one dataset and a small sample of instances.
+- Model hyperparameters and preprocessing choices could affect results.
+
+## Future Directions
+
+- Explore other interpretability methods such as SHAP or Anchor explanations.
+- Apply the same analysis to other medical prediction datasets.
+- Involve domain experts (e.g., clinicians) to assess explanation usefulness in real-world decision-making.
+
+---
+
+This project highlights both the potential and the caution needed when interpreting machine learning models, especially in healthcare.
+
