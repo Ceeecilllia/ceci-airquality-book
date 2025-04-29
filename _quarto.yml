@@ -19,7 +19,7 @@ book:
   chapters:
     - index.qmd
     - data.qmd
-    - results.qmd
+    - models.qmd
     - d3graph.qmd
     - conclusion.qmd
 
