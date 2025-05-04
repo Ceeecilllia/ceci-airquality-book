@@ -1,29 +1,116 @@
+---
+title: "Data"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
 # Data
 
-## Dataset Description
+In this section, we provide an overview of the dataset used in our heart disease prediction task, along with key preprocessing and exploratory analysis steps.
 
-We use the **Heart Failure Prediction** dataset from [Kaggle](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction).  
-This dataset includes clinical features of patients and a binary outcome variable indicating whether the patient is diagnosed with heart disease.
+# Dataset Description
 
-There are `n = 918` rows and `p = 12` columns in the dataset.  
-Some of the key features include:
+We use the **Heart Disease Dataset**, which contains `n = 1025` observations and `p = 14` features, including:
 
-- `Age`: Age of the patient
-- `RestingBP`: Resting blood pressure (mm Hg)
-- `Cholesterol`: Serum cholesterol in mg/dl
-- `ChestPainType`: Type of chest pain (e.g., ATA, NAP, ASY, TA)
-- `FastingBS`: Fasting blood sugar (>120 mg/dl, binary: 1 or 0)
-- `MaxHR`: Maximum heart rate achieved
-- `ExerciseAngina`: Exercise-induced angina (Yes/No)
-- `HeartDisease`: Target variable (1 = heart disease, 0 = no heart disease)
+- `age`: Age in years  
+- `sex`: Biological sex (1 = male, 0 = female)  
+- `cp`: Chest pain type (0 to 3, categorical) 
+  - 0 = Typical angina  
+  - 1 = Atypical angina  
+  - 2 = Non-anginal pain  
+  - 3 = Asymptomatic
+- `trestbps`: Resting blood pressure  
+- `chol`: Serum cholesterol (mg/dl)  
+- `fbs`: Fasting blood sugar > 120 mg/dl (1 = true, 0 = false)  
+- `restecg`: Resting ECG results  
+- `thalach`: Maximum heart rate achieved  
+- `exang`: Exercise-induced angina (1 = yes, 0 = no)  
+- `oldpeak`: ST depression induced by exercise  
+- `slope`, `ca`, `thal`: Additional heart-related features  
+- `target`: Presence of heart disease (1 = yes, 0 = no)
+---
 
-## Preprocessing Steps
+# Preprocessing
 
-Before modeling, we apply the following preprocessing steps:
+We perform the following preprocessing steps:
 
-- Convert categorical variables (e.g., `Sex`, `ChestPainType`, `ExerciseAngina`, `RestingECG`, `ST_Slope`) into factors
-- Standardize numerical variables if needed (for SVM or neural networks)
-- Check for and handle missing values (if any)
-- Split the data into training and test sets (e.g., 70% training, 30% testing)
+- Convert categorical variables to factors (`sex`, `cp`, `fbs`, `restecg`, `exang`, `slope`, `ca`, `thal`)
+- Rename `target` to `HeartDisease` for clarity
+- Check for missing values
+- Split into 70% training / 30% testing using `initial_split()` from **rsample**
 
-We will use this cleaned dataset to train our four models and evaluate LIME explanations.
+---
+
+## Data Loading and Preprocessing
+
+```{r}
+library(tidyverse)
+# Load the dataset
+heart <- read_csv("data/heart.csv")
+
+# Rename variables for clarity
+heart <- heart %>%
+  rename(
+    Age = age,
+    Sex = sex,
+    ChestPainType = cp,
+    RestingBP = trestbps,
+    Cholesterol = chol,
+    FastingBS = fbs,
+    RestingECG = restecg,
+    MaxHR = thalach,
+    ExerciseAngina = exang,
+    Oldpeak = oldpeak,
+    Slope = slope,
+    NumMajorVessels = ca,
+    Thalassemia = thal,
+    HeartDisease = target
+  ) %>%
+  mutate(
+    Sex = as.factor(Sex),
+    ChestPainType = as.factor(ChestPainType),
+    RestingECG = as.factor(RestingECG),
+    ExerciseAngina = as.factor(ExerciseAngina),
+    Thalassemia = as.factor(Thalassemia),
+    HeartDisease = as.factor(HeartDisease)
+  )
+
+```
+# Exploratory Data Analysis
+
+## Age Distribution by Heart Disease Status
+```{r}
+# Basic structure
+glimpse(heart)
+
+# Proportion of heart disease cases
+heart %>%
+  count(HeartDisease) %>%
+  mutate(prop = n / sum(n))
+
+```
+```{r}
+# Distribution of Age
+ggplot(heart, aes(x = Age, fill = HeartDisease)) +
+  geom_histogram(bins = 30, position = "dodge") +
+  labs(title = "Age Distribution by Heart Disease Status")
+
+```
+
+```{r}
+# Chest Pain Type vs Disease
+ggplot(heart, aes(x = ChestPainType, fill = HeartDisease)) +
+  geom_bar(position = "fill") +
+  labs(title = "Chest Pain Type and Heart Disease", y = "Proportion")
+
+```
+
+As shown, patients with heart disease (label 1) tend to be older.  
+The highest heart disease rate occurs around ages 55 to 65.
+
+Likewise, chest pain types 1 and 2 are more common in patients with heart disease, suggesting these features could be predictive.
+
+These patterns will guide our model-building decisions and feature interpretation strategies in the next sections.
+

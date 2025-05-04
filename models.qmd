@@ -1,33 +1,46 @@
-# Models
+---
+title: "Models Overview"
+format: html
+---
 
-We trained four different models using the preprocessed heart disease dataset:
+# Models Overview
 
-- Decision Tree
-- Random Forest
-- Support Vector Machine (SVM)
-- Neural Network
+In this section, we provide an overview of the models used to predict heart disease based on clinical features.
 
-Each model was evaluated on a held-out test set using accuracy and AUC.
+We trained and evaluated **four different models**, each representing a different level of complexity and interpretability:
 
-## Model Training Overview
+| Model             | Engine     | Type               | Interpretability | Notes                           |
+|------------------|------------|--------------------|------------------|----------------------------------|
+| Decision Tree     | `rpart`    | Interpretable      | High             | Baseline tree model              |
+| Random Forest     | `ranger`   | Ensemble           | Medium           | Handles interactions, more robust |
+| SVM               | `kernlab`  | Kernel-based       | Low              | Sensitive to scaling             |
+| Neural Network    | `nnet`     | Nonlinear          | Low              | Can model complex patterns       |
 
-Below is a summary of the methods and tools used:
+Each model is evaluated using:
+- Accuracy
+- AUC (Area Under the ROC Curve)
+- Global feature importance (e.g., using `vip` or built-in model metrics)
+- LIME local explanations
 
-- Models were implemented using the `tidymodels` framework in R.
-- The dataset was split into training (70%) and test (30%) sets.
-- Preprocessing (e.g., normalization or dummy variable creation) was applied using `recipes`.
-- Each model used 10-fold cross-validation for tuning (if applicable).
+---
 
-## Model 1: Decision Tree
+# Modeling Workflow
 
-> You can insert code chunk here like:
+We use the [`tidymodels`](https://www.tidymodels.org/) framework for consistency and reproducibility across models:
 
-```r
-# Decision Tree with rpart
-library(tidymodels)
+- Split data: 70% training / 30% test
+- Recipe preprocessing: dummy encoding, normalization, etc.
+- 10-fold cross-validation for tuning (if applicable)
+- Evaluation on test set
 
-tree_spec <- decision_tree() %>%
-  set_engine("rpart") %>%
-  set_mode("classification")
+Each model is analyzed in its own chapter:
 
-# Add recipe and workflow, then fit the model
+- [Decision Tree](tree_model.qmd)
+- [Random Forest](rf_model.qmd)
+- [SVM](svm_model.qmd)
+- [Neural Network](nn_model.qmd)
+
+---
+
+This modular approach allows us to compare different modeling philosophies and investigate how interpretation methods like LIME behave across them.
+
