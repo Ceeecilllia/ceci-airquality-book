@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -149,8 +183,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link active" data-scroll-target="#dataset-description"><span class="header-section-number">2.1</span> Dataset Description</a></li>
-  <li><a href="#preprocessing-steps" id="toc-preprocessing-steps" class="nav-link" data-scroll-target="#preprocessing-steps"><span class="header-section-number">2.2</span> Preprocessing Steps</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">3</span> Data</a></li>
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description"><span class="header-section-number">4</span> Dataset Description</a></li>
+  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">5</span> Preprocessing</a>
+  <ul class="collapse">
+  <li><a href="#data-loading-and-preprocessing" id="toc-data-loading-and-preprocessing" class="nav-link" data-scroll-target="#data-loading-and-preprocessing"><span class="header-section-number">5.1</span> Data Loading and Preprocessing</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">6</span> Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#age-distribution-by-heart-disease-status" id="toc-age-distribution-by-heart-disease-status" class="nav-link" data-scroll-target="#age-distribution-by-heart-disease-status"><span class="header-section-number">6.1</span> Age Distribution by Heart Disease Status</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -176,35 +218,205 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="dataset-description" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="dataset-description"><span class="header-section-number">2.1</span> Dataset Description</h2>
-<p>We use the <strong>Heart Failure Prediction</strong> dataset from <a href="https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction">Kaggle</a>.<br>
-This dataset includes clinical features of patients and a binary outcome variable indicating whether the patient is diagnosed with heart disease.</p>
-<p>There are <code>n = 918</code> rows and <code>p = 12</code> columns in the dataset.<br>
-Some of the key features include:</p>
-<ul>
-<li><code>Age</code>: Age of the patient</li>
-<li><code>RestingBP</code>: Resting blood pressure (mm Hg)</li>
-<li><code>Cholesterol</code>: Serum cholesterol in mg/dl</li>
-<li><code>ChestPainType</code>: Type of chest pain (e.g., ATA, NAP, ASY, TA)</li>
-<li><code>FastingBS</code>: Fasting blood sugar (&gt;120 mg/dl, binary: 1 or 0)</li>
-<li><code>MaxHR</code>: Maximum heart rate achieved</li>
-<li><code>ExerciseAngina</code>: Exercise-induced angina (Yes/No)</li>
-<li><code>HeartDisease</code>: Target variable (1 = heart disease, 0 = no heart disease)</li>
-</ul>
+<section id="data" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data</h1>
+<p>In this section, we provide an overview of the dataset used in our heart disease prediction task, along with key preprocessing and exploratory analysis steps.</p>
 </section>
-<section id="preprocessing-steps" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="preprocessing-steps"><span class="header-section-number">2.2</span> Preprocessing Steps</h2>
-<p>Before modeling, we apply the following preprocessing steps:</p>
+<section id="dataset-description" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Dataset Description</h1>
+<p>We use the <strong>Heart Disease Dataset</strong>, which contains <code>n = 1025</code> observations and <code>p = 14</code> features, including:</p>
 <ul>
-<li>Convert categorical variables (e.g., <code>Sex</code>, <code>ChestPainType</code>, <code>ExerciseAngina</code>, <code>RestingECG</code>, <code>ST_Slope</code>) into factors</li>
-<li>Standardize numerical variables if needed (for SVM or neural networks)</li>
-<li>Check for and handle missing values (if any)</li>
-<li>Split the data into training and test sets (e.g., 70% training, 30% testing)</li>
+<li><code>age</code>: Age in years<br>
+</li>
+<li><code>sex</code>: Biological sex (1 = male, 0 = female)<br>
+</li>
+<li><code>cp</code>: Chest pain type (0 to 3, categorical)
+<ul>
+<li>0 = Typical angina<br>
+</li>
+<li>1 = Atypical angina<br>
+</li>
+<li>2 = Non-anginal pain<br>
+</li>
+<li>3 = Asymptomatic</li>
+</ul></li>
+<li><code>trestbps</code>: Resting blood pressure<br>
+</li>
+<li><code>chol</code>: Serum cholesterol (mg/dl)<br>
+</li>
+<li><code>fbs</code>: Fasting blood sugar &gt; 120 mg/dl (1 = true, 0 = false)<br>
+</li>
+<li><code>restecg</code>: Resting ECG results<br>
+</li>
+<li><code>thalach</code>: Maximum heart rate achieved<br>
+</li>
+<li><code>exang</code>: Exercise-induced angina (1 = yes, 0 = no)<br>
+</li>
+<li><code>oldpeak</code>: ST depression induced by exercise<br>
+</li>
+<li><code>slope</code>, <code>ca</code>, <code>thal</code>: Additional heart-related features<br>
+</li>
+<li><code>target</code>: Presence of heart disease (1 = yes, 0 = no)</li>
 </ul>
-<p>We will use this cleaned dataset to train our four models and evaluate LIME explanations.</p>
+<hr>
+</section>
+<section id="preprocessing" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Preprocessing</h1>
+<p>We perform the following preprocessing steps:</p>
+<ul>
+<li>Convert categorical variables to factors (<code>sex</code>, <code>cp</code>, <code>fbs</code>, <code>restecg</code>, <code>exang</code>, <code>slope</code>, <code>ca</code>, <code>thal</code>)</li>
+<li>Rename <code>target</code> to <code>HeartDisease</code> for clarity</li>
+<li>Check for missing values</li>
+<li>Split into 70% training / 30% testing using <code>initial_split()</code> from <strong>rsample</strong></li>
+</ul>
+<hr>
+<section id="data-loading-and-preprocessing" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="data-loading-and-preprocessing"><span class="header-section-number">5.1</span> Data Loading and Preprocessing</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>heart <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/heart.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1025 Columns: 14
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename variables for clarity</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>heart <span class="ot">&lt;-</span> heart <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age =</span> age,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> sex,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ChestPainType =</span> cp,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">RestingBP =</span> trestbps,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Cholesterol =</span> chol,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">FastingBS =</span> fbs,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">RestingECG =</span> restecg,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">MaxHR =</span> thalach,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">ExerciseAngina =</span> exang,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">Oldpeak =</span> oldpeak,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Slope =</span> slope,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">NumMajorVessels =</span> ca,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">Thalassemia =</span> thal,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">HeartDisease =</span> target</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> <span class="fu">as.factor</span>(Sex),</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">ChestPainType =</span> <span class="fu">as.factor</span>(ChestPainType),</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">RestingECG =</span> <span class="fu">as.factor</span>(RestingECG),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">ExerciseAngina =</span> <span class="fu">as.factor</span>(ExerciseAngina),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">Thalassemia =</span> <span class="fu">as.factor</span>(Thalassemia),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">HeartDisease =</span> <span class="fu">as.factor</span>(HeartDisease)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="exploratory-data-analysis" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Exploratory Data Analysis</h1>
+<section id="age-distribution-by-heart-disease-status" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="age-distribution-by-heart-disease-status"><span class="header-section-number">6.1</span> Age Distribution by Heart Disease Status</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic structure</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(heart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,025
+Columns: 14
+$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…
+$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …
+$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …
+$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…
+$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…
+$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …
+$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …
+$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…
+$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …
+$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…
+$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …
+$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …
+$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …
+$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Proportion of heart disease cases</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>heart <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(HeartDisease) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  HeartDisease     n  prop
+  &lt;fct&gt;        &lt;int&gt; &lt;dbl&gt;
+1 0              499 0.487
+2 1              526 0.513</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution of Age</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(heart, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">fill =</span> HeartDisease)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age Distribution by Heart Disease Status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chest Pain Type vs Disease</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(heart, <span class="fu">aes</span>(<span class="at">x =</span> ChestPainType, <span class="at">fill =</span> HeartDisease)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chest Pain Type and Heart Disease"</span>, <span class="at">y =</span> <span class="st">"Proportion"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As shown, patients with heart disease (label 1) tend to be older.<br>
+The highest heart disease rate occurs around ages 55 to 65.</p>
+<p>Likewise, chest pain types 1 and 2 are more common in patients with heart disease, suggesting these features could be predictive.</p>
+<p>These patterns will guide our model-building decisions and feature interpretation strategies in the next sections.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

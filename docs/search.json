@@ -14,7 +14,7 @@
     "href": "data.html",
     "title": "2  Data",
     "section": "",
-    "text": "2.1 Dataset Description\nWe use the Heart Failure Prediction dataset from Kaggle.\nThis dataset includes clinical features of patients and a binary outcome variable indicating whether the patient is diagnosed with heart disease.\nThere are n = 918 rows and p = 12 columns in the dataset.\nSome of the key features include:",
+    "text": "3 Data\nIn this section, we provide an overview of the dataset used in our heart disease prediction task, along with key preprocessing and exploratory analysis steps.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
@@ -137,6 +137,26 @@
     "text": "5.3 Future Directions\n\nExplore other interpretability methods such as SHAP or Anchor explanations.\nApply the same analysis to other medical prediction datasets.\nInvolve domain experts (e.g., clinicians) to assess explanation usefulness in real-world decision-making.\n\n\nThis project highlights both the potential and the caution needed when interpreting machine learning models, especially in healthcare.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#data-loading-and-preprocessing",
+    "href": "data.html#data-loading-and-preprocessing",
+    "title": "2  Data",
+    "section": "5.1 Data Loading and Preprocessing",
+    "text": "5.1 Data Loading and Preprocessing\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\n# Load the dataset\nheart &lt;- read_csv(\"data/heart.csv\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\n# Rename variables for clarity\nheart &lt;- heart %&gt;%\n  rename(\n    Age = age,\n    Sex = sex,\n    ChestPainType = cp,\n    RestingBP = trestbps,\n    Cholesterol = chol,\n    FastingBS = fbs,\n    RestingECG = restecg,\n    MaxHR = thalach,\n    ExerciseAngina = exang,\n    Oldpeak = oldpeak,\n    Slope = slope,\n    NumMajorVessels = ca,\n    Thalassemia = thal,\n    HeartDisease = target\n  ) %&gt;%\n  mutate(\n    Sex = as.factor(Sex),\n    ChestPainType = as.factor(ChestPainType),\n    RestingECG = as.factor(RestingECG),\n    ExerciseAngina = as.factor(ExerciseAngina),\n    Thalassemia = as.factor(Thalassemia),\n    HeartDisease = as.factor(HeartDisease)\n  )",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#age-distribution-by-heart-disease-status",
+    "href": "data.html#age-distribution-by-heart-disease-status",
+    "title": "2  Data",
+    "section": "6.1 Age Distribution by Heart Disease Status",
+    "text": "6.1 Age Distribution by Heart Disease Status\n\n\nCode\n# Basic structure\nglimpse(heart)\n\n\nRows: 1,025\nColumns: 14\n$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…\n$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …\n$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …\n$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…\n$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…\n$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …\n$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …\n$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…\n$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …\n$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…\n$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …\n$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …\n$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …\n$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …\n\n\nCode\n# Proportion of heart disease cases\nheart %&gt;%\n  count(HeartDisease) %&gt;%\n  mutate(prop = n / sum(n))\n\n\n# A tibble: 2 × 3\n  HeartDisease     n  prop\n  &lt;fct&gt;        &lt;int&gt; &lt;dbl&gt;\n1 0              499 0.487\n2 1              526 0.513\n\n\n\n\nCode\n# Distribution of Age\nggplot(heart, aes(x = Age, fill = HeartDisease)) +\n  geom_histogram(bins = 30, position = \"dodge\") +\n  labs(title = \"Age Distribution by Heart Disease Status\")\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Chest Pain Type vs Disease\nggplot(heart, aes(x = ChestPainType, fill = HeartDisease)) +\n  geom_bar(position = \"fill\") +\n  labs(title = \"Chest Pain Type and Heart Disease\", y = \"Proportion\")\n\n\n\n\n\n\n\n\n\nAs shown, patients with heart disease (label 1) tend to be older.\nThe highest heart disease rate occurs around ages 55 to 65.\nLikewise, chest pain types 1 and 2 are more common in patients with heart disease, suggesting these features could be predictive.\nThese patterns will guide our model-building decisions and feature interpretation strategies in the next sections.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
   }
 ]
