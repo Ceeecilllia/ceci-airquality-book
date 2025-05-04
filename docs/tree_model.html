@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Models Overview – Final project</title>
+<title>4&nbsp; Decision Tree Model – Final project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./tree_model.html" rel="next">
-<link href="./data.html" rel="prev">
+<link href="./lime_analysis.html" rel="next">
+<link href="./models.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./models.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models Overview</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tree_model.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Decision Tree Model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -123,13 +157,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./models.html" class="sidebar-item-text sidebar-link active">
+  <a href="./models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models Overview</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tree_model.html" class="sidebar-item-text sidebar-link">
+  <a href="./tree_model.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Decision Tree Model</span></span></a>
   </div>
 </li>
@@ -155,17 +189,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#models-overview" id="toc-models-overview" class="nav-link active" data-scroll-target="#models-overview"><span class="header-section-number">4</span> Models Overview</a></li>
-  <li><a href="#modeling-workflow" id="toc-modeling-workflow" class="nav-link" data-scroll-target="#modeling-workflow"><span class="header-section-number">5</span> Modeling Workflow</a></li>
+  <li><a href="#decision-tree-model" id="toc-decision-tree-model" class="nav-link active" data-scroll-target="#decision-tree-model"><span class="header-section-number">4.1</span> Decision Tree Model</a>
+  <ul class="collapse">
+  <li><a href="#data-split-and-preprocessing" id="toc-data-split-and-preprocessing" class="nav-link" data-scroll-target="#data-split-and-preprocessing"><span class="header-section-number">4.1.1</span> Data Split and Preprocessing</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/models.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/tree_model.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models Overview</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Decision Tree Model</span></h1>
 </div>
 
 
@@ -182,81 +218,75 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="models-overview" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Models Overview</h1>
-<p>In this section, we provide an overview of the models used to predict heart disease based on clinical features.</p>
-<p>We trained and evaluated <strong>four different models</strong>, each representing a different level of complexity and interpretability:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 11%">
-<col style="width: 19%">
-<col style="width: 17%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>Engine</th>
-<th>Type</th>
-<th>Interpretability</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Decision Tree</td>
-<td><code>rpart</code></td>
-<td>Interpretable</td>
-<td>High</td>
-<td>Baseline tree model</td>
-</tr>
-<tr class="even">
-<td>Random Forest</td>
-<td><code>ranger</code></td>
-<td>Ensemble</td>
-<td>Medium</td>
-<td>Handles interactions, more robust</td>
-</tr>
-<tr class="odd">
-<td>SVM</td>
-<td><code>kernlab</code></td>
-<td>Kernel-based</td>
-<td>Low</td>
-<td>Sensitive to scaling</td>
-</tr>
-<tr class="even">
-<td>Neural Network</td>
-<td><code>nnet</code></td>
-<td>Nonlinear</td>
-<td>Low</td>
-<td>Can model complex patterns</td>
-</tr>
-</tbody>
-</table>
-<p>Each model is evaluated using: - Accuracy - AUC (Area Under the ROC Curve) - Global feature importance (e.g., using <code>vip</code> or built-in model metrics) - LIME local explanations</p>
-<hr>
+<section id="decision-tree-model" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="decision-tree-model"><span class="header-section-number">4.1</span> Decision Tree Model</h2>
+<p>We trained a decision tree model to predict heart disease using the <code>rpart</code> engine via the <code>tidymodels</code> framework. This model is inherently interpretable and serves as a baseline for comparison.</p>
+<section id="data-split-and-preprocessing" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="data-split-and-preprocessing"><span class="header-section-number">4.1.1</span> Data Split and Preprocessing</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>heart <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/heart.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1025 Columns: 14
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename + factor conversion</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>heart <span class="ot">&lt;-</span> heart <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age =</span> age,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> sex,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ChestPainType =</span> cp,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">RestingBP =</span> trestbps,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Cholesterol =</span> chol,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">FastingBS =</span> fbs,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">RestingECG =</span> restecg,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">MaxHR =</span> thalach,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">ExerciseAngina =</span> exang,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">Oldpeak =</span> oldpeak,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Slope =</span> slope,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">NumMajorVessels =</span> ca,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">Thalassemia =</span> thal,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">HeartDisease =</span> target</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sex =</span> <span class="fu">as.factor</span>(Sex),</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">ChestPainType =</span> <span class="fu">as.factor</span>(ChestPainType),</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">RestingECG =</span> <span class="fu">as.factor</span>(RestingECG),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">ExerciseAngina =</span> <span class="fu">as.factor</span>(ExerciseAngina),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">Thalassemia =</span> <span class="fu">as.factor</span>(Thalassemia),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">HeartDisease =</span> <span class="fu">as.factor</span>(HeartDisease)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+
 </section>
-<section id="modeling-workflow" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Modeling Workflow</h1>
-<p>We use the <a href="https://www.tidymodels.org/"><code>tidymodels</code></a> framework for consistency and reproducibility across models:</p>
-<ul>
-<li>Split data: 70% training / 30% test</li>
-<li>Recipe preprocessing: dummy encoding, normalization, etc.</li>
-<li>10-fold cross-validation for tuning (if applicable)</li>
-<li>Evaluation on test set</li>
-</ul>
-<p>Each model is analyzed in its own chapter:</p>
-<ul>
-<li><a href="./tree_model.html">Decision Tree</a></li>
-<li><a href="rf_model.qmd">Random Forest</a></li>
-<li><a href="svm_model.qmd">SVM</a></li>
-<li><a href="nn_model.qmd">Neural Network</a></li>
-</ul>
-<hr>
-<p>This modular approach allows us to compare different modeling philosophies and investigate how interpretation methods like LIME behave across them.</p>
-
-
 </section>
 
 </main> <!-- /main -->
@@ -682,13 +712,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./data.html" class="pagination-link" aria-label="Data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data</span></span>
+      <a href="./models.html" class="pagination-link" aria-label="Models Overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models Overview</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./tree_model.html" class="pagination-link" aria-label="Decision Tree Model">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Decision Tree Model</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./lime_analysis.html" class="pagination-link" aria-label="LIME Analysis">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -700,7 +730,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/models.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/tree_model.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

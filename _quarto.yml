@@ -20,6 +20,7 @@ book:
     - index.qmd
     - data.qmd
     - models.qmd
+    - tree_model.qmd
     - lime_analysis.qmd
     - conclusion.qmd
 

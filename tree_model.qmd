@@ -1,5 +1,50 @@
 ---
-title: "tree_model"
-format: html
+title: "Decision Tree Model"
+format:
+  html:
+    toc: true
+    code-fold: true
 ---
+
+## Decision Tree Model
+
+We trained a decision tree model to predict heart disease using the `rpart` engine via the `tidymodels` framework. This model is inherently interpretable and serves as a baseline for comparison.
+
+### Data Split and Preprocessing
+
+```{r}
+library(tidyverse)
+# Load the dataset
+heart <- read_csv("data/heart.csv")
+
+# Rename + factor conversion
+heart <- heart %>%
+  rename(
+    Age = age,
+    Sex = sex,
+    ChestPainType = cp,
+    RestingBP = trestbps,
+    Cholesterol = chol,
+    FastingBS = fbs,
+    RestingECG = restecg,
+    MaxHR = thalach,
+    ExerciseAngina = exang,
+    Oldpeak = oldpeak,
+    Slope = slope,
+    NumMajorVessels = ca,
+    Thalassemia = thal,
+    HeartDisease = target
+  ) %>%
+  mutate(
+    Sex = as.factor(Sex),
+    ChestPainType = as.factor(ChestPainType),
+    RestingECG = as.factor(RestingECG),
+    ExerciseAngina = as.factor(ExerciseAngina),
+    Thalassemia = as.factor(Thalassemia),
+    HeartDisease = as.factor(HeartDisease)
+  )
+
+```
+
+
 
