@@ -10,6 +10,46 @@
     ]
   },
   {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "Final project",
+    "section": "",
+    "text": "Decision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\nLogistic Regression",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#dataset",
+    "href": "index.html#dataset",
+    "title": "Final project",
+    "section": "0.2 Dataset",
+    "text": "0.2 Dataset\nWe use the UCI Heart Disease dataset, containing 14 clinical variables (e.g., age, sex, cholesterol, resting blood pressure) and a binary outcome indicating the presence of heart disease, which includes 14 clinical features and a binary target variable:\n\n1 = diagnosed with heart disease\n0 = no heart disease",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#methods",
+    "href": "index.html#methods",
+    "title": "Final project",
+    "section": "0.3 Methods",
+    "text": "0.3 Methods\nWe apply the following modeling and explanation techniques:\n\n🧠 Model training via the tidymodels framework\n📈 Evaluation using test set Accuracy and AUC\n🔍 Global feature importance using built-in tools (e.g., rpart, randomForest, glm)\n🌈 Local explanations using lime (for tree-based models) and iml::LocalModel (for logistic regression)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#goals",
+    "href": "index.html#goals",
+    "title": "Final project",
+    "section": "0.4 Goals",
+    "text": "0.4 Goals\n\nCompare interpretable vs black-box models\nEvaluate the stability and reliability of explanations\nDiscuss whether models are trustworthy for medical use",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
+    ]
+  },
+  {
     "objectID": "data.html",
     "href": "data.html",
     "title": "2  Data",
@@ -40,11 +80,61 @@
     ]
   },
   {
+    "objectID": "data.html#data-structure",
+    "href": "data.html#data-structure",
+    "title": "2  Data",
+    "section": "6.2 Data Structure",
+    "text": "6.2 Data Structure\nWe first inspect the structure of the dataset:\n\n\nCode\nglimpse(heart)\n\n\nRows: 1,025\nColumns: 14\n$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…\n$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …\n$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …\n$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…\n$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…\n$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …\n$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …\n$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…\n$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …\n$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…\n$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …\n$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …\n$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …\n$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#missing-value-check",
+    "href": "data.html#missing-value-check",
+    "title": "2  Data",
+    "section": "6.3 Missing Value Check",
+    "text": "6.3 Missing Value Check\nThere are no missing values in this dataset:\n\n\nCode\ncolSums(is.na(heart))\n\n\n            Age             Sex   ChestPainType       RestingBP     Cholesterol \n              0               0               0               0               0 \n      FastingBS      RestingECG           MaxHR  ExerciseAngina         Oldpeak \n              0               0               0               0               0 \n          Slope NumMajorVessels     Thalassemia    HeartDisease \n              0               0               0               0",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#data-loading-and-preparation-code",
+    "href": "data.html#data-loading-and-preparation-code",
+    "title": "2  Data",
+    "section": "6.4 Data Loading and Preparation Code",
+    "text": "6.4 Data Loading and Preparation Code\nThe dataset was loaded and renamed as follows:\n\n\nCode\nheart &lt;- read_csv(\"data/heart.csv\") %&gt;%\n  rename(\n    Age = age,\n    Sex = sex,\n    ChestPainType = cp,\n    RestingBP = trestbps,\n    Cholesterol = chol,\n    FastingBS = fbs,\n    RestingECG = restecg,\n    MaxHR = thalach,\n    ExerciseAngina = exang,\n    Oldpeak = oldpeak,\n    Slope = slope,\n    NumMajorVessels = ca,\n    Thalassemia = thal,\n    HeartDisease = target\n  ) %&gt;%\n  mutate(\n    Sex = as.factor(Sex),\n    ChestPainType = as.factor(ChestPainType),\n    RestingECG = as.factor(RestingECG),\n    ExerciseAngina = as.factor(ExerciseAngina),\n    Thalassemia = as.factor(Thalassemia),\n    HeartDisease = as.factor(HeartDisease)\n  )\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#outcome-variable-distribution",
+    "href": "data.html#outcome-variable-distribution",
+    "title": "2  Data",
+    "section": "6.5 Outcome Variable Distribution",
+    "text": "6.5 Outcome Variable Distribution\n\n\nCode\nheart %&gt;%\n  ggplot(aes(x = HeartDisease)) +\n  geom_bar(fill = \"tomato\") +\n  labs(title = \"Heart Disease Diagnosis\", x = \"Heart Disease (1 = Yes)\", y = \"Count\")",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
     "objectID": "models.html",
     "href": "models.html",
     "title": "3  Model Overview",
     "section": "",
     "text": "3.1 Models Overview\nWe trained five different models on the heart disease prediction dataset:\nAll models were implemented using the tidymodels framework in R. The dataset was split into 70% training and 30% testing.\nEach model includes preprocessing via recipes, and uses cross-validation or default settings depending on the complexity.\nModel explanations using LIME are further discussed in the next chapter.\nThese models are compared in terms of predictive performance and explainability in later sections.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Overview</span>"
+    ]
+  },
+  {
+    "objectID": "models.html#models-overview",
+    "href": "models.html#models-overview",
+    "title": "3  Model Overview",
+    "section": "",
+    "text": "Decision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\nLogistic Regression\n\n\n\n\n\n\n\n\n\n\nModel\nDescription\n\n\n\n\nLogistic Regression\nA linear model for binary classification, interpretable weights\n\n\nDecision Tree\nA tree-based model using rpart, easy to visualize and explain\n\n\nRandom Forest\nAn ensemble of trees, generally improves accuracy\n\n\nSVM\nSupport Vector Machine with polynomial kernel\n\n\nNeural Network\nA single-layer neural network using nnet",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Overview</span>"
     ]
@@ -67,76 +157,6 @@
     "text": "4.1.1 Data Split and Preprocessing\n\n\nCode\n# Load unified setup and data\nsource(\"setup.R\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
-    ]
-  },
-  {
-    "objectID": "lime_analysis.html",
-    "href": "lime_analysis.html",
-    "title": "5  LIME Explanations",
-    "section": "",
-    "text": "5.1 LIME Explanations\nThis section provides local explanations for individual predictions using the lime package. Models that support LIME include Decision Tree and Random Forest. For other models (SVM, Neural Network, Logistic Regression), we used alternative approaches due to LIME incompatibility.\nCode\nlibrary(tidymodels)\n\n\n── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──\n\n\n✔ broom        1.0.7     ✔ recipes      1.1.1\n✔ dials        1.4.0     ✔ rsample      1.3.0\n✔ dplyr        1.1.4     ✔ tibble       3.2.1\n✔ ggplot2      3.5.2     ✔ tidyr        1.3.1\n✔ infer        1.0.8     ✔ tune         1.3.0\n✔ modeldata    1.4.0     ✔ workflows    1.2.0\n✔ parsnip      1.3.1     ✔ workflowsets 1.1.0\n✔ purrr        1.0.4     ✔ yardstick    1.3.2\n\n\n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ purrr::discard() masks scales::discard()\n✖ dplyr::filter()  masks stats::filter()\n✖ dplyr::lag()     masks stats::lag()\n✖ recipes::step()  masks stats::step()\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ forcats   1.0.0     ✔ readr     2.1.5\n✔ lubridate 1.9.4     ✔ stringr   1.5.1\n\n\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ readr::col_factor() masks scales::col_factor()\n✖ purrr::discard()    masks scales::discard()\n✖ dplyr::filter()     masks stats::filter()\n✖ stringr::fixed()    masks recipes::fixed()\n✖ dplyr::lag()        masks stats::lag()\n✖ readr::spec()       masks yardstick::spec()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\nlibrary(lime)\n\n\n\nAttaching package: 'lime'\n\nThe following object is masked from 'package:dplyr':\n\n    explain\n\n\nCode\nlibrary(forcats)\nsource(\"setup.R\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\ntree_fit &lt;- readRDS(\"scripts/tree_fit.rds\")\nrf_fit &lt;- readRDS(\"scripts/rf_fit.rds\")\n    \nset.seed(123)\nsample_cases &lt;- heart_test %&gt;% slice_sample(n = 5)",
-    "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>LIME Explanations</span>"
-    ]
-  },
-  {
-    "objectID": "lime_analysis.html#lime-parameters",
-    "href": "lime_analysis.html#lime-parameters",
-    "title": "5  LIME Analysis",
-    "section": "6.1 LIME Parameters",
-    "text": "6.1 LIME Parameters\n\nNumber of features: 5\nNumber of permutations: 5000",
-    "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>LIME Analysis</span>"
-    ]
-  },
-  {
-    "objectID": "lime_analysis.html#example-lime-explanation",
-    "href": "lime_analysis.html#example-lime-explanation",
-    "title": "5  LIME Analysis",
-    "section": "6.2 Example LIME Explanation",
-    "text": "6.2 Example LIME Explanation\n\nInsert example code and output here, e.g., for one test set observation:\n\n```r # Example: Apply LIME to Decision Tree model library(lime)\nexplainer_tree &lt;- lime(training_data, model_tree) explanation_tree &lt;- explain(test_data[1, ], explainer = explainer_tree, n_features = 5, n_permutations = 5000)\nplot_features(explanation_tree)",
-    "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>LIME Analysis</span>"
-    ]
-  },
-  {
-    "objectID": "conclusion.html",
-    "href": "conclusion.html",
-    "title": "6  Conclusion",
-    "section": "",
-    "text": "6.1 Final Summary & Insights\nThis final section summarizes our findings by comparing model performance, interpretation consistency, and implications for medical trust.",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Conclusion</span>"
-    ]
-  },
-  {
-    "objectID": "conclusion.html#key-findings",
-    "href": "conclusion.html#key-findings",
-    "title": "6  Conclusion",
-    "section": "",
-    "text": "LIME explanations aligned more closely with simpler models like decision trees.\nFor more complex models (e.g., neural networks), the LIME feature rankings showed greater variability.\nSome features such as Age, ChestPainType, and Cholesterol were consistently important across models and explanations.",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Conclusion</span>"
-    ]
-  },
-  {
-    "objectID": "conclusion.html#limitations",
-    "href": "conclusion.html#limitations",
-    "title": "6  Conclusion",
-    "section": "6.2 Limitations",
-    "text": "6.2 Limitations\n\nLIME explanations are local and may not reflect the global model behavior.\nThe comparison is limited to one dataset and a small sample of instances.\nModel hyperparameters and preprocessing choices could affect results.",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Conclusion</span>"
-    ]
-  },
-  {
-    "objectID": "conclusion.html#future-directions",
-    "href": "conclusion.html#future-directions",
-    "title": "6  Conclusion",
-    "section": "6.3 Future Directions",
-    "text": "6.3 Future Directions\n\nExplore other interpretability methods such as SHAP or Anchor explanations.\nApply the same analysis to other medical prediction datasets.\nInvolve domain experts (e.g., clinicians) to assess explanation usefulness in real-world decision-making.\n\n\nThis project highlights both the potential and the caution needed when interpreting machine learning models, especially in healthcare.",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Conclusion</span>"
     ]
   },
   {
@@ -210,93 +230,13 @@
     ]
   },
   {
-    "objectID": "index.html#overview",
-    "href": "index.html#overview",
-    "title": "Final project",
+    "objectID": "lime_analysis.html",
+    "href": "lime_analysis.html",
+    "title": "5  LIME Explanations",
     "section": "",
-    "text": "Decision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\nLogistic Regression",
+    "text": "5.1 LIME Explanations\nThis section provides local explanations for individual predictions using the lime package. Models that support LIME include Decision Tree and Random Forest. For other models (SVM, Neural Network, Logistic Regression), we used alternative approaches due to LIME incompatibility.\nCode\nlibrary(tidymodels)\n\n\n── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──\n\n\n✔ broom        1.0.7     ✔ recipes      1.1.1\n✔ dials        1.4.0     ✔ rsample      1.3.0\n✔ dplyr        1.1.4     ✔ tibble       3.2.1\n✔ ggplot2      3.5.2     ✔ tidyr        1.3.1\n✔ infer        1.0.8     ✔ tune         1.3.0\n✔ modeldata    1.4.0     ✔ workflows    1.2.0\n✔ parsnip      1.3.1     ✔ workflowsets 1.1.0\n✔ purrr        1.0.4     ✔ yardstick    1.3.2\n\n\n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ purrr::discard() masks scales::discard()\n✖ dplyr::filter()  masks stats::filter()\n✖ dplyr::lag()     masks stats::lag()\n✖ recipes::step()  masks stats::step()\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ forcats   1.0.0     ✔ readr     2.1.5\n✔ lubridate 1.9.4     ✔ stringr   1.5.1\n\n\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ readr::col_factor() masks scales::col_factor()\n✖ purrr::discard()    masks scales::discard()\n✖ dplyr::filter()     masks stats::filter()\n✖ stringr::fixed()    masks recipes::fixed()\n✖ dplyr::lag()        masks stats::lag()\n✖ readr::spec()       masks yardstick::spec()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\nlibrary(lime)\n\n\n\nAttaching package: 'lime'\n\nThe following object is masked from 'package:dplyr':\n\n    explain\n\n\nCode\nlibrary(forcats)\nsource(\"setup.R\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\ntree_fit &lt;- readRDS(\"scripts/tree_fit.rds\")\nrf_fit &lt;- readRDS(\"scripts/rf_fit.rds\")\n    \nset.seed(123)\nsample_cases &lt;- heart_test %&gt;% slice_sample(n = 5)",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#dataset",
-    "href": "index.html#dataset",
-    "title": "Final project",
-    "section": "0.2 Dataset",
-    "text": "0.2 Dataset\nWe use the UCI Heart Disease dataset, containing 14 clinical variables (e.g., age, sex, cholesterol, resting blood pressure) and a binary outcome indicating the presence of heart disease, which includes 14 clinical features and a binary target variable:\n\n1 = diagnosed with heart disease\n0 = no heart disease",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#methods",
-    "href": "index.html#methods",
-    "title": "Final project",
-    "section": "0.3 Methods",
-    "text": "0.3 Methods\nWe apply the following modeling and explanation techniques:\n\n🧠 Model training via the tidymodels framework\n📈 Evaluation using test set Accuracy and AUC\n🔍 Global feature importance using built-in tools (e.g., rpart, randomForest, glm)\n🌈 Local explanations using lime (for tree-based models) and iml::LocalModel (for logistic regression)",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#goals",
-    "href": "index.html#goals",
-    "title": "Final project",
-    "section": "0.4 Goals",
-    "text": "0.4 Goals\n\nCompare interpretable vs black-box models\nEvaluate the stability and reliability of explanations\nDiscuss whether models are trustworthy for medical use",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#data-structure",
-    "href": "data.html#data-structure",
-    "title": "2  Data",
-    "section": "6.2 Data Structure",
-    "text": "6.2 Data Structure\nWe first inspect the structure of the dataset:\n\n\nCode\nglimpse(heart)\n\n\nRows: 1,025\nColumns: 14\n$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…\n$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …\n$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …\n$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…\n$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…\n$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …\n$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …\n$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…\n$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …\n$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…\n$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …\n$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …\n$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …\n$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#missing-value-check",
-    "href": "data.html#missing-value-check",
-    "title": "2  Data",
-    "section": "6.3 Missing Value Check",
-    "text": "6.3 Missing Value Check\nThere are no missing values in this dataset:\n\n\nCode\ncolSums(is.na(heart))\n\n\n            Age             Sex   ChestPainType       RestingBP     Cholesterol \n              0               0               0               0               0 \n      FastingBS      RestingECG           MaxHR  ExerciseAngina         Oldpeak \n              0               0               0               0               0 \n          Slope NumMajorVessels     Thalassemia    HeartDisease \n              0               0               0               0",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#data-loading-and-preparation-code",
-    "href": "data.html#data-loading-and-preparation-code",
-    "title": "2  Data",
-    "section": "6.4 Data Loading and Preparation Code",
-    "text": "6.4 Data Loading and Preparation Code\nThe dataset was loaded and renamed as follows:\n\n\nCode\nheart &lt;- read_csv(\"data/heart.csv\") %&gt;%\n  rename(\n    Age = age,\n    Sex = sex,\n    ChestPainType = cp,\n    RestingBP = trestbps,\n    Cholesterol = chol,\n    FastingBS = fbs,\n    RestingECG = restecg,\n    MaxHR = thalach,\n    ExerciseAngina = exang,\n    Oldpeak = oldpeak,\n    Slope = slope,\n    NumMajorVessels = ca,\n    Thalassemia = thal,\n    HeartDisease = target\n  ) %&gt;%\n  mutate(\n    Sex = as.factor(Sex),\n    ChestPainType = as.factor(ChestPainType),\n    RestingECG = as.factor(RestingECG),\n    ExerciseAngina = as.factor(ExerciseAngina),\n    Thalassemia = as.factor(Thalassemia),\n    HeartDisease = as.factor(HeartDisease)\n  )\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#outcome-variable-distribution",
-    "href": "data.html#outcome-variable-distribution",
-    "title": "2  Data",
-    "section": "6.5 Outcome Variable Distribution",
-    "text": "6.5 Outcome Variable Distribution\n\n\nCode\nheart %&gt;%\n  ggplot(aes(x = HeartDisease)) +\n  geom_bar(fill = \"tomato\") +\n  labs(title = \"Heart Disease Diagnosis\", x = \"Heart Disease (1 = Yes)\", y = \"Count\")",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "models.html#models-overview",
-    "href": "models.html#models-overview",
-    "title": "3  Model Overview",
-    "section": "",
-    "text": "Logistic Regression\nDecision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\n\n\n\n\n\n\n\n\n\n\nModel\nDescription\n\n\n\n\nLogistic Regression\nA linear model for binary classification, interpretable weights\n\n\nDecision Tree\nA tree-based model using rpart, easy to visualize and explain\n\n\nRandom Forest\nAn ensemble of trees, generally improves accuracy\n\n\nSVM\nSupport Vector Machine with polynomial kernel\n\n\nNeural Network\nA single-layer neural network using nnet",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Overview</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>LIME Explanations</span>"
     ]
   },
   {
@@ -307,6 +247,16 @@
     "text": "5.1.1 1. Decision Tree\n\n\nCode\nmodel_type.rpart &lt;- function(x, ...) \"classification\"\npredict_model.rpart &lt;- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = \"prob\"))\n\nprep_tree &lt;- prep(heart_recipe)\ntrain_baked_tree &lt;- bake(prep_tree, new_data = NULL)\nsample_baked_tree &lt;- bake(prep_tree, new_data = sample_cases)\ntree_raw &lt;- extract_fit_parsnip(tree_fit)$fit\n\nexplainer_tree &lt;- lime(train_baked_tree, model = tree_raw)\n\n\nWarning: FastingBS does not contain enough variance to use quantile binning.\nUsing standard binning instead.\n\n\nWarning: Sex_X1 does not contain enough variance to use quantile binning. Using\nstandard binning instead.\n\n\nWarning: ChestPainType_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ExerciseAngina_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nCode\nexpl_tree &lt;- explain(sample_baked_tree, explainer_tree, n_features = 5, labels = \"1\")\n\n\n\n5.1.1.1 Average LIME Feature Contributions\n\n\nCode\nexpl_tree %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  scale_fill_manual(values = c(\"firebrick\", \"darkcyan\")) +\n  labs(title = \"Average LIME Contributions (Decision Tree)\", x = NULL, y = \"Avg Feature Weight\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n5.1.2 2. Random Forest\n\n\nCode\nmodel_type.randomForest &lt;- function(x, ...) \"classification\"\npredict_model.randomForest &lt;- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = \"prob\"))\n\nprep_rf &lt;- prep(heart_recipe)\ntrain_baked_rf &lt;- bake(prep_rf, new_data = NULL)\nsample_baked_rf &lt;- bake(prep_rf, new_data = sample_cases)\nrf_raw &lt;- extract_fit_parsnip(rf_fit)$fit\n\nexplainer_rf &lt;- lime(train_baked_rf, model = rf_raw)\n\n\nWarning: FastingBS does not contain enough variance to use quantile binning.\nUsing standard binning instead.\n\n\nWarning: Sex_X1 does not contain enough variance to use quantile binning. Using\nstandard binning instead.\n\n\nWarning: ChestPainType_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ExerciseAngina_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nCode\nexpl_rf &lt;- explain(sample_baked_rf, explainer_rf, n_features = 5, labels = \"1\")\n\n\n\n5.1.2.1 Average LIME Feature Contributions\n\n\nCode\nexpl_rf %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  scale_fill_manual(values = c(\"firebrick\", \"darkgreen\")) +\n  labs(title = \"Average LIME Contributions (Random Forest)\", x = NULL, y = \"Avg Feature Weight\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n5.1.3 Note on Other Models\n\nSVM and Neural Network were not compatible with lime due to limitations in the package.\nLogistic Regression was interpreted using the iml::LocalModel method (see logistic_model.qmd for details).",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>LIME Explanations</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html",
+    "href": "conclusion.html",
+    "title": "6  Conclusion",
+    "section": "",
+    "text": "6.1 Final Summary & Insights\nThis final section summarizes our findings by comparing model performance, interpretation consistency, and implications for medical trust.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Conclusion</span>"
     ]
   },
   {
