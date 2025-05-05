@@ -1,25 +1,89 @@
+
 ---
-title: "LIME Analysis"
-editor: visual
+title: "LIME Explanations"
+format: html
 ---
 
-# LIME Analysis
+## LIME Explanations
 
-We applied LIME (Local Interpretable Model-agnostic Explanations) to generate local explanations for each of the four models.
+This section provides local explanations for individual predictions using the `lime` package. Models that support LIME include **Decision Tree** and **Random Forest**. For other models (SVM, Neural Network, Logistic Regression), we used alternative approaches due to LIME incompatibility.
 
-The explanations focus on identifying the top 5 features contributing to each model's predictions.
+```{r}
+library(tidymodels)
+library(tidyverse)
+library(lime)
+library(forcats)
+source("setup.R")
+tree_fit <- readRDS("scripts/tree_fit.rds")
+rf_fit <- readRDS("scripts/rf_fit.rds")
+    
+set.seed(123)
+sample_cases <- heart_test %>% slice_sample(n = 5)
+```
 
-## LIME Parameters
+---
 
--   Number of features: 5
--   Number of permutations: 5000
+### 1. Decision Tree
 
-## Example LIME Explanation
+```{r}
+model_type.rpart <- function(x, ...) "classification"
+predict_model.rpart <- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = "prob"))
 
-> Insert example code and output here, e.g., for one test set observation:
+prep_tree <- prep(heart_recipe)
+train_baked_tree <- bake(prep_tree, new_data = NULL)
+sample_baked_tree <- bake(prep_tree, new_data = sample_cases)
+tree_raw <- extract_fit_parsnip(tree_fit)$fit
 
-\`\`\`r \# Example: Apply LIME to Decision Tree model library(lime)
+explainer_tree <- lime(train_baked_tree, model = tree_raw)
+expl_tree <- explain(sample_baked_tree, explainer_tree, n_features = 5, labels = "1")
+```
 
-explainer_tree \<- lime(training_data, model_tree) explanation_tree \<- explain(test_data\[1, \], explainer = explainer_tree, n_features = 5, n_permutations = 5000)
+#### Average LIME Feature Contributions
 
-plot_features(explanation_tree)
+```{r}
+expl_tree %>%
+  group_by(feature_desc) %>%
+  summarise(avg_weight = mean(feature_weight)) %>%
+  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight > 0)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  scale_fill_manual(values = c("firebrick", "darkcyan")) +
+  labs(title = "Average LIME Contributions (Decision Tree)", x = NULL, y = "Avg Feature Weight")
+```
+
+---
+
+### 2. Random Forest
+
+```{r}
+model_type.randomForest <- function(x, ...) "classification"
+predict_model.randomForest <- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = "prob"))
+
+prep_rf <- prep(heart_recipe)
+train_baked_rf <- bake(prep_rf, new_data = NULL)
+sample_baked_rf <- bake(prep_rf, new_data = sample_cases)
+rf_raw <- extract_fit_parsnip(rf_fit)$fit
+
+explainer_rf <- lime(train_baked_rf, model = rf_raw)
+expl_rf <- explain(sample_baked_rf, explainer_rf, n_features = 5, labels = "1")
+```
+
+#### Average LIME Feature Contributions
+
+```{r}
+expl_rf %>%
+  group_by(feature_desc) %>%
+  summarise(avg_weight = mean(feature_weight)) %>%
+  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight > 0)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  scale_fill_manual(values = c("firebrick", "darkgreen")) +
+  labs(title = "Average LIME Contributions (Random Forest)", x = NULL, y = "Avg Feature Weight")
+```
+
+---
+
+### Note on Other Models
+
+- SVM and Neural Network were **not compatible** with `lime` due to limitations in the package.
+- Logistic Regression was interpreted using the `iml::LocalModel` method (see `logistic_model.qmd` for details).

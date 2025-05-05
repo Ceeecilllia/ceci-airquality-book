@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Models Overview – Final project</title>
+<title>3&nbsp; Model Overview – Final project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./models.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models Overview</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./models.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Overview</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -112,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Evaluating LIME Explanations on Heart Disease Prediction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -124,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./models.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models Overview</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Overview</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -136,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lime_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Explanations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -155,8 +155,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#models-overview" id="toc-models-overview" class="nav-link active" data-scroll-target="#models-overview"><span class="header-section-number">4</span> Models Overview</a></li>
-  <li><a href="#modeling-workflow" id="toc-modeling-workflow" class="nav-link" data-scroll-target="#modeling-workflow"><span class="header-section-number">5</span> Modeling Workflow</a></li>
+  <li><a href="#models-overview" id="toc-models-overview" class="nav-link active" data-scroll-target="#models-overview"><span class="header-section-number">3.1</span> Models Overview</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/models.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -165,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models Overview</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Overview</span></h1>
 </div>
 
 
@@ -182,79 +181,54 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="models-overview" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Models Overview</h1>
-<p>In this section, we provide an overview of the models used to predict heart disease based on clinical features.</p>
-<p>We trained and evaluated <strong>four different models</strong>, each representing a different level of complexity and interpretability:</p>
+<section id="models-overview" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="models-overview"><span class="header-section-number">3.1</span> Models Overview</h2>
+<p>We trained five different models on the heart disease prediction dataset:</p>
+<ul>
+<li><strong>Decision Tree</strong></li>
+<li><strong>Random Forest</strong></li>
+<li><strong>Support Vector Machine (SVM)</strong></li>
+<li><strong>Neural Network</strong></li>
+<li><strong>Logistic Regression</strong></li>
+</ul>
+<p>All models were implemented using the <code>tidymodels</code> framework in R. The dataset was split into 70% training and 30% testing.</p>
+<p>Each model includes preprocessing via <code>recipes</code>, and uses cross-validation or default settings depending on the complexity.<br>
+Model explanations using LIME are further discussed in the next chapter.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 17%">
-<col style="width: 11%">
-<col style="width: 19%">
-<col style="width: 17%">
-<col style="width: 33%">
+<col style="width: 24%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Model</th>
-<th>Engine</th>
-<th>Type</th>
-<th>Interpretability</th>
-<th>Notes</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Decision Tree</td>
-<td><code>rpart</code></td>
-<td>Interpretable</td>
-<td>High</td>
-<td>Baseline tree model</td>
+<td>Logistic Regression</td>
+<td>A linear model for binary classification, interpretable weights</td>
 </tr>
 <tr class="even">
-<td>Random Forest</td>
-<td><code>ranger</code></td>
-<td>Ensemble</td>
-<td>Medium</td>
-<td>Handles interactions, more robust</td>
+<td>Decision Tree</td>
+<td>A tree-based model using <code>rpart</code>, easy to visualize and explain</td>
 </tr>
 <tr class="odd">
-<td>SVM</td>
-<td><code>kernlab</code></td>
-<td>Kernel-based</td>
-<td>Low</td>
-<td>Sensitive to scaling</td>
+<td>Random Forest</td>
+<td>An ensemble of trees, generally improves accuracy</td>
 </tr>
 <tr class="even">
+<td>SVM</td>
+<td>Support Vector Machine with polynomial kernel</td>
+</tr>
+<tr class="odd">
 <td>Neural Network</td>
-<td><code>nnet</code></td>
-<td>Nonlinear</td>
-<td>Low</td>
-<td>Can model complex patterns</td>
+<td>A single-layer neural network using <code>nnet</code></td>
 </tr>
 </tbody>
 </table>
-<p>Each model is evaluated using: - Accuracy - AUC (Area Under the ROC Curve) - Global feature importance (e.g., using <code>vip</code> or built-in model metrics) - LIME local explanations</p>
-<hr>
-</section>
-<section id="modeling-workflow" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Modeling Workflow</h1>
-<p>We use the <a href="https://www.tidymodels.org/"><code>tidymodels</code></a> framework for consistency and reproducibility across models:</p>
-<ul>
-<li>Split data: 70% training / 30% test</li>
-<li>Recipe preprocessing: dummy encoding, normalization, etc.</li>
-<li>10-fold cross-validation for tuning (if applicable)</li>
-<li>Evaluation on test set</li>
-</ul>
-<p>Each model is analyzed in its own chapter:</p>
-<ul>
-<li><a href="./tree_model.html">Decision Tree</a></li>
-<li><a href="rf_model.qmd">Random Forest</a></li>
-<li><a href="svm_model.qmd">SVM</a></li>
-<li><a href="nn_model.qmd">Neural Network</a></li>
-</ul>
-<hr>
-<p>This modular approach allows us to compare different modeling philosophies and investigate how interpretation methods like LIME behave across them.</p>
+<p>These models are compared in terms of predictive performance and explainability in later sections.</p>
 
 
 </section>

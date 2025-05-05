@@ -1,0 +1,95 @@
+---
+title: "Random Forest Model"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidymodels)
+theme_set(theme_minimal())
+
+```
+
+## Random Forest Model
+
+We trained a random forest model using the `ranger` engine in the `tidymodels` framework. This ensemble method aggregates multiple decision trees to improve prediction accuracy and reduce overfitting.
+
+### Data Split and Preprocessing
+```{r}
+source("setup.R")
+```
+
+##Random Forest Specification
+
+```{r}
+rf_spec <- rand_forest(mtry = 4, trees = 500, min_n = 5) %>%
+  set_engine("ranger", importance = "impurity") %>%
+  set_mode("classification")
+
+rf_wf <- workflow() %>%
+  add_model(rf_spec) %>%
+  add_recipe(heart_recipe)
+
+```
+
+##Fit Model
+
+```{r}
+rf_fit <- fit(rf_wf, data = heart_train)
+
+```
+
+##Evaluate on Test Set
+
+```{r}
+rf_preds <- predict(rf_fit, heart_test, type = "prob") %>%
+  bind_cols(predict(rf_fit, heart_test)) %>%
+  bind_cols(heart_test)
+
+metrics <- metric_set(accuracy, roc_auc)
+rf_metrics <- metrics(rf_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
+rf_metrics
+
+```
+
+##Global Feature Importance
+
+```{r}
+# Extract importance
+rf_fit_raw <- extract_fit_parsnip(rf_fit)$fit
+vip_rf <- as.data.frame(rf_fit_raw$variable.importance) %>%
+  rownames_to_column("Feature") %>%
+  rename(Importance = `rf_fit_raw$variable.importance`) %>%
+  arrange(desc(Importance)) %>%
+  slice_head(n = 5)
+
+vip_rf
+
+# Plot
+vip_rf %>%
+  ggplot(aes(x = fct_reorder(Feature, Importance), y = Importance)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(title = "Top 5 Feature Importances (Random Forest)", x = NULL, y = "Importance")
+
+```
+We observe that NumMajorVessels and Oldpeak are consistently ranked as top features, highlighting their predictive importance for heart disease. These will be compared with LIME explanations in later sections.
+
+## Save for Comparison
+
+```{r}
+# Save top features for LIME comparison
+rf_top_features <- vip_rf$Feature
+saveRDS(rf_top_features, file = "scripts/rf_top_features.rds")
+
+# Save fitted model for LIME explanation
+saveRDS(rf_fit, file = "scripts/rf_fit.rds")
+```
+
+## Summary
+
+This random forest model generally performs better than a single decision tree due to its ensemble nature.  
+It will also be evaluated using LIME to understand its local predictions.

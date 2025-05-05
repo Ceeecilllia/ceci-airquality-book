@@ -1,46 +1,29 @@
 ---
-title: "Models Overview"
+title: "Model Overview"
 format: html
 ---
 
-# Models Overview
+## Models Overview
 
-In this section, we provide an overview of the models used to predict heart disease based on clinical features.
+We trained five different models on the heart disease prediction dataset:
 
-We trained and evaluated **four different models**, each representing a different level of complexity and interpretability:
+- **Decision Tree**
+- **Random Forest**
+- **Support Vector Machine (SVM)**
+- **Neural Network**
+- **Logistic Regression**
 
-| Model             | Engine     | Type               | Interpretability | Notes                           |
-|------------------|------------|--------------------|------------------|----------------------------------|
-| Decision Tree     | `rpart`    | Interpretable      | High             | Baseline tree model              |
-| Random Forest     | `ranger`   | Ensemble           | Medium           | Handles interactions, more robust |
-| SVM               | `kernlab`  | Kernel-based       | Low              | Sensitive to scaling             |
-| Neural Network    | `nnet`     | Nonlinear          | Low              | Can model complex patterns       |
+All models were implemented using the `tidymodels` framework in R. The dataset was split into 70% training and 30% testing. 
 
-Each model is evaluated using:
-- Accuracy
-- AUC (Area Under the ROC Curve)
-- Global feature importance (e.g., using `vip` or built-in model metrics)
-- LIME local explanations
+Each model includes preprocessing via `recipes`, and uses cross-validation or default settings depending on the complexity.  
+Model explanations using LIME are further discussed in the next chapter.
 
----
+| Model                | Description                                                    |
+|---------------------|----------------------------------------------------------------|
+| Logistic Regression | A linear model for binary classification, interpretable weights|
+| Decision Tree       | A tree-based model using `rpart`, easy to visualize and explain|
+| Random Forest       | An ensemble of trees, generally improves accuracy               |
+| SVM                 | Support Vector Machine with polynomial kernel                   |
+| Neural Network      | A single-layer neural network using `nnet`                      |
 
-# Modeling Workflow
-
-We use the [`tidymodels`](https://www.tidymodels.org/) framework for consistency and reproducibility across models:
-
-- Split data: 70% training / 30% test
-- Recipe preprocessing: dummy encoding, normalization, etc.
-- 10-fold cross-validation for tuning (if applicable)
-- Evaluation on test set
-
-Each model is analyzed in its own chapter:
-
-- [Decision Tree](tree_model.qmd)
-- [Random Forest](rf_model.qmd)
-- [SVM](svm_model.qmd)
-- [Neural Network](nn_model.qmd)
-
----
-
-This modular approach allows us to compare different modeling philosophies and investigate how interpretation methods like LIME behave across them.
-
+These models are compared in terms of predictive performance and explainability in later sections.
