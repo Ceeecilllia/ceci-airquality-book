@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Evaluating LIME Explanations on Heart Disease Prediction Models</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Evaluating LIME Explanations on Heart Disease Prediction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -138,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lime_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Explanations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -152,15 +152,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#evaluating-lime-explanations-on-heart-disease-prediction-models" id="toc-evaluating-lime-explanations-on-heart-disease-prediction-models" class="nav-link active" data-scroll-target="#evaluating-lime-explanations-on-heart-disease-prediction-models"><span class="header-section-number">1</span> Evaluating LIME Explanations on Heart Disease Prediction Models</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -196,11 +188,47 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="evaluating-lime-explanations-on-heart-disease-prediction-models" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Evaluating LIME Explanations on Heart Disease Prediction Models</h1>
-<p>In healthcare, it is critical to understand how models make predictions — especially when diagnosing heart disease. LIME (Local Interpretable Model-agnostic Explanations) offers human-friendly explanations even for complex models.</p>
-<p>This project aims to evaluate the reliability of LIME explanations across different model types, including interpretable models such as decision trees and more complex models like neural networks.</p>
-<p>We will answer the following research questions: - Does LIME provide faithful explanations for interpretable models? - How do LIME’s feature rankings compare across different models? - Can LIME be considered trustworthy for medical prediction tasks?</p>
+<section id="overview" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">0.1</span> Overview</h2>
+<p>This project explores interpretable machine learning methods to predict the likelihood of heart disease from patient clinical data.</p>
+<p>We build and compare five models:</p>
+<ul>
+<li>Decision Tree</li>
+<li>Random Forest</li>
+<li>Support Vector Machine (SVM)</li>
+<li>Neural Network</li>
+<li>Logistic Regression</li>
+</ul>
+<p>Our primary goal is <strong>not only to achieve high predictive accuracy</strong>, but also to understand <strong>why</strong> a model makes certain predictions.</p>
+<hr>
+</section>
+<section id="dataset" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="dataset"><span class="header-section-number">0.2</span> Dataset</h2>
+<p>We use the UCI Heart Disease dataset, containing 14 clinical variables (e.g., age, sex, cholesterol, resting blood pressure) and a binary outcome indicating the presence of heart disease, which includes 14 clinical features and a binary target variable:</p>
+<ul>
+<li><code>1</code> = diagnosed with heart disease</li>
+<li><code>0</code> = no heart disease</li>
+</ul>
+<hr>
+</section>
+<section id="methods" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="methods"><span class="header-section-number">0.3</span> Methods</h2>
+<p>We apply the following modeling and explanation techniques:</p>
+<ul>
+<li>🧠 <strong>Model training</strong> via the <code>tidymodels</code> framework</li>
+<li>📈 <strong>Evaluation</strong> using test set Accuracy and AUC</li>
+<li>🔍 <strong>Global feature importance</strong> using built-in tools (e.g., rpart, randomForest, glm)</li>
+<li>🌈 <strong>Local explanations</strong> using <code>lime</code> (for tree-based models) and <code>iml::LocalModel</code> (for logistic regression)</li>
+</ul>
+<hr>
+</section>
+<section id="goals" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="goals"><span class="header-section-number">0.4</span> Goals</h2>
+<ul>
+<li>Compare interpretable vs black-box models</li>
+<li>Evaluate the <strong>stability and reliability</strong> of explanations</li>
+<li>Discuss whether models are <strong>trustworthy for medical use</strong></li>
+</ul>
 
 
 </section>
@@ -643,7 +671,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

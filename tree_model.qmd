@@ -10,41 +10,106 @@ format:
 
 We trained a decision tree model to predict heart disease using the `rpart` engine via the `tidymodels` framework. This model is inherently interpretable and serves as a baseline for comparison.
 
-### Data Split and Preprocessing
-
-```{r}
+```{r setup, include=FALSE}
 library(tidyverse)
-# Load the dataset
-heart <- read_csv("data/heart.csv")
-
-# Rename + factor conversion
-heart <- heart %>%
-  rename(
-    Age = age,
-    Sex = sex,
-    ChestPainType = cp,
-    RestingBP = trestbps,
-    Cholesterol = chol,
-    FastingBS = fbs,
-    RestingECG = restecg,
-    MaxHR = thalach,
-    ExerciseAngina = exang,
-    Oldpeak = oldpeak,
-    Slope = slope,
-    NumMajorVessels = ca,
-    Thalassemia = thal,
-    HeartDisease = target
-  ) %>%
-  mutate(
-    Sex = as.factor(Sex),
-    ChestPainType = as.factor(ChestPainType),
-    RestingECG = as.factor(RestingECG),
-    ExerciseAngina = as.factor(ExerciseAngina),
-    Thalassemia = as.factor(Thalassemia),
-    HeartDisease = as.factor(HeartDisease)
-  )
+library(tidymodels)
+theme_set(theme_minimal())
 
 ```
 
+### Data Split and Preprocessing
+
+```{r}
+# Load unified setup and data
+source("setup.R")
+```
+
+## Preprocessing Recipe
+
+```{r}
+
+heart_recipe <- recipe(HeartDisease ~ ., data = heart_train) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_zv(all_predictors())
+```
+
+## Specify Decision Tree Model
+
+```{r}
+tree_spec <- decision_tree() %>%
+  set_engine("rpart") %>%
+  set_mode("classification")
+
+heart_wf <- workflow() %>%
+  add_model(tree_spec) %>%
+  add_recipe(heart_recipe)
+```
+
+## Train the Model
+
+```{r}
+tree_fit <- fit(heart_wf, data = heart_train)
+```
+
+## Evaluate on Test Set
+
+```{r}
+tree_preds <- predict(tree_fit, heart_test, type = "prob") %>%
+  bind_cols(predict(tree_fit, heart_test)) %>%
+  bind_cols(heart_test)
+
+
+# Metrics
+metrics <- metric_set(accuracy, roc_auc)
+tree_metrics <- metrics(tree_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
+tree_metrics
+```
+## Global Feature Importance
+
+```{r}
+library(rpart)
+
+# Extract variable importance from underlying fitted model
+rpart_fit <- extract_fit_parsnip(tree_fit)$fit
+
+vip <- data.frame(
+  Feature = names(rpart_fit$variable.importance),
+  Importance = as.numeric(rpart_fit$variable.importance)
+) %>%
+  arrange(desc(Importance)) %>%
+  slice_head(n = 5)
+
+
+# Plot top 5 features
+vip %>%
+  ggplot(aes(x = fct_reorder(Feature, Importance), y = Importance)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Top 5 Feature Importances (Decision Tree)", x = NULL, y = "Importance")
+
+```
+
+The top 5 most important features for the decision tree include two Thalassemia categories (Thalassemia_X2 and Thalassemia_X3), followed by the number of major vessels, Oldpeak, and MaxHR. These features drive the majority of the splits in the tree, indicating their strong influence in predicting heart disease.
+
+
+## tree plot
+
+```{r}
+library(rpart.plot)
+rpart.plot(rpart_fit, type = 2, extra = 106)
+
+```
+
+## Save for Comparison
+
+```{r}
+# Save top features for LIME comparison
+tree_top_features <- vip$Feature
+saveRDS(tree_top_features, file = "scripts/tree_top_features.rds")
+
+# Save fitted model for LIME explanation
+saveRDS(tree_fit, file = "scripts/tree_fit.rds")
+
+```
 
 

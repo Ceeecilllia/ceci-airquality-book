@@ -1,0 +1,78 @@
+---
+title: "Support Vector Machine Model"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidymodels)
+theme_set(theme_minimal())
+
+```
+
+
+## Support Vector Machine (SVM) Model
+
+We train a linear SVM model using the `kernlab` engine via `tidymodels`. Although SVMs are less interpretable than decision trees, we can still approximate global feature importance via model coefficients.
+
+### Data Split and Preprocessing
+
+```{r}
+# Load and rename
+source("setup.R")
+```
+##Preprocessing Recipe
+
+```{r}
+svm_recipe <- recipe(HeartDisease ~ ., data = heart_train) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_normalize(all_numeric_predictors())
+
+```
+
+##SVM Model Specification
+
+```{r}
+svm_spec <- svm_poly() %>%
+  set_engine("kernlab", prob.model = TRUE) %>%
+  set_mode("classification")
+
+svm_wf <- workflow() %>%
+  add_model(svm_spec) %>%
+  add_recipe(svm_recipe)
+
+```
+
+## Fit and Evaluate
+
+```{r}
+svm_fit <- workflow() %>%
+  add_model(svm_spec) %>%
+  add_recipe(svm_recipe) %>%
+  fit(data = heart_train)
+
+svm_preds <- predict(svm_fit, heart_test, type = "prob") %>%
+  bind_cols(predict(svm_fit, heart_test)) %>%
+  bind_cols(heart_test)
+
+metrics <- metric_set(accuracy, roc_auc)
+svm_metrics <- metrics(svm_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
+svm_metrics
+
+```
+
+```{r}
+# Since SVM is a black-box model, feature importance is not directly available.
+# We store an empty character vector for consistency in downstream comparison.
+
+svm_top_features <- character(0)
+saveRDS(svm_top_features, file = "scripts/svm_top_features.rds")
+
+```
+
+### Interpretation
+
+Support vector machines do not produce interpretable coefficients or built-in variable importance scores. Therefore, we omit global feature importance here and instead rely on LIME for local explanations in a later section.
+

@@ -1,0 +1,109 @@
+---
+title: "Logistic Regression Model"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+## Logistic Regression
+
+We trained a logistic regression model using the `tidymodels` framework. This interpretable model provides a performance baseline and supports local explanation using the `iml` package.
+
+```{r}
+source("setup.R")
+```
+
+### Model Setup and Workflow
+
+```{r}
+library(tidymodels)
+library(iml)
+library(tidyverse)
+
+# Model specification
+logistic_spec <- logistic_reg() %>%
+  set_engine("glm") %>%
+  set_mode("classification")
+
+# Recipe for preprocessing
+log_recipe <- recipe(HeartDisease ~ ., data = heart_train) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_zv(all_predictors())
+
+# Combine into workflow
+logistic_wf <- workflow() %>%
+  add_model(logistic_spec) %>%
+  add_recipe(log_recipe)
+
+# Fit the model
+logistic_fit <- fit(logistic_wf, data = heart_train)
+```
+
+##Evaluation on Test Set
+
+
+```{r}
+log_preds <- predict(logistic_fit, heart_test, type = "prob") %>%
+  bind_cols(predict(logistic_fit, heart_test)) %>%
+  bind_cols(heart_test)
+
+metrics <- metric_set(accuracy, roc_auc)
+
+log_metrics <- metrics(
+  data = log_preds,
+  truth = HeartDisease,
+  estimate = .pred_class,
+  .pred_1
+)
+
+log_metrics
+
+```
+
+###Local Explanation with iml
+```{r}
+# Prepare training data
+prep_log <- prep(log_recipe)
+train_baked_log <- bake(prep_log, new_data = NULL)
+
+# Extract raw glm model
+log_raw <- extract_fit_parsnip(logistic_fit)$fit
+
+# Define iml predictor
+predictor_log <- Predictor$new(
+  model = log_raw,
+  data = train_baked_log %>% select(-HeartDisease),
+  y = train_baked_log$HeartDisease,
+  type = "response"
+)
+
+```
+
+###Example: Explain one prediction
+
+```{r}
+# Choose one test sample (and preprocess it)
+sample_log <- bake(prep_log, new_data = sample_cases[1, ]) %>%
+  select(-HeartDisease)
+
+# Generate local explanation
+local_log <- LocalModel$new(predictor_log, x.interest = sample_log)
+plot(local_log)
+
+```
+
+Summary
+Logistic regression is interpretable by design and performs competitively.
+
+We used iml::LocalModel to simulate LIME-style explanation for a single prediction.
+
+This allows comparison with post-hoc explanations of black-box models like random forest and neural networks.
+
+```{r}
+# Save fitted model for explanation via IML
+saveRDS(logistic_fit, file = "scripts/logistic_fit.rds")
+
+```
+
+

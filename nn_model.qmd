@@ -1,0 +1,61 @@
+---
+title: "Neural Network Model"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+## Neural Network Model
+
+We fit a single-layer neural network using the `nnet` engine in the `tidymodels` framework.  
+This model is non-linear and typically more expressive, but also harder to interpret.
+
+```{r}
+# Load project setup
+source("setup.R")
+```
+
+## Model Specification and Training
+
+```{r}
+library(nnet)
+
+nn_spec <- mlp(hidden_units = 5, penalty = 0.01, epochs = 100) %>%
+  set_engine("nnet") %>%
+  set_mode("classification")
+
+nn_wf <- workflow() %>%
+  add_model(nn_spec) %>%
+  add_recipe(heart_recipe)
+
+nn_fit <- fit(nn_wf, data = heart_train)
+```
+
+## Evaluation
+
+```{r}
+nn_preds <- predict(nn_fit, heart_test, type = "prob") %>%
+  bind_cols(predict(nn_fit, heart_test)) %>%
+  bind_cols(heart_test)
+
+metrics <- metric_set(accuracy, roc_auc)
+nn_metrics <- metrics(nn_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
+nn_metrics
+```
+
+## Global Feature Importance
+
+```{r}
+# Due to the black-box nature of neural networks, traditional feature importance is not available.
+# We store an empty list for downstream comparison with LIME or global interpretability methods.
+
+nn_top_features <- character(0)
+saveRDS(nn_top_features, file = "scripts/nn_top_features.rds")
+```
+
+
+## Summary
+
+This neural network serves as a flexible model for prediction, though it lacks built-in interpretability.  
+We will analyze its behavior using local explanation techniques if compatible.

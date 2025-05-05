@@ -1,10 +1,51 @@
-# Evaluating LIME Explanations on Heart Disease Prediction Models
+---
+title: "Heart Disease Prediction and Explanation"
+format:
+  html:
+    toc: false
+    code-fold: false
+---
 
-In healthcare, it is critical to understand how models make predictions — especially when diagnosing heart disease. LIME (Local Interpretable Model-agnostic Explanations) offers human-friendly explanations even for complex models.
+## Overview
 
-This project aims to evaluate the reliability of LIME explanations across different model types, including interpretable models such as decision trees and more complex models like neural networks.
+This project explores interpretable machine learning methods to predict the likelihood of heart disease from patient clinical data.
 
-We will answer the following research questions:
-- Does LIME provide faithful explanations for interpretable models?
-- How do LIME's feature rankings compare across different models?
-- Can LIME be considered trustworthy for medical prediction tasks?
+We build and compare five models:
+
+- Decision Tree
+- Random Forest
+- Support Vector Machine (SVM)
+- Neural Network
+- Logistic Regression
+
+Our primary goal is **not only to achieve high predictive accuracy**, but also to understand **why** a model makes certain predictions.
+
+---
+
+## Dataset
+
+We use the UCI Heart Disease dataset, containing 14 clinical variables (e.g., age, sex, cholesterol, resting blood pressure) and a binary outcome indicating the presence of heart disease, which includes 14 clinical features and a binary target variable:
+
+- `1` = diagnosed with heart disease
+- `0` = no heart disease
+
+---
+
+## Methods
+
+We apply the following modeling and explanation techniques:
+
+- 🧠 **Model training** via the `tidymodels` framework
+- 📈 **Evaluation** using test set Accuracy and AUC
+- 🔍 **Global feature importance** using built-in tools (e.g., rpart, randomForest, glm)
+- 🌈 **Local explanations** using `lime` (for tree-based models) and `iml::LocalModel` (for logistic regression)
+
+---
+
+## Goals
+
+- Compare interpretable vs black-box models
+- Evaluate the **stability and reliability** of explanations
+- Discuss whether models are **trustworthy for medical use**
+
+

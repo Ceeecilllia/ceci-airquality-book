@@ -114,3 +114,59 @@ Likewise, chest pain types 1 and 2 are more common in patients with heart diseas
 
 These patterns will guide our model-building decisions and feature interpretation strategies in the next sections.
 
+## Data Structure
+
+We first inspect the structure of the dataset:
+
+```{r}
+glimpse(heart)
+```
+
+## Missing Value Check
+
+There are no missing values in this dataset:
+
+```{r}
+colSums(is.na(heart))
+```
+
+## Data Loading and Preparation Code
+
+The dataset was loaded and renamed as follows:
+
+```{r}
+heart <- read_csv("data/heart.csv") %>%
+  rename(
+    Age = age,
+    Sex = sex,
+    ChestPainType = cp,
+    RestingBP = trestbps,
+    Cholesterol = chol,
+    FastingBS = fbs,
+    RestingECG = restecg,
+    MaxHR = thalach,
+    ExerciseAngina = exang,
+    Oldpeak = oldpeak,
+    Slope = slope,
+    NumMajorVessels = ca,
+    Thalassemia = thal,
+    HeartDisease = target
+  ) %>%
+  mutate(
+    Sex = as.factor(Sex),
+    ChestPainType = as.factor(ChestPainType),
+    RestingECG = as.factor(RestingECG),
+    ExerciseAngina = as.factor(ExerciseAngina),
+    Thalassemia = as.factor(Thalassemia),
+    HeartDisease = as.factor(HeartDisease)
+  )
+```
+
+## Outcome Variable Distribution
+
+```{r}
+heart %>%
+  ggplot(aes(x = HeartDisease)) +
+  geom_bar(fill = "tomato") +
+  labs(title = "Heart Disease Diagnosis", x = "Heart Disease (1 = Yes)", y = "Count")
+```
