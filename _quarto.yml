@@ -6,11 +6,12 @@ execute:
   echo: true
 
 book:
-  title: "Final project"
+  title: "Final Heartlime Book"
+  subtitle: "Model Interpretation with LIME and IML"
   author:
-    - Jiangnan Wan(jw4638)
+    - Jiangnan Wan (jw4638)
     - Jinglei Lou (jl6954)
-  repo-url: https://github.com/Ceeecilllia/ceci-airquality-book
+  repo-url: https://github.com/Ceeecilllia/final-heartlime-book
   date: today
   page-footer:
     right: |
@@ -21,6 +22,10 @@ book:
     - data.qmd
     - models.qmd
     - tree_model.qmd
+    - rf_model.qmd
+    - svm_model.qmd
+    - nn_model.qmd
+    - logistic_model.qmd
     - lime_analysis.qmd
     - conclusion.qmd
 
@@ -28,5 +33,3 @@ format:
   html:
     theme: cosmo
     code-fold: true
-
-
