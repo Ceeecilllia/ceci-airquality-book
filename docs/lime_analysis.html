@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; LIME Explanations – Final project</title>
+<title>9&nbsp; LIME Explanations – Final Heartlime Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./conclusion.html" rel="next">
-<link href="./tree_model.html" rel="prev">
+<link href="./logistic_model.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./lime_analysis.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Explanations</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./lime_analysis.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LIME Explanations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -130,9 +130,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Final project</a> 
+      <a href="./">Final Heartlime Book</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/Ceeecilllia/ceci-airquality-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/Ceeecilllia/final-heartlime-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -169,14 +169,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./rf_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Forest Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./svm_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Support Vector Machine Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nn_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Neural Network Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Logistic Regression Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./lime_analysis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Explanations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LIME Explanations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
     </ul>
@@ -189,21 +213,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lime-explanations" id="toc-lime-explanations" class="nav-link active" data-scroll-target="#lime-explanations"><span class="header-section-number">5.1</span> LIME Explanations</a>
+  <li><a href="#lime-explanations" id="toc-lime-explanations" class="nav-link active" data-scroll-target="#lime-explanations"><span class="header-section-number">9.1</span> LIME Explanations</a>
   <ul class="collapse">
-  <li><a href="#decision-tree" id="toc-decision-tree" class="nav-link" data-scroll-target="#decision-tree"><span class="header-section-number">5.1.1</span> 1. Decision Tree</a></li>
-  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest"><span class="header-section-number">5.1.2</span> 2. Random Forest</a></li>
-  <li><a href="#note-on-other-models" id="toc-note-on-other-models" class="nav-link" data-scroll-target="#note-on-other-models"><span class="header-section-number">5.1.3</span> Note on Other Models</a></li>
+  <li><a href="#decision-tree" id="toc-decision-tree" class="nav-link" data-scroll-target="#decision-tree"><span class="header-section-number">9.1.1</span> 1. Decision Tree</a></li>
+  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest"><span class="header-section-number">9.1.2</span> 2. Random Forest</a></li>
+  <li><a href="#note-on-other-models" id="toc-note-on-other-models" class="nav-link" data-scroll-target="#note-on-other-models"><span class="header-section-number">9.1.3</span> Note on Other Models</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/lime_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/edit/main/lime_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LIME Explanations</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LIME Explanations</span></h1>
 </div>
 
 
@@ -220,8 +244,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="lime-explanations" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="lime-explanations"><span class="header-section-number">5.1</span> LIME Explanations</h2>
+<section id="lime-explanations" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="lime-explanations"><span class="header-section-number">9.1</span> LIME Explanations</h2>
 <p>This section provides local explanations for individual predictions using the <code>lime</code> package. Models that support LIME include <strong>Decision Tree</strong> and <strong>Random Forest</strong>. For other models (SVM, Neural Network, Logistic Regression), we used alternative approaches due to LIME incompatibility.</p>
 <div class="cell">
 <details class="code-fold">
@@ -303,8 +327,8 @@ dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
 </details>
 </div>
 <hr>
-<section id="decision-tree" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="decision-tree"><span class="header-section-number">5.1.1</span> 1. Decision Tree</h3>
+<section id="decision-tree" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="decision-tree"><span class="header-section-number">9.1.1</span> 1. Decision Tree</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -367,8 +391,8 @@ binning. Using standard binning instead.</code></pre>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>expl_tree <span class="ot">&lt;-</span> <span class="fu">explain</span>(sample_baked_tree, explainer_tree, <span class="at">n_features =</span> <span class="dv">5</span>, <span class="at">labels =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="average-lime-feature-contributions" class="level4" data-number="5.1.1.1">
-<h4 data-number="5.1.1.1" class="anchored" data-anchor-id="average-lime-feature-contributions"><span class="header-section-number">5.1.1.1</span> Average LIME Feature Contributions</h4>
+<section id="average-lime-feature-contributions" class="level4" data-number="9.1.1.1">
+<h4 data-number="9.1.1.1" class="anchored" data-anchor-id="average-lime-feature-contributions"><span class="header-section-number">9.1.1.1</span> Average LIME Feature Contributions</h4>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -392,8 +416,8 @@ binning. Using standard binning instead.</code></pre>
 <hr>
 </section>
 </section>
-<section id="random-forest" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">5.1.2</span> 2. Random Forest</h3>
+<section id="random-forest" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">9.1.2</span> 2. Random Forest</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -456,8 +480,8 @@ binning. Using standard binning instead.</code></pre>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>expl_rf <span class="ot">&lt;-</span> <span class="fu">explain</span>(sample_baked_rf, explainer_rf, <span class="at">n_features =</span> <span class="dv">5</span>, <span class="at">labels =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="average-lime-feature-contributions-1" class="level4" data-number="5.1.2.1">
-<h4 data-number="5.1.2.1" class="anchored" data-anchor-id="average-lime-feature-contributions-1"><span class="header-section-number">5.1.2.1</span> Average LIME Feature Contributions</h4>
+<section id="average-lime-feature-contributions-1" class="level4" data-number="9.1.2.1">
+<h4 data-number="9.1.2.1" class="anchored" data-anchor-id="average-lime-feature-contributions-1"><span class="header-section-number">9.1.2.1</span> Average LIME Feature Contributions</h4>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -481,8 +505,8 @@ binning. Using standard binning instead.</code></pre>
 <hr>
 </section>
 </section>
-<section id="note-on-other-models" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="note-on-other-models"><span class="header-section-number">5.1.3</span> Note on Other Models</h3>
+<section id="note-on-other-models" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="note-on-other-models"><span class="header-section-number">9.1.3</span> Note on Other Models</h3>
 <ul>
 <li>SVM and Neural Network were <strong>not compatible</strong> with <code>lime</code> due to limitations in the package.</li>
 <li>Logistic Regression was interpreted using the <code>iml::LocalModel</code> method (see <code>logistic_model.qmd</code> for details).</li>
@@ -915,13 +939,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./tree_model.html" class="pagination-link" aria-label="Decision Tree Model">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Decision Tree Model</span></span>
+      <a href="./logistic_model.html" class="pagination-link" aria-label="Logistic Regression Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Logistic Regression Model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./conclusion.html" class="pagination-link" aria-label="Conclusion">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusion</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -933,7 +957,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/edit/main/lime_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/ceci-airquality-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/edit/main/lime_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
