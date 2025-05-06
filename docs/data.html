@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Data – Final Heartlime Book</title>
+<title>Heart Disease Prediction and Explanation - 2&nbsp; Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -112,13 +112,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -130,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Final Heartlime Book</a> 
+      <a href="./">Heart Disease Prediction and Explanation</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Ceeecilllia/final-heartlime-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -213,19 +213,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">3</span> Data</a></li>
-  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description"><span class="header-section-number">4</span> Dataset Description</a></li>
-  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">5</span> Preprocessing</a>
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link active" data-scroll-target="#dataset-description"><span class="header-section-number">2.1</span> Dataset Description</a></li>
+  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">2.2</span> Preprocessing</a>
   <ul class="collapse">
-  <li><a href="#data-loading-and-preprocessing" id="toc-data-loading-and-preprocessing" class="nav-link" data-scroll-target="#data-loading-and-preprocessing"><span class="header-section-number">5.1</span> Data Loading and Preprocessing</a></li>
+  <li><a href="#data-loading-and-preprocessing" id="toc-data-loading-and-preprocessing" class="nav-link" data-scroll-target="#data-loading-and-preprocessing"><span class="header-section-number">2.2.1</span> Data Loading and Preprocessing</a></li>
   </ul></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">6</span> Exploratory Data Analysis</a>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">2.3</span> Exploratory Data Analysis</a>
   <ul class="collapse">
-  <li><a href="#age-distribution-by-heart-disease-status" id="toc-age-distribution-by-heart-disease-status" class="nav-link" data-scroll-target="#age-distribution-by-heart-disease-status"><span class="header-section-number">6.1</span> Age Distribution by Heart Disease Status</a></li>
-  <li><a href="#data-structure" id="toc-data-structure" class="nav-link" data-scroll-target="#data-structure"><span class="header-section-number">6.2</span> Data Structure</a></li>
-  <li><a href="#missing-value-check" id="toc-missing-value-check" class="nav-link" data-scroll-target="#missing-value-check"><span class="header-section-number">6.3</span> Missing Value Check</a></li>
-  <li><a href="#data-loading-and-preparation-code" id="toc-data-loading-and-preparation-code" class="nav-link" data-scroll-target="#data-loading-and-preparation-code"><span class="header-section-number">6.4</span> Data Loading and Preparation Code</a></li>
-  <li><a href="#outcome-variable-distribution" id="toc-outcome-variable-distribution" class="nav-link" data-scroll-target="#outcome-variable-distribution"><span class="header-section-number">6.5</span> Outcome Variable Distribution</a></li>
+  <li><a href="#age-distribution-by-heart-disease-status" id="toc-age-distribution-by-heart-disease-status" class="nav-link" data-scroll-target="#age-distribution-by-heart-disease-status"><span class="header-section-number">2.3.1</span> Age Distribution by Heart Disease Status</a></li>
+  <li><a href="#data-structure" id="toc-data-structure" class="nav-link" data-scroll-target="#data-structure"><span class="header-section-number">2.3.2</span> Data Structure</a></li>
+  <li><a href="#missing-value-check" id="toc-missing-value-check" class="nav-link" data-scroll-target="#missing-value-check"><span class="header-section-number">2.3.3</span> Missing Value Check</a></li>
+  <li><a href="#data-loading-and-preparation-code" id="toc-data-loading-and-preparation-code" class="nav-link" data-scroll-target="#data-loading-and-preparation-code"><span class="header-section-number">2.3.4</span> Data Loading and Preparation Code</a></li>
+  <li><a href="#outcome-variable-distribution" id="toc-outcome-variable-distribution" class="nav-link" data-scroll-target="#outcome-variable-distribution"><span class="header-section-number">2.3.5</span> Outcome Variable Distribution</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/edit/main/data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -252,12 +251,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="data" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Data</h1>
 <p>In this section, we provide an overview of the dataset used in our heart disease prediction task, along with key preprocessing and exploratory analysis steps.</p>
-</section>
-<section id="dataset-description" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Dataset Description</h1>
+<section id="dataset-description" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="dataset-description"><span class="header-section-number">2.1</span> Dataset Description</h2>
 <p>We use the <strong>Heart Disease Dataset</strong>, which contains <code>n = 1025</code> observations and <code>p = 14</code> features, including:</p>
 <ul>
 <li><code>age</code>: Age in years<br>
@@ -294,18 +290,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <hr>
 </section>
-<section id="preprocessing" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Preprocessing</h1>
+<section id="preprocessing" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="preprocessing"><span class="header-section-number">2.2</span> Preprocessing</h2>
 <p>We perform the following preprocessing steps:</p>
 <ul>
 <li>Convert categorical variables to factors (<code>sex</code>, <code>cp</code>, <code>fbs</code>, <code>restecg</code>, <code>exang</code>, <code>slope</code>, <code>ca</code>, <code>thal</code>)</li>
 <li>Rename <code>target</code> to <code>HeartDisease</code> for clarity</li>
 <li>Check for missing values</li>
-<li>Split into 70% training / 30% testing using <code>initial_split()</code> from <strong>rsample</strong></li>
+<li>Split into 70% training / 30% testing using <code>initial_split()</code> from <strong>rsample</strong>.</li>
 </ul>
 <hr>
-<section id="data-loading-and-preprocessing" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="data-loading-and-preprocessing"><span class="header-section-number">5.1</span> Data Loading and Preprocessing</h2>
+<section id="data-loading-and-preprocessing" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="data-loading-and-preprocessing"><span class="header-section-number">2.2.1</span> Data Loading and Preprocessing</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -369,10 +365,11 @@ dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
 </div>
 </section>
 </section>
-<section id="exploratory-data-analysis" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Exploratory Data Analysis</h1>
-<section id="age-distribution-by-heart-disease-status" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="age-distribution-by-heart-disease-status"><span class="header-section-number">6.1</span> Age Distribution by Heart Disease Status</h2>
+<section id="exploratory-data-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">2.3</span> Exploratory Data Analysis</h2>
+<p>We conducted exploratory analysis to understand the relationships between clinical features and heart disease outcomes.</p>
+<section id="age-distribution-by-heart-disease-status" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="age-distribution-by-heart-disease-status"><span class="header-section-number">2.3.1</span> Age Distribution by Heart Disease Status</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -445,12 +442,12 @@ $ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
 </div>
 </div>
 <p>As shown, patients with heart disease (label 1) tend to be older.<br>
-The highest heart disease rate occurs around ages 55 to 65.</p>
+The highest heart disease rate occurs around ages 55 to 65 indicating that age is a strong predictive feature in the diagnosis of heart disease.</p>
 <p>Likewise, chest pain types 1 and 2 are more common in patients with heart disease, suggesting these features could be predictive.</p>
 <p>These patterns will guide our model-building decisions and feature interpretation strategies in the next sections.</p>
 </section>
-<section id="data-structure" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="data-structure"><span class="header-section-number">6.2</span> Data Structure</h2>
+<section id="data-structure" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="data-structure"><span class="header-section-number">2.3.2</span> Data Structure</h3>
 <p>We first inspect the structure of the dataset:</p>
 <div class="cell">
 <details class="code-fold">
@@ -476,10 +473,11 @@ $ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2,
 $ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …</code></pre>
 </div>
 </div>
+<p>The dataset consists of 1,025 rows and 14 columns. Variables include both continuous features (e.g., Age, Cholesterol, RestingBP) and categorical features (e.g., ChestPainType, Sex, Thalassemia). All variables appear to be properly structured for analysis.</p>
 </section>
-<section id="missing-value-check" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="missing-value-check"><span class="header-section-number">6.3</span> Missing Value Check</h2>
-<p>There are no missing values in this dataset:</p>
+<section id="missing-value-check" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="missing-value-check"><span class="header-section-number">2.3.3</span> Missing Value Check</h3>
+<p>There are no missing values in the dataset. Each feature has complete observations across all 1,025 entries.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -495,8 +493,8 @@ $ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
 </div>
 </div>
 </section>
-<section id="data-loading-and-preparation-code" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="data-loading-and-preparation-code"><span class="header-section-number">6.4</span> Data Loading and Preparation Code</h2>
+<section id="data-loading-and-preparation-code" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="data-loading-and-preparation-code"><span class="header-section-number">2.3.4</span> Data Loading and Preparation Code</h3>
 <p>The dataset was loaded and renamed as follows:</p>
 <div class="cell">
 <details class="code-fold">
@@ -538,8 +536,8 @@ dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
 </div>
 </div>
 </section>
-<section id="outcome-variable-distribution" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="outcome-variable-distribution"><span class="header-section-number">6.5</span> Outcome Variable Distribution</h2>
+<section id="outcome-variable-distribution" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="outcome-variable-distribution"><span class="header-section-number">2.3.5</span> Outcome Variable Distribution</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -556,6 +554,7 @@ dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
 </div>
 </div>
 </div>
+<p>The target variable HeartDisease is fairly balanced: about half the patients have heart disease (1), and the other half do not (0). This balance suggests we can apply standard classification models without significant concern for class imbalance.</p>
 
 
 </section>
@@ -597,7 +596,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -629,29 +639,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -659,7 +647,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -984,8 +972,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Heart Disease Prediction and Explanation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></span>
+      <a href="./index.html" class="pagination-link" aria-label="Index">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

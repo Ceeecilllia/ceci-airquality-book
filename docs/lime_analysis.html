@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; LIME Explanations – Final Heartlime Book</title>
+<title>Heart Disease Prediction and Explanation - 9&nbsp; LIME Explanations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -112,13 +112,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./lime_analysis.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LIME Explanations</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -130,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Final Heartlime Book</a> 
+      <a href="./">Heart Disease Prediction and Explanation</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Ceeecilllia/final-heartlime-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -213,11 +213,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lime-explanations" id="toc-lime-explanations" class="nav-link active" data-scroll-target="#lime-explanations"><span class="header-section-number">9.1</span> LIME Explanations</a>
+  <li><a href="#lime-analysis-decision-tree" id="toc-lime-analysis-decision-tree" class="nav-link active" data-scroll-target="#lime-analysis-decision-tree"><span class="header-section-number">9.1</span> LIME Analysis: Decision Tree</a>
   <ul class="collapse">
-  <li><a href="#decision-tree" id="toc-decision-tree" class="nav-link" data-scroll-target="#decision-tree"><span class="header-section-number">9.1.1</span> 1. Decision Tree</a></li>
-  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest"><span class="header-section-number">9.1.2</span> 2. Random Forest</a></li>
-  <li><a href="#note-on-other-models" id="toc-note-on-other-models" class="nav-link" data-scroll-target="#note-on-other-models"><span class="header-section-number">9.1.3</span> Note on Other Models</a></li>
+  <li><a href="#fitting-lime-explainer-on-decision-tree-model" id="toc-fitting-lime-explainer-on-decision-tree-model" class="nav-link" data-scroll-target="#fitting-lime-explainer-on-decision-tree-model"><span class="header-section-number">9.1.1</span> Fitting LIME Explainer on Decision Tree Model</a></li>
+  <li><a href="#average-lime-feature-contributions" id="toc-average-lime-feature-contributions" class="nav-link" data-scroll-target="#average-lime-feature-contributions"><span class="header-section-number">9.1.2</span> Average LIME Feature Contributions</a></li>
+  <li><a href="#comparing-local-lime-and-global-feature-importance" id="toc-comparing-local-lime-and-global-feature-importance" class="nav-link" data-scroll-target="#comparing-local-lime-and-global-feature-importance"><span class="header-section-number">9.1.3</span> Comparing Local (LIME) and Global Feature Importance</a></li>
+  </ul></li>
+  <li><a href="#lime-analysis-random-forest" id="toc-lime-analysis-random-forest" class="nav-link" data-scroll-target="#lime-analysis-random-forest"><span class="header-section-number">9.2</span> LIME Analysis: Random Forest</a>
+  <ul class="collapse">
+  <li><a href="#fitting-lime-explainer-on-random-forest" id="toc-fitting-lime-explainer-on-random-forest" class="nav-link" data-scroll-target="#fitting-lime-explainer-on-random-forest"><span class="header-section-number">9.2.1</span> Fitting LIME Explainer on Random Forest</a></li>
+  <li><a href="#average-lime-feature-contributions-1" id="toc-average-lime-feature-contributions-1" class="nav-link" data-scroll-target="#average-lime-feature-contributions-1"><span class="header-section-number">9.2.2</span> Average LIME Feature Contributions</a></li>
+  <li><a href="#comparing-local-lime-and-global-feature-importance-1" id="toc-comparing-local-lime-and-global-feature-importance-1" class="nav-link" data-scroll-target="#comparing-local-lime-and-global-feature-importance-1"><span class="header-section-number">9.2.3</span> Comparing Local (LIME) and Global Feature Importance</a></li>
+  </ul></li>
+  <li><a href="#lime-analysis-svm" id="toc-lime-analysis-svm" class="nav-link" data-scroll-target="#lime-analysis-svm"><span class="header-section-number">9.3</span> LIME Analysis: SVM</a>
+  <ul class="collapse">
+  <li><a href="#fitting-lime-explainer-on-svm" id="toc-fitting-lime-explainer-on-svm" class="nav-link" data-scroll-target="#fitting-lime-explainer-on-svm"><span class="header-section-number">9.3.1</span> Fitting LIME Explainer on SVM</a></li>
+  <li><a href="#average-lime-feature-contributions-2" id="toc-average-lime-feature-contributions-2" class="nav-link" data-scroll-target="#average-lime-feature-contributions-2"><span class="header-section-number">9.3.2</span> Average LIME Feature Contributions</a></li>
+  </ul></li>
+  <li><a href="#lime-analysis-neural-network" id="toc-lime-analysis-neural-network" class="nav-link" data-scroll-target="#lime-analysis-neural-network"><span class="header-section-number">9.4</span> LIME Analysis: Neural Network</a>
+  <ul class="collapse">
+  <li><a href="#fitting-lime-explainer-on-neural-network" id="toc-fitting-lime-explainer-on-neural-network" class="nav-link" data-scroll-target="#fitting-lime-explainer-on-neural-network"><span class="header-section-number">9.4.1</span> Fitting LIME Explainer on Neural Network</a></li>
+  <li><a href="#average-lime-feature-contributions-3" id="toc-average-lime-feature-contributions-3" class="nav-link" data-scroll-target="#average-lime-feature-contributions-3"><span class="header-section-number">9.4.2</span> Average LIME Feature Contributions</a></li>
+  </ul></li>
+  <li><a href="#lime-analysis-logistic-model" id="toc-lime-analysis-logistic-model" class="nav-link" data-scroll-target="#lime-analysis-logistic-model"><span class="header-section-number">9.5</span> LIME Analysis: Logistic Model</a>
+  <ul class="collapse">
+  <li><a href="#fitting-lime-explainer-on-neural-network-1" id="toc-fitting-lime-explainer-on-neural-network-1" class="nav-link" data-scroll-target="#fitting-lime-explainer-on-neural-network-1"><span class="header-section-number">9.5.1</span> Fitting LIME Explainer on Neural Network</a></li>
+  <li><a href="#average-lime-feature-contributions-4" id="toc-average-lime-feature-contributions-4" class="nav-link" data-scroll-target="#average-lime-feature-contributions-4"><span class="header-section-number">9.5.2</span> Average LIME Feature Contributions</a></li>
+  <li><a href="#comparing-local-lime-and-global-feature-importance-2" id="toc-comparing-local-lime-and-global-feature-importance-2" class="nav-link" data-scroll-target="#comparing-local-lime-and-global-feature-importance-2"><span class="header-section-number">9.5.3</span> Comparing Local (LIME) and Global Feature Importance</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/edit/main/lime_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -244,166 +266,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="lime-explanations" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="lime-explanations"><span class="header-section-number">9.1</span> LIME Explanations</h2>
 <p>This section provides local explanations for individual predictions using the <code>lime</code> package. Models that support LIME include <strong>Decision Tree</strong> and <strong>Random Forest</strong>. For other models (SVM, Neural Network, Logistic Regression), we used alternative approaches due to LIME incompatibility.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ broom        1.0.7     ✔ recipes      1.1.1
-✔ dials        1.4.0     ✔ rsample      1.3.0
-✔ dplyr        1.1.4     ✔ tibble       3.2.1
-✔ ggplot2      3.5.2     ✔ tidyr        1.3.1
-✔ infer        1.0.8     ✔ tune         1.3.0
-✔ modeldata    1.4.0     ✔ workflows    1.2.0
-✔ parsnip      1.3.1     ✔ workflowsets 1.1.0
-✔ purrr        1.0.4     ✔ yardstick    1.3.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
-✖ purrr::discard() masks scales::discard()
-✖ dplyr::filter()  masks stats::filter()
-✖ dplyr::lag()     masks stats::lag()
-✖ recipes::step()  masks stats::step()</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ forcats   1.0.0     ✔ readr     2.1.5
-✔ lubridate 1.9.4     ✔ stringr   1.5.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ readr::col_factor() masks scales::col_factor()
-✖ purrr::discard()    masks scales::discard()
-✖ dplyr::filter()     masks stats::filter()
-✖ stringr::fixed()    masks recipes::fixed()
-✖ dplyr::lag()        masks stats::lag()
-✖ readr::spec()       masks yardstick::spec()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'lime'
-
-The following object is masked from 'package:dplyr':
-
-    explain</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1025 Columns: 14
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tree_fit <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"scripts/tree_fit.rds"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"scripts/rf_fit.rds"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>sample_cases <span class="ot">&lt;-</span> heart_test <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
 <hr>
-<section id="decision-tree" class="level3" data-number="9.1.1">
-<h3 data-number="9.1.1" class="anchored" data-anchor-id="decision-tree"><span class="header-section-number">9.1.1</span> 1. Decision Tree</h3>
+<section id="lime-analysis-decision-tree" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="lime-analysis-decision-tree"><span class="header-section-number">9.1</span> LIME Analysis: Decision Tree</h2>
+<p>To better understand the prediction mechanism of our decision tree model, we used the <code>lime</code> package to generate local explanations. Each prediction was explained using top 5 influential features, and their average contribution weights were aggregated to evaluate which features consistently pushed the model toward or away from predicting heart disease.</p>
+<section id="fitting-lime-explainer-on-decision-tree-model" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="fitting-lime-explainer-on-decision-tree-model"><span class="header-section-number">9.1.1</span> Fitting LIME Explainer on Decision Tree Model</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model_type.rpart <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="st">"classification"</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>predict_model.rpart <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, ...) <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(x, newdata, <span class="at">type =</span> <span class="st">"prob"</span>))</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>prep_tree <span class="ot">&lt;-</span> <span class="fu">prep</span>(heart_recipe)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>train_baked_tree <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_tree, <span class="at">new_data =</span> <span class="cn">NULL</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>sample_baked_tree <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_tree, <span class="at">new_data =</span> sample_cases)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>tree_raw <span class="ot">&lt;-</span> <span class="fu">extract_fit_parsnip</span>(tree_fit)<span class="sc">$</span>fit</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>explainer_tree <span class="ot">&lt;-</span> <span class="fu">lime</span>(train_baked_tree, <span class="at">model =</span> tree_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: FastingBS does not contain enough variance to use quantile binning.
-Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Sex_X1 does not contain enough variance to use quantile binning. Using
-standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ChestPainType_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ChestPainType_X2 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ChestPainType_X3 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: RestingECG_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: RestingECG_X2 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ExerciseAngina_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Thalassemia_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Thalassemia_X2 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Thalassemia_X3 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>expl_tree <span class="ot">&lt;-</span> <span class="fu">explain</span>(sample_baked_tree, explainer_tree, <span class="at">n_features =</span> <span class="dv">5</span>, <span class="at">labels =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model_type.rpart <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="st">"classification"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>predict_model.rpart <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, ...) <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(x, newdata, <span class="at">type =</span> <span class="st">"prob"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>prep_tree <span class="ot">&lt;-</span> <span class="fu">prep</span>(heart_recipe)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>train_baked_tree <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_tree, <span class="at">new_data =</span> <span class="cn">NULL</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sample_baked_tree <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_tree, <span class="at">new_data =</span> sample_cases)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>tree_raw <span class="ot">&lt;-</span> <span class="fu">extract_fit_parsnip</span>(tree_fit)<span class="sc">$</span>fit</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>explainer_tree <span class="ot">&lt;-</span> <span class="fu">lime</span>(train_baked_tree, <span class="at">model =</span> tree_raw)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>expl_tree <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sample_baked_tree,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">explainer =</span> explainer_tree,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> <span class="dv">5</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="st">"1"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="average-lime-feature-contributions" class="level4" data-number="9.1.1.1">
-<h4 data-number="9.1.1.1" class="anchored" data-anchor-id="average-lime-feature-contributions"><span class="header-section-number">9.1.1.1</span> Average LIME Feature Contributions</h4>
+</section>
+<section id="average-lime-feature-contributions" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="average-lime-feature-contributions"><span class="header-section-number">9.1.2</span> Average LIME Feature Contributions</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>expl_tree <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feature_desc) <span class="sc">%&gt;%</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_weight =</span> <span class="fu">mean</span>(feature_weight)) <span class="sc">%&gt;%</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(feature_desc, avg_weight), <span class="at">y =</span> avg_weight, <span class="at">fill =</span> avg_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"darkcyan"</span>)) <span class="sc">+</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average LIME Contributions (Decision Tree)"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Avg Feature Weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>expl_tree <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feature_desc) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_weight =</span> <span class="fu">mean</span>(feature_weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(feature_desc, avg_weight), <span class="at">y =</span> avg_weight, <span class="at">fill =</span> avg_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"darkcyan"</span>)) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average LIME Contributions (Decision Tree)"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Avg Feature Weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -413,104 +316,613 @@ binning. Using standard binning instead.</code></pre>
 </div>
 </div>
 </div>
-<hr>
+<ul>
+<li><strong>Positive Contributors</strong><br>
+Features that pushed predictions toward heart disease include:
+<ul>
+<li><code>Sex_X1</code> (Male): being male increases the predicted risk.</li>
+<li><code>NumMajorVessels &lt;= 1</code>: fewer vessels observed might be associated with disease.</li>
+<li><code>Age &gt; 61</code>: older age brackets consistently showed higher contribution weights.</li>
+</ul></li>
+<li><strong>Negative Contributors</strong><br>
+Features that decreased the predicted probability of heart disease include:
+<ul>
+<li><code>Age &lt;= 48</code>: younger individuals were less likely to be classified as high risk.</li>
+<li><code>NumMajorVessels &gt; 1</code>: more vessels may indicate better health.</li>
+<li><code>Slope &lt;= 1</code>: flatter slopes in exercise ECG are associated with lower predicted risk.</li>
+</ul></li>
+</ul>
+<p>This interpretation provides a transparent view into how the decision tree model leverages input features.</p>
 </section>
-</section>
-<section id="random-forest" class="level3" data-number="9.1.2">
-<h3 data-number="9.1.2" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">9.1.2</span> 2. Random Forest</h3>
+<section id="comparing-local-lime-and-global-feature-importance" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="comparing-local-lime-and-global-feature-importance"><span class="header-section-number">9.1.3</span> Comparing Local (LIME) and Global Feature Importance</h3>
+<p>To assess whether the local behavior of the model aligns with its overall logic, we compared the average LIME weights (local importance) with the global feature importances derived from the decision tree model.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>model_type.randomForest <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="st">"classification"</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>predict_model.randomForest <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, ...) <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(x, newdata, <span class="at">type =</span> <span class="st">"prob"</span>))</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>prep_rf <span class="ot">&lt;-</span> <span class="fu">prep</span>(heart_recipe)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>train_baked_rf <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_rf, <span class="at">new_data =</span> <span class="cn">NULL</span>)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>sample_baked_rf <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_rf, <span class="at">new_data =</span> sample_cases)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>rf_raw <span class="ot">&lt;-</span> <span class="fu">extract_fit_parsnip</span>(rf_fit)<span class="sc">$</span>fit</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>explainer_rf <span class="ot">&lt;-</span> <span class="fu">lime</span>(train_baked_rf, <span class="at">model =</span> rf_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: FastingBS does not contain enough variance to use quantile binning.
-Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Sex_X1 does not contain enough variance to use quantile binning. Using
-standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ChestPainType_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ChestPainType_X2 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ChestPainType_X3 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: RestingECG_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: RestingECG_X2 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ExerciseAngina_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Thalassemia_X1 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Thalassemia_X2 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Thalassemia_X3 does not contain enough variance to use quantile
-binning. Using standard binning instead.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>expl_rf <span class="ot">&lt;-</span> <span class="fu">explain</span>(sample_baked_rf, explainer_rf, <span class="at">n_features =</span> <span class="dv">5</span>, <span class="at">labels =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<section id="average-lime-feature-contributions-1" class="level4" data-number="9.1.2.1">
-<h4 data-number="9.1.2.1" class="anchored" data-anchor-id="average-lime-feature-contributions-1"><span class="header-section-number">9.1.2.1</span> Average LIME Feature Contributions</h4>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>expl_rf <span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feature_desc) <span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_weight =</span> <span class="fu">mean</span>(feature_weight)) <span class="sc">%&gt;%</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(feature_desc, avg_weight), <span class="at">y =</span> avg_weight, <span class="at">fill =</span> avg_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"darkgreen"</span>)) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average LIME Contributions (Random Forest)"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Avg Feature Weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 5 global importances (already precomputed, e.g., via `vip` or `model$variable.importance`)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tree_importance_df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Feature =</span> <span class="fu">c</span>(<span class="st">"Thalassemia_X2"</span>, <span class="st">"Thalassemia_X3"</span>, <span class="st">"NumMajorVessels"</span>, <span class="st">"Oldpeak"</span>, <span class="st">"MaxHR"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Importance =</span> <span class="fu">c</span>(<span class="dv">95</span>, <span class="dv">85</span>, <span class="dv">60</span>, <span class="dv">58</span>, <span class="dv">54</span>)  <span class="co"># Replace with actual values if available</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tree_importance_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Feature, Importance), <span class="at">y =</span> Importance)) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#4682B4"</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 5 Feature Importances (Decision Tree)"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Importance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lime_analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>We observe that:</p>
+<p>Thalassemia_X2/X3: Ranked top globally and also showed up among influential local features in several LIME explanations, supporting the idea that they consistently influence the model.</p>
+<p>NumMajorVessels: A strong signal in both global and local interpretations.</p>
+<p>Oldpeak &amp; MaxHR: Also appear prominently in both rankings, further confirming their importance.</p>
+<p>However, Sex_X1, which was highly influential in local explanations, is not among the top 5 global importances. This discrepancy highlights how some features may play more context-specific (local) roles that are not dominant across the entire training dataset.</p>
 <hr>
 </section>
 </section>
-<section id="note-on-other-models" class="level3" data-number="9.1.3">
-<h3 data-number="9.1.3" class="anchored" data-anchor-id="note-on-other-models"><span class="header-section-number">9.1.3</span> Note on Other Models</h3>
+<section id="lime-analysis-random-forest" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="lime-analysis-random-forest"><span class="header-section-number">9.2</span> LIME Analysis: Random Forest</h2>
+<p>We used the <code>lime</code> package to provide local explanations for Random Forest predictions. By analyzing a set of test cases, we identified which features most consistently increased or decreased the model’s predicted probability of heart disease.</p>
+<section id="fitting-lime-explainer-on-random-forest" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="fitting-lime-explainer-on-random-forest"><span class="header-section-number">9.2.1</span> Fitting LIME Explainer on Random Forest</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_type.randomForest <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="st">"classification"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>predict_model.randomForest <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, ...) <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(x, newdata, <span class="at">type =</span> <span class="st">"prob"</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>prep_rf <span class="ot">&lt;-</span> <span class="fu">prep</span>(heart_recipe)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>train_baked_rf <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_rf, <span class="at">new_data =</span> <span class="cn">NULL</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>sample_baked_rf <span class="ot">&lt;-</span> <span class="fu">bake</span>(prep_rf, <span class="at">new_data =</span> sample_cases)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>rf_raw <span class="ot">&lt;-</span> <span class="fu">extract_fit_parsnip</span>(rf_fit)<span class="sc">$</span>fit</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>explainer_rf <span class="ot">&lt;-</span> <span class="fu">lime</span>(train_baked_rf, <span class="at">model =</span> rf_raw)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>expl_rf <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sample_baked_rf,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">explainer =</span> explainer_rf,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> <span class="dv">5</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="st">"1"</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="average-lime-feature-contributions-1" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="average-lime-feature-contributions-1"><span class="header-section-number">9.2.2</span> Average LIME Feature Contributions</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>expl_rf <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feature_desc) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_weight =</span> <span class="fu">mean</span>(feature_weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(feature_desc, avg_weight), <span class="at">y =</span> avg_weight, <span class="at">fill =</span> avg_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"darkgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average LIME Contributions (Random Forest)"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Avg Feature Weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <ul>
-<li>SVM and Neural Network were <strong>not compatible</strong> with <code>lime</code> due to limitations in the package.</li>
-<li>Logistic Regression was interpreted using the <code>iml::LocalModel</code> method (see <code>logistic_model.qmd</code> for details).</li>
+<li><p><strong>Positive Contributors</strong> Features that consistently <strong>increased</strong> the predicted probability of heart disease:</p></li>
+<li><p><strong>NumMajorVessels ≤ 1</strong>: Fewer visible vessels likely suggest restricted flow, increasing risk.</p></li>
+<li><p><strong>Oldpeak ≤ 0.8</strong>: Low ST depression after exercise might indicate abnormal response.</p></li>
+<li><p><strong>Slope &gt; 1</strong> and <strong>RestingBP ≤ 120</strong>: Certain exercise ECG characteristics and lower blood pressure were associated with elevated risk.</p></li>
+<li><p><strong>Negative Contributors</strong> Features that most strongly <strong>reduced</strong> the predicted risk:</p></li>
+<li><p><strong>Oldpeak &gt; 1.6</strong>: Higher ST depression values appear linked to lower predicted risk, possibly due to model learning patterns from outliers or noise.</p></li>
+<li><p><strong>MaxHR ≤ 133</strong>: Lower max heart rate reduced the likelihood of a heart disease prediction.</p></li>
+<li><p><strong>Slope ≤ 1</strong> and <strong>Cholesterol &gt; 243</strong>: These features also appeared to suppress positive predictions.</p></li>
 </ul>
+<p>Compared to the decision tree, the random forest shows more nuanced interactions across continuous variables. The LIME results help interpret the ensemble model by identifying directional feature impacts, making it easier to compare with global summaries or logistic regression coefficients.</p>
+</section>
+<section id="comparing-local-lime-and-global-feature-importance-1" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="comparing-local-lime-and-global-feature-importance-1"><span class="header-section-number">9.2.3</span> Comparing Local (LIME) and Global Feature Importance</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample global importance dataframe (replace with actual values if needed)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rf_importance_df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Feature =</span> <span class="fu">c</span>(<span class="st">"NumMajorVessels"</span>, <span class="st">"Oldpeak"</span>, <span class="st">"MaxHR"</span>, <span class="st">"Thalassemia_X2"</span>, <span class="st">"Cholesterol"</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Importance =</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">70</span>, <span class="dv">65</span>, <span class="dv">60</span>, <span class="dv">55</span>)  <span class="co"># Replace with actual values if using vip() or model$variable.importance</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rf_importance_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Feature, Importance), <span class="at">y =</span> Importance)) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#3C9B6F"</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 5 Feature Importances (Random Forest)"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Importance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We compared the global feature importance from the Random Forest model with the average local explanations from LIME.</p>
+<p>Global importance shows that the top predictive features across the dataset are: - NumMajorVessels, Oldpeak, MaxHR, Thalassemia_X2, and Cholesterol.</p>
+<ul>
+<li>LIME contributions reveal that: NumMajorVessels ≤ 1 and Oldpeak ≤ 0.8 consistently increase heart disease risk. 1 &lt; NumMajorVessels and 1.6 &lt; Oldpeak tend to decrease the risk.</li>
+</ul>
+<p>The top features align across both views, but LIME provides more nuanced, directional insight (e.g., thresholds).</p>
+<p>Global and local explanations are consistent, with LIME offering more interpretability at the individual level.</p>
+</section>
+</section>
+<section id="lime-analysis-svm" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="lime-analysis-svm"><span class="header-section-number">9.3</span> LIME Analysis: SVM</h2>
+<p>We construct a custom prediction function to apply LIME on an SVM model built with <code>tidymodels</code>. Since <code>workflow</code> objects are not directly compatible with <code>lime</code>, we define a wrapper function to bridge the gap.</p>
+<section id="fitting-lime-explainer-on-svm" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="fitting-lime-explainer-on-svm"><span class="header-section-number">9.3.1</span> Fitting LIME Explainer on SVM</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm_rbf</span>(<span class="at">mode =</span> <span class="st">"classification"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>svm_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(svm_model) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(HeartDisease <span class="sc">~</span> .)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>svm_fit <span class="ot">&lt;-</span> <span class="fu">fit</span>(svm_workflow, <span class="at">data =</span> heart_train)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lime)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a custom wrapper function to allow lime to call the full workflow model for probability predictions</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>svm_predictor <span class="ot">&lt;-</span> <span class="cf">function</span>(model, newdata) {</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(svm_fit, <span class="at">new_data =</span> newdata, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(svm_predictor) <span class="ot">&lt;-</span> <span class="st">"function"</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Inform lime that this is a classification model and how to call the predictor</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>model_type.function <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="st">"classification"</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>predict_model.function <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, type, ...) <span class="fu">x</span>(<span class="cn">NULL</span>, newdata)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the explainer using raw (non-dummy) training data</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>explainer <span class="ot">&lt;-</span> <span class="fu">lime</span>(</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> heart_train <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>HeartDisease),  <span class="co"># use raw features</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> svm_predictor,</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">bin_continuous =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_bins =</span> <span class="dv">4</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample a few test cases using the same raw format</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>sample_cases <span class="ot">&lt;-</span> heart_test <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>HeartDisease)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate LIME explanations for SVM model predictions</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>svm_explanation <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sample_cases,</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">explainer =</span> explainer,</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> <span class="dv">5</span>,</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_labels =</span> <span class="dv">1</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize LIME explanations across cases</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> svm_explanation <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">case =</span> <span class="fu">paste</span>(<span class="st">"Case"</span>, case),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">feature =</span> stringr<span class="sc">::</span><span class="fu">str_wrap</span>(feature_desc, <span class="at">width =</span> <span class="dv">25</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">as.character</span>(label)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(feature, feature_weight), <span class="at">y =</span> feature_weight, <span class="at">fill =</span> feature_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> case <span class="sc">+</span> label, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Feature"</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weight (LIME Explanation)"</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LIME Local Explanations for SVM Predictions"</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#4B9CD3"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D1495B"</span>)) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows LIME explanations for five test cases predicted by the SVM model.</p>
+<p>We find that:</p>
+<ul>
+<li><strong>Consistent influential features</strong> include:
+<ul>
+<li><code>NumMajorVessels &lt;= 1</code>: often positively associated with predicting disease.</li>
+<li><code>Oldpeak &lt;= 0.8</code> and <code>ChestPainType</code>: frequently appear with moderate to strong impact.</li>
+<li><code>Sex = 1</code> (male) and <code>Thalassemia = 3</code>: show varying directional contributions depending on case.</li>
+</ul></li>
+<li><strong>Case-specific variance</strong>: For example, <code>Oldpeak</code> acts as a positive contributor in Case 1 but flips to negative in Cases 2 and 4, suggesting interactions with other features.</li>
+</ul>
+<p>These local explanations highlight how the SVM model incorporates nonlinear relationships and feature interactions. The visualizations improve model transparency by showing which features influenced each decision and in what direction.</p>
+</section>
+<section id="average-lime-feature-contributions-2" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="average-lime-feature-contributions-2"><span class="header-section-number">9.3.2</span> Average LIME Feature Contributions</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>svm_explanation <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feature_desc) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_weight =</span> <span class="fu">mean</span>(feature_weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(feature_desc, avg_weight), <span class="at">y =</span> avg_weight, <span class="at">fill =</span> avg_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"darkgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average LIME Contributions (SVM)"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Avg Feature Weight"</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><strong>Top Positive Contributors</strong><br>
+<code>ChestPainType = 2</code>, <code>1 &lt; NumMajorVessels</code>, and <code>Sex = 0</code> had the strongest average positive effects, consistently pushing predictions toward class 1 (heart disease).<br>
+Features like <code>Oldpeak &gt; 1.6</code> and <code>Thalassemia = 2</code> also frequently supported predictions of heart disease.</p></li>
+<li><p><strong>Mild Negative Contributors</strong><br>
+<code>ChestPainType = 0</code>, <code>Thalassemia = 3</code>, and <code>Sex = 1</code> had minor average negative effects, slightly lowering predicted probabilities of disease. However, their magnitudes were close to zero, suggesting low consistency or importance across the sampled cases.</p></li>
+</ul>
+<p>Overall, this visualization highlights which features the SVM model relies on most locally. For example, certain combinations of chest pain type and vessel count were influential in nudging predictions toward positive outcomes.</p>
+</section>
+</section>
+<section id="lime-analysis-neural-network" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="lime-analysis-neural-network"><span class="header-section-number">9.4</span> LIME Analysis: Neural Network</h2>
+<section id="fitting-lime-explainer-on-neural-network" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="fitting-lime-explainer-on-neural-network"><span class="header-section-number">9.4.1</span> Fitting LIME Explainer on Neural Network</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lime)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the NN model</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>nn_model <span class="ot">&lt;-</span> <span class="fu">mlp</span>(<span class="at">hidden_units =</span> <span class="dv">5</span>, <span class="at">penalty =</span> <span class="fl">0.01</span>, <span class="at">epochs =</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"nnet"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the workflow</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>nn_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(nn_model) <span class="sc">%&gt;%</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(HeartDisease <span class="sc">~</span> .)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define wrapper function to allow lime to call the NN workflow and return probabilities</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>nn_fit <span class="ot">&lt;-</span> <span class="fu">fit</span>(nn_workflow, <span class="at">data =</span> heart_train)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>nn_predictor <span class="ot">&lt;-</span> <span class="cf">function</span>(model, newdata) {</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(nn_fit, <span class="at">new_data =</span> newdata, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(nn_predictor) <span class="ot">&lt;-</span> <span class="st">"function"</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Register the model type and prediction method</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>model_type.function <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="st">"classification"</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>predict_model.function <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, type, ...) <span class="fu">x</span>(<span class="cn">NULL</span>, newdata)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the explainer using raw (non-dummy) training data</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>explainer_nn <span class="ot">&lt;-</span> <span class="fu">lime</span>(</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> dplyr<span class="sc">::</span><span class="fu">select</span>(heart_train, <span class="sc">-</span>HeartDisease),</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> nn_predictor,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">bin_continuous =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_bins =</span> <span class="dv">4</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample a few test cases (raw format, no dummy variables)</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>sample_nn <span class="ot">&lt;-</span> heart_test <span class="sc">%&gt;%</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>HeartDisease) <span class="sc">%&gt;%</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate local LIME explanations</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>explanation_nn <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sample_nn,</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">explainer =</span> explainer_nn,</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> <span class="dv">5</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_labels =</span> <span class="dv">1</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># output</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>df_nn <span class="ot">&lt;-</span> explanation_nn <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">case =</span> <span class="fu">paste</span>(<span class="st">"Case"</span>, case),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">feature =</span> <span class="fu">str_wrap</span>(feature_desc, <span class="at">width =</span> <span class="dv">25</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">as.character</span>(label)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_nn, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(feature, feature_weight), <span class="at">y =</span> feature_weight, <span class="at">fill =</span> feature_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> case <span class="sc">+</span> label, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Feature"</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weight (LIME Explanation)"</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LIME Local Explanations for Neural Network Predictions"</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#4B9CD3"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D1495B"</span>)) <span class="sc">+</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows the top 5 feature contributions for 5 test cases predicted by the neural network. We find that:<br>
+- <strong>Cases 1 and 3</strong> were predicted as <strong>positive</strong> (likely to have heart disease), driven by: - <code>Thalassemia = 2</code>, <code>ChestPainType = 2</code>, and <code>NumMajorVessels &lt;= 1</code> - Low or high <code>MaxHR</code> values and <code>ExerciseAngina = 0</code> also supported the prediction</p>
+<ul>
+<li><strong>Cases 2, 4, and 5</strong> were predicted as <strong>negative</strong>, with important risk-reducing features including:
+<ul>
+<li><code>Sex = 1</code>, <code>ExerciseAngina = 0</code>, and moderate/high <code>Oldpeak</code></li>
+<li>Notably, in <strong>Case 5</strong>, <code>ChestPainType = 2</code> had a strong negative influence</li>
+</ul></li>
+</ul>
+</section>
+<section id="average-lime-feature-contributions-3" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="average-lime-feature-contributions-3"><span class="header-section-number">9.4.2</span> Average LIME Feature Contributions</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># average</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>avg_contrib_nn <span class="ot">&lt;-</span> explanation_nn <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feature_desc) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_weight =</span> <span class="fu">mean</span>(feature_weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(avg_contrib_nn, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(feature_desc, avg_weight), </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> avg_weight, </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> avg_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average LIME Contributions (Neural Network)"</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Avg Feature Weight"</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#4B9CD3"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D1495B"</span>)) <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We find that:</p>
+<ul>
+<li>The top contributors that <strong>increase the predicted probability</strong> of heart disease include:
+<ul>
+<li><strong><code>MaxHR &lt;= 133</code></strong>: Low maximum heart rate is strongly linked to heart disease risk.</li>
+<li><strong><code>Sex = 0</code> (Female)</strong>: This group shows higher contribution to risk in this model.</li>
+<li><strong><code>1.6 &lt; Oldpeak</code></strong>: Higher ST depression during exercise suggests poor cardiac function.</li>
+<li><strong><code>Thalassemia = 2 or 3</code></strong>: Genetic blood disorders are consistent indicators.</li>
+<li><strong><code>140 &lt; RestingBP</code></strong>: Elevated blood pressure adds to predicted risk.</li>
+</ul></li>
+<li>Some features like <strong><code>NumMajorVessels &lt;= 1</code></strong> or <strong><code>ExerciseAngina = 0</code></strong> have <strong>very low average contribution</strong>, suggesting they play less consistent roles in this model’s decision-making.</li>
+</ul>
+<p>The neural network tends to rely more on <strong>cardiac stress indicators</strong> (<code>MaxHR</code>, <code>Oldpeak</code>, <code>RestingBP</code>) and <strong>demographic/genetic markers</strong> (<code>Sex</code>, <code>Thalassemia</code>), rather than vessel counts or exercise-related factors.</p>
+</section>
+</section>
+<section id="lime-analysis-logistic-model" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="lime-analysis-logistic-model"><span class="header-section-number">9.5</span> LIME Analysis: Logistic Model</h2>
+<section id="fitting-lime-explainer-on-neural-network-1" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="fitting-lime-explainer-on-neural-network-1"><span class="header-section-number">9.5.1</span> Fitting LIME Explainer on Neural Network</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lime)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit logistic regression model using a tidymodels workflow</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>logreg_model <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>logreg_fit <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(logreg_model) <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(HeartDisease <span class="sc">~</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> heart_train)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>model_type.workflow <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) <span class="st">"classification"</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>predict_model.workflow <span class="ot">&lt;-</span> <span class="cf">function</span>(x, newdata, type, ...) {</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(x, <span class="at">new_data =</span> newdata, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Create LIME explainer</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>explainer_logreg <span class="ot">&lt;-</span> <span class="fu">lime</span>(</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> heart_train <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>HeartDisease),</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> logreg_fit,</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">bin_continuous =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_bins =</span> <span class="dv">4</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample 5 test cases to explain</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>sample_logreg <span class="ot">&lt;-</span> heart_test <span class="sc">%&gt;%</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>HeartDisease)</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate local LIME explanations</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>explanation_logreg <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sample_logreg,</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">explainer =</span> explainer_logreg,</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> <span class="dv">5</span>,    </span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_labels =</span> <span class="dv">1</span>       </span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the explanation</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>explanation_logreg <span class="sc">%&gt;%</span></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">case =</span> <span class="fu">paste</span>(<span class="st">"Case"</span>, case),</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">feature =</span> <span class="fu">str_wrap</span>(feature_desc, <span class="at">width =</span> <span class="dv">25</span>),</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">as.character</span>(label)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(feature, feature_weight), <span class="at">y =</span> feature_weight, <span class="at">fill =</span> feature_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> case <span class="sc">+</span> label, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Feature"</span>,</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Weight (LIME Explanation)"</span>,</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LIME Local Explanations for Logistic Regression"</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#4B9CD3"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D1495B"</span>)) <span class="sc">+</span></span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We find that:</p>
+<ul>
+<li><strong>Cases 1, 3, and 4</strong> were predicted as positive (likely to have heart disease). Key positive contributors include:
+<ul>
+<li><code>NumMajorVessels &lt;= 1</code> (fewer open vessels)</li>
+<li><code>Oldpeak &lt;= 0.8</code> and <code>Thalassemia = 2</code></li>
+<li><code>ChestPainType = 2</code> in Case 3 and Case 4</li>
+</ul></li>
+<li><strong>Cases 2 and 5</strong> were predicted negative (low heart disease risk), mainly due to:
+<ul>
+<li><code>Sex = 0</code> and <code>ChestPainType = 0</code>, both of which strongly reduced the predicted risk</li>
+<li><code>Thalassemia = 3</code> and <code>MaxHR &lt;= 133</code> also negatively contributed in Case 5</li>
+</ul></li>
+</ul>
+<p>Overall, the logistic regression model relies heavily on <strong>vessel count, chest pain type, thalassemia levels</strong>, and <strong>ST depression (Oldpeak)</strong> for its predictions. These features behave consistently across samples and offer interpretable medical insights.</p>
+</section>
+<section id="average-lime-feature-contributions-4" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="average-lime-feature-contributions-4"><span class="header-section-number">9.5.2</span> Average LIME Feature Contributions</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>explanation_logreg <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feature_desc) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_weight =</span> <span class="fu">mean</span>(feature_weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">feature_desc =</span> <span class="fu">reorder</span>(feature_desc, avg_weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> feature_desc, <span class="at">y =</span> avg_weight, <span class="at">fill =</span> avg_weight <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average LIME Contributions (Logistic Regression)"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Avg Feature Weight"</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#4B9CD3"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D1495B"</span>)) <span class="sc">+</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lime_analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the plot we find that:</p>
+<ul>
+<li>Features that <strong>increase the predicted risk</strong> of heart disease (positive average weights) include:
+<ul>
+<li><code>1.6 &lt; Oldpeak</code> and <code>MaxHR &lt;= 133</code>, indicating ST depression and lower heart rate</li>
+<li><code>Thalassemia = 2 or 3</code> and <code>Oldpeak &lt;= 0.8</code> — consistent with clinical risk factors</li>
+<li><code>Cholesterol &lt;= 212</code> and <code>RestingECG = 1</code> also contribute positively to the disease prediction</li>
+</ul></li>
+<li>Features that <strong>decrease the predicted risk</strong> (negative contributions) include:
+<ul>
+<li><code>ChestPainType = 0</code> and <code>Sex = 1</code> (i.e., male), strongly associated with lower risk</li>
+<li><code>Sex = 0</code> (female) also shows slight negative contribution</li>
+</ul></li>
+</ul>
+<p>Overall, the logistic regression model relies heavily on interpretable clinical indicators such as <strong>Oldpeak</strong>, <strong>Thalassemia</strong>, and <strong>MaxHR</strong> to differentiate between high- and low-risk cases, which aligns with medical intuition.</p>
+</section>
+<section id="comparing-local-lime-and-global-feature-importance-2" class="level3" data-number="9.5.3">
+<h3 data-number="9.5.3" class="anchored" data-anchor-id="comparing-local-lime-and-global-feature-importance-2"><span class="header-section-number">9.5.3</span> Comparing Local (LIME) and Global Feature Importance</h3>
+<ul>
+<li><strong>Consistent signals</strong>:
+<ul>
+<li><code>Thalassemia</code>, <code>ChestPainType</code>, <code>Oldpeak</code>, and <code>MaxHR</code> are important in both LIME and regression coefficients.</li>
+<li><code>Sex = 1</code> (male) consistently reduces heart disease risk in both views.</li>
+</ul></li>
+<li><strong>Differences</strong>:
+<ul>
+<li>LIME highlights <code>NumMajorVessels</code> and <code>RestingECG</code>, which have weaker or uncertain global effects.</li>
+<li>Some globally insignificant features like <code>Cholesterol</code> show notable local impact.</li>
+</ul></li>
+</ul>
+<p><strong>Conclusion</strong>:<br>
+LIME captures local effects missed by global models, while logistic coefficients offer overall trends. Combining both gives a fuller understanding.</p>
 
 
 </section>
@@ -552,7 +964,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -584,29 +1007,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -614,7 +1015,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

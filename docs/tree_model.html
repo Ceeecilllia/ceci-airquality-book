@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Decision Tree Model – Final Heartlime Book</title>
+<title>Heart Disease Prediction and Explanation - 4&nbsp; Decision Tree Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -112,13 +112,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tree_model.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Decision Tree Model</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -130,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Final Heartlime Book</a> 
+      <a href="./">Heart Disease Prediction and Explanation</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Ceeecilllia/final-heartlime-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -213,17 +213,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#decision-tree-model" id="toc-decision-tree-model" class="nav-link active" data-scroll-target="#decision-tree-model"><span class="header-section-number">4.1</span> Decision Tree Model</a>
-  <ul class="collapse">
-  <li><a href="#data-split-and-preprocessing" id="toc-data-split-and-preprocessing" class="nav-link" data-scroll-target="#data-split-and-preprocessing"><span class="header-section-number">4.1.1</span> Data Split and Preprocessing</a></li>
-  </ul></li>
-  <li><a href="#preprocessing-recipe" id="toc-preprocessing-recipe" class="nav-link" data-scroll-target="#preprocessing-recipe"><span class="header-section-number">4.2</span> Preprocessing Recipe</a></li>
-  <li><a href="#specify-decision-tree-model" id="toc-specify-decision-tree-model" class="nav-link" data-scroll-target="#specify-decision-tree-model"><span class="header-section-number">4.3</span> Specify Decision Tree Model</a></li>
-  <li><a href="#train-the-model" id="toc-train-the-model" class="nav-link" data-scroll-target="#train-the-model"><span class="header-section-number">4.4</span> Train the Model</a></li>
-  <li><a href="#evaluate-on-test-set" id="toc-evaluate-on-test-set" class="nav-link" data-scroll-target="#evaluate-on-test-set"><span class="header-section-number">4.5</span> Evaluate on Test Set</a></li>
-  <li><a href="#global-feature-importance" id="toc-global-feature-importance" class="nav-link" data-scroll-target="#global-feature-importance"><span class="header-section-number">4.6</span> Global Feature Importance</a></li>
-  <li><a href="#tree-plot" id="toc-tree-plot" class="nav-link" data-scroll-target="#tree-plot"><span class="header-section-number">4.7</span> tree plot</a></li>
-  <li><a href="#save-for-comparison" id="toc-save-for-comparison" class="nav-link" data-scroll-target="#save-for-comparison"><span class="header-section-number">4.8</span> Save for Comparison</a></li>
+  <li><a href="#model-setup-and-training" id="toc-model-setup-and-training" class="nav-link active" data-scroll-target="#model-setup-and-training"><span class="header-section-number">4.1</span> Model Setup and Training</a></li>
+  <li><a href="#confusion-matrix" id="toc-confusion-matrix" class="nav-link" data-scroll-target="#confusion-matrix"><span class="header-section-number">4.2</span> Confusion Matrix</a></li>
+  <li><a href="#roc-curve" id="toc-roc-curve" class="nav-link" data-scroll-target="#roc-curve"><span class="header-section-number">4.3</span> ROC Curve</a></li>
+  <li><a href="#train-vs.-test-comparison" id="toc-train-vs.-test-comparison" class="nav-link" data-scroll-target="#train-vs.-test-comparison"><span class="header-section-number">4.4</span> Train vs.&nbsp;Test Comparison</a></li>
+  <li><a href="#global-feature-importance" id="toc-global-feature-importance" class="nav-link" data-scroll-target="#global-feature-importance"><span class="header-section-number">4.5</span> Global Feature Importance</a></li>
+  <li><a href="#tree-plot" id="toc-tree-plot" class="nav-link" data-scroll-target="#tree-plot"><span class="header-section-number">4.6</span> tree plot</a></li>
+  <li><a href="#save-for-comparison" id="toc-save-for-comparison" class="nav-link" data-scroll-target="#save-for-comparison"><span class="header-section-number">4.7</span> Save for Comparison</a></li>
+  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary"><span class="header-section-number">4.8</span> Model Summary</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/edit/main/tree_model.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Ceeecilllia/final-heartlime-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -249,94 +246,114 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="decision-tree-model" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="decision-tree-model"><span class="header-section-number">4.1</span> Decision Tree Model</h2>
 <p>We trained a decision tree model to predict heart disease using the <code>rpart</code> engine via the <code>tidymodels</code> framework. This model is inherently interpretable and serves as a baseline for comparison.</p>
-<section id="data-split-and-preprocessing" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="data-split-and-preprocessing"><span class="header-section-number">4.1.1</span> Data Split and Preprocessing</h3>
+<section id="model-setup-and-training" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="model-setup-and-training"><span class="header-section-number">4.1</span> Model Setup and Training</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load unified setup and data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1025 Columns: 14
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="preprocessing-recipe" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="preprocessing-recipe"><span class="header-section-number">4.2</span> Preprocessing Recipe</h2>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>heart_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(HeartDisease <span class="sc">~</span> ., <span class="at">data =</span> heart_train) <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocessing Recipe</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>heart_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(HeartDisease <span class="sc">~</span> ., <span class="at">data =</span> heart_train) <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify Decision Tree Model</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>heart_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tree_spec) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(heart_recipe)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the Model</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>tree_fit <span class="ot">&lt;-</span> <span class="fu">fit</span>(heart_wf, <span class="at">data =</span> heart_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="specify-decision-tree-model" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="specify-decision-tree-model"><span class="header-section-number">4.3</span> Specify Decision Tree Model</h2>
+<section id="confusion-matrix" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="confusion-matrix"><span class="header-section-number">4.2</span> Confusion Matrix</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tree_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree_fit, heart_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(tree_fit, heart_test)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(heart_test)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>tree_preds <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> HeartDisease, <span class="at">estimate =</span> .pred_class) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">"heatmap"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Confusion Matrix - Decision Tree"</span>) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tree_model_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This confusion matrix shows that the decision tree model performs well on both classes, achieving balanced sensitivity and specificity. The equal number of false positives and false negatives (21 each) suggests that the model does not exhibit bias toward either class. With an overall accuracy of 86.4%, the decision tree serves as a strong baseline for comparison with more complex models.</p>
+</section>
+<section id="roc-curve" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="roc-curve"><span class="header-section-number">4.3</span> ROC Curve</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tree_preds <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> HeartDisease, .pred_1, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ROC Curve - Decision Tree"</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tree_model_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The ROC curve for the decision tree model rises steeply toward the top-left corner, indicating strong discriminative ability between positive and negative classes. This shape suggests that the model achieves a high true positive rate while maintaining a low false positive rate across a range of thresholds.</p>
+<p>The curve significantly deviates from the diagonal line (representing random guessing), confirming that the model performs much better than chance. This supports the decision tree as a reliable baseline model for predicting heart disease.</p>
+</section>
+<section id="train-vs.-test-comparison" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="train-vs.-test-comparison"><span class="header-section-number">4.4</span> Train vs.&nbsp;Test Comparison</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tree_preds_train <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree_fit, heart_train, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(tree_fit, heart_train)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(heart_train)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>heart_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tree_spec) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(heart_recipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="train-the-model" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="train-the-model"><span class="header-section-number">4.4</span> Train the Model</h2>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tree_fit <span class="ot">&lt;-</span> <span class="fu">fit</span>(heart_wf, <span class="at">data =</span> heart_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="evaluate-on-test-set" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="evaluate-on-test-set"><span class="header-section-number">4.5</span> Evaluate on Test Set</h2>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tree_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree_fit, heart_test, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(tree_fit, heart_test)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(heart_test)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Metrics</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, roc_auc)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>tree_metrics <span class="ot">&lt;-</span> <span class="fu">metrics</span>(tree_preds, <span class="at">truth =</span> HeartDisease, <span class="at">estimate =</span> .pred_class, .pred_1)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>tree_metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define metric set</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, roc_auc)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to training predictions</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">metrics</span>(tree_preds_train,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">truth =</span> HeartDisease,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">estimate =</span> .pred_class,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>           .pred_1,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   .metric  .estimator .estimate
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-1 accuracy binary        0.864 
-2 roc_auc  binary        0.0924</code></pre>
+1 accuracy binary         0.900
+2 roc_auc  binary         0.926</code></pre>
 </div>
 </div>
+<p>On the training set, the decision tree achieved an accuracy of 89.96% and a ROC AUC of 0.93 after correcting the event level. These results indicate that the model not only predicts accurately, but also ranks predictions effectively.</p>
+<p>Compared to the test set performance (accuracy 86.4%, AUC X.XX), the small drop suggests that the model generalizes reasonably well without severe overfitting. The training performance confirms that the decision tree has learned meaningful patterns from the data.</p>
 </section>
-<section id="global-feature-importance" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="global-feature-importance"><span class="header-section-number">4.6</span> Global Feature Importance</h2>
+<section id="global-feature-importance" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="global-feature-importance"><span class="header-section-number">4.5</span> Global Feature Importance</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -349,23 +366,23 @@ Attaching package: 'rpart'</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract variable importance from underlying fitted model</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>rpart_fit <span class="ot">&lt;-</span> <span class="fu">extract_fit_parsnip</span>(tree_fit)<span class="sc">$</span>fit</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>vip <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Feature =</span> <span class="fu">names</span>(rpart_fit<span class="sc">$</span>variable.importance),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Importance =</span> <span class="fu">as.numeric</span>(rpart_fit<span class="sc">$</span>variable.importance)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Importance)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 5 features</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>vip <span class="sc">%&gt;%</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(Feature, Importance), <span class="at">y =</span> Importance)) <span class="sc">+</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 5 Feature Importances (Decision Tree)"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Importance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract variable importance from underlying fitted model</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rpart_fit <span class="ot">&lt;-</span> <span class="fu">extract_fit_parsnip</span>(tree_fit)<span class="sc">$</span>fit</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>vip <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Feature =</span> <span class="fu">names</span>(rpart_fit<span class="sc">$</span>variable.importance),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Importance =</span> <span class="fu">as.numeric</span>(rpart_fit<span class="sc">$</span>variable.importance)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Importance)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 5 features</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>vip <span class="sc">%&gt;%</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(Feature, Importance), <span class="at">y =</span> Importance)) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 5 Feature Importances (Decision Tree)"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Importance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -377,13 +394,13 @@ Attaching package: 'rpart'</code></pre>
 </div>
 <p>The top 5 most important features for the decision tree include two Thalassemia categories (Thalassemia_X2 and Thalassemia_X3), followed by the number of major vessels, Oldpeak, and MaxHR. These features drive the majority of the splits in the tree, indicating their strong influence in predicting heart disease.</p>
 </section>
-<section id="tree-plot" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="tree-plot"><span class="header-section-number">4.7</span> tree plot</h2>
+<section id="tree-plot" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="tree-plot"><span class="header-section-number">4.6</span> tree plot</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(rpart_fit, <span class="at">type =</span> <span class="dv">2</span>, <span class="at">extra =</span> <span class="dv">106</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(rpart_fit, <span class="at">type =</span> <span class="dv">2</span>, <span class="at">extra =</span> <span class="dv">106</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Cannot retrieve the data used to build the model (so cannot determine roundint and is.binary for the variables).
@@ -399,20 +416,29 @@ To silence this warning:
 </div>
 </div>
 </div>
+<p>The decision tree visualization shows that the top splitting variable is Thalassemia_X2, indicating it is the most important feature in predicting heart disease. The left subtree mostly leads to predictions of no heart disease (0), while the right subtree often predicts presence of heart disease (1) with high confidence. Other key decision nodes include NumMajorVessels, Oldpeak, ChestPainType, and RestingBP, suggesting these features also play a significant role in the classification. The tree structure confirms the model’s interpretability and highlights clinically relevant variables.</p>
 </section>
-<section id="save-for-comparison" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="save-for-comparison"><span class="header-section-number">4.8</span> Save for Comparison</h2>
+<section id="save-for-comparison" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="save-for-comparison"><span class="header-section-number">4.7</span> Save for Comparison</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save top features for LIME comparison</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tree_top_features <span class="ot">&lt;-</span> vip<span class="sc">$</span>Feature</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tree_top_features, <span class="at">file =</span> <span class="st">"scripts/tree_top_features.rds"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Save fitted model for LIME explanation</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tree_fit, <span class="at">file =</span> <span class="st">"scripts/tree_fit.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save top features for LIME comparison</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tree_top_features <span class="ot">&lt;-</span> vip<span class="sc">$</span>Feature</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tree_top_features, <span class="at">file =</span> <span class="st">"scripts/tree_top_features.rds"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Save fitted model for LIME explanation</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tree_fit, <span class="at">file =</span> <span class="st">"scripts/tree_fit.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
+<section id="model-summary" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">4.8</span> Model Summary</h2>
+<p>The decision tree model offers a strong balance between interpretability and predictive performance.</p>
+<p>From the tree visualization, the top splitting feature is <strong>Thalassemia_X2</strong>, indicating it plays a crucial role in distinguishing patients with heart disease. Other important decision nodes include <strong>Thalassemia_X3</strong>, <strong>NumMajorVessels</strong>, <strong>Oldpeak</strong>, and <strong>MaxHR</strong>, as confirmed by both the tree structure and variable importance plot.</p>
+<p>The confusion matrix shows balanced predictions with <strong>129 true negatives and 137 true positives</strong>, and equal false positives and false negatives (21 each), reflecting well-calibrated sensitivity and specificity.</p>
+<p>The ROC curve demonstrates excellent discriminative power, with an AUC of <strong>0.93 on the training set</strong>, suggesting the model can effectively rank positive and negative cases. The high training accuracy (<strong>89.96%</strong>) supports its ability to capture meaningful patterns from the data without overfitting.</p>
+<p>Overall, the decision tree provides a transparent and reasonably accurate baseline model. While interpretable, it may still benefit from more robust ensemble methods like random forests to improve generalization and reduce variance in complex datasets.</p>
 
 
 </section>
@@ -453,7 +479,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -485,29 +522,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -515,7 +530,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

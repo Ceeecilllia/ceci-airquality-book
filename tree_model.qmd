@@ -6,36 +6,29 @@ format:
     code-fold: true
 ---
 
-## Decision Tree Model
 
 We trained a decision tree model to predict heart disease using the `rpart` engine via the `tidymodels` framework. This model is inherently interpretable and serves as a baseline for comparison.
 
-```{r setup, include=FALSE}
+
+## Model Setup and Training
+
+```{r include=FALSE}
 library(tidyverse)
 library(tidymodels)
 theme_set(theme_minimal())
 
-```
-
-### Data Split and Preprocessing
-
-```{r}
 # Load unified setup and data
 source("setup.R")
 ```
 
-## Preprocessing Recipe
 
 ```{r}
-
+# Preprocessing Recipe
 heart_recipe <- recipe(HeartDisease ~ ., data = heart_train) %>%
   step_dummy(all_nominal_predictors()) %>%
   step_zv(all_predictors())
-```
 
-## Specify Decision Tree Model
-
-```{r}
+# Specify Decision Tree Model
 tree_spec <- decision_tree() %>%
   set_engine("rpart") %>%
   set_mode("classification")
@@ -43,27 +36,71 @@ tree_spec <- decision_tree() %>%
 heart_wf <- workflow() %>%
   add_model(tree_spec) %>%
   add_recipe(heart_recipe)
-```
 
-## Train the Model
-
-```{r}
+# Train the Model
 tree_fit <- fit(heart_wf, data = heart_train)
+
 ```
 
-## Evaluate on Test Set
+
+## Confusion Matrix
 
 ```{r}
 tree_preds <- predict(tree_fit, heart_test, type = "prob") %>%
   bind_cols(predict(tree_fit, heart_test)) %>%
   bind_cols(heart_test)
 
-
-# Metrics
-metrics <- metric_set(accuracy, roc_auc)
-tree_metrics <- metrics(tree_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
-tree_metrics
+tree_preds %>%
+  conf_mat(truth = HeartDisease, estimate = .pred_class) %>%
+  autoplot(type = "heatmap") +
+  labs(title = "Confusion Matrix - Decision Tree") +
+  theme_minimal()
 ```
+
+This confusion matrix shows that the decision tree model performs well on both classes, achieving balanced sensitivity and specificity. The equal number of false positives and false negatives (21 each) suggests that the model does not exhibit bias toward either class. With an overall accuracy of 86.4%, the decision tree serves as a strong baseline for comparison with more complex models.
+
+
+## ROC Curve
+
+```{r}
+tree_preds %>%
+  roc_curve(truth = HeartDisease, .pred_1, event_level = "second") %>%
+  autoplot() +
+  labs(title = "ROC Curve - Decision Tree") +
+  theme_minimal()
+
+```
+
+The ROC curve for the decision tree model rises steeply toward the top-left corner, indicating strong discriminative ability between positive and negative classes. This shape suggests that the model achieves a high true positive rate while maintaining a low false positive rate across a range of thresholds.
+
+The curve significantly deviates from the diagonal line (representing random guessing), confirming that the model performs much better than chance. This supports the decision tree as a reliable baseline model for predicting heart disease.
+
+
+## Train vs. Test Comparison
+
+```{r}
+tree_preds_train <- predict(tree_fit, heart_train, type = "prob") %>%
+  bind_cols(predict(tree_fit, heart_train)) %>%
+  bind_cols(heart_train)
+
+# Define metric set
+metrics <- metric_set(accuracy, roc_auc)
+
+# Apply to training predictions
+metrics(tree_preds_train,
+           truth = HeartDisease,
+           estimate = .pred_class,
+           .pred_1,
+           event_level = "second")
+
+
+```
+
+On the training set, the decision tree achieved an accuracy of 89.96% and a ROC AUC of 0.93 after correcting the event level. These results indicate that the model not only predicts accurately, but also ranks predictions effectively.
+
+Compared to the test set performance (accuracy 86.4%, AUC X.XX), the small drop suggests that the model generalizes reasonably well without severe overfitting. The training performance confirms that the decision tree has learned meaningful patterns from the data.
+
+
 ## Global Feature Importance
 
 ```{r}
@@ -100,6 +137,9 @@ rpart.plot(rpart_fit, type = 2, extra = 106)
 
 ```
 
+The decision tree visualization shows that the top splitting variable is Thalassemia_X2, indicating it is the most important feature in predicting heart disease. The left subtree mostly leads to predictions of no heart disease (0), while the right subtree often predicts presence of heart disease (1) with high confidence. Other key decision nodes include NumMajorVessels, Oldpeak, ChestPainType, and RestingBP, suggesting these features also play a significant role in the classification. The tree structure confirms the model’s interpretability and highlights clinically relevant variables.
+
+
 ## Save for Comparison
 
 ```{r}
@@ -113,3 +153,14 @@ saveRDS(tree_fit, file = "scripts/tree_fit.rds")
 ```
 
 
+## Model Summary
+
+The decision tree model offers a strong balance between interpretability and predictive performance.
+
+From the tree visualization, the top splitting feature is **Thalassemia_X2**, indicating it plays a crucial role in distinguishing patients with heart disease. Other important decision nodes include **Thalassemia_X3**, **NumMajorVessels**, **Oldpeak**, and **MaxHR**, as confirmed by both the tree structure and variable importance plot.
+
+The confusion matrix shows balanced predictions with **129 true negatives and 137 true positives**, and equal false positives and false negatives (21 each), reflecting well-calibrated sensitivity and specificity.
+
+The ROC curve demonstrates excellent discriminative power, with an AUC of **0.93 on the training set**, suggesting the model can effectively rank positive and negative cases. The high training accuracy (**89.96%**) supports its ability to capture meaningful patterns from the data without overfitting.
+
+Overall, the decision tree provides a transparent and reasonably accurate baseline model. While interpretable, it may still benefit from more robust ensemble methods like random forests to improve generalization and reduce variance in complex datasets.

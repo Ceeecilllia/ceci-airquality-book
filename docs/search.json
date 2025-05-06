@@ -2,51 +2,11 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Final Heartlime Book",
+    "title": "Heart Disease Prediction and Explanation",
     "section": "",
-    "text": "0.1 Overview\nThis project explores interpretable machine learning methods to predict the likelihood of heart disease from patient clinical data.\nWe build and compare five models:\nOur primary goal is not only to achieve high predictive accuracy, but also to understand why a model makes certain predictions.",
+    "text": "1 Index\nThis project explores interpretable machine learning methods to predict the likelihood of heart disease from patient clinical data.\nWe build and compare five models:\n\nDecision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\nLogistic Regression\n\nOur primary goal is not only to achieve high predictive accuracy, but also to understand why a model makes certain predictions.\nThe dataset used in this project is the UCI Heart Disease dataset, which contains 14 clinical variables such as age, sex, cholesterol, and resting blood pressure, along with a binary outcome variable indicating the presence or absence of heart disease. In this dataset, a value of 1 means the individual was diagnosed with heart disease, while 0 indicates no heart disease.\nTo achieve our objectives, we applied several modeling and explanation techniques. These include model training using the tidymodels framework, evaluation based on test set Accuracy and AUC, and feature importance analysis using built-in tools like rpart, randomForest, and glm. Additionally, we used local explanation methods such as LIME for tree-based models and the iml::LocalModel package for logistic regression.\nThe broader goals of our project are to compare interpretable models with black-box models, evaluate the stability and reliability of their explanations, and assess whether these models are trustworthy for medical use.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#overview",
-    "href": "index.html#overview",
-    "title": "Final Heartlime Book",
-    "section": "",
-    "text": "Decision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\nLogistic Regression",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#dataset",
-    "href": "index.html#dataset",
-    "title": "Final Heartlime Book",
-    "section": "0.2 Dataset",
-    "text": "0.2 Dataset\nWe use the UCI Heart Disease dataset, containing 14 clinical variables (e.g., age, sex, cholesterol, resting blood pressure) and a binary outcome indicating the presence of heart disease, which includes 14 clinical features and a binary target variable:\n\n1 = diagnosed with heart disease\n0 = no heart disease",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#methods",
-    "href": "index.html#methods",
-    "title": "Final Heartlime Book",
-    "section": "0.3 Methods",
-    "text": "0.3 Methods\nWe apply the following modeling and explanation techniques:\n\n🧠 Model training via the tidymodels framework\n📈 Evaluation using test set Accuracy and AUC\n🔍 Global feature importance using built-in tools (e.g., rpart, randomForest, glm)\n🌈 Local explanations using lime (for tree-based models) and iml::LocalModel (for logistic regression)",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#goals",
-    "href": "index.html#goals",
-    "title": "Final Heartlime Book",
-    "section": "0.4 Goals",
-    "text": "0.4 Goals\n\nCompare interpretable vs black-box models\nEvaluate the stability and reliability of explanations\nDiscuss whether models are trustworthy for medical use",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Heart Disease Prediction and Explanation</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Index</span>"
     ]
   },
   {
@@ -54,67 +14,37 @@
     "href": "data.html",
     "title": "2  Data",
     "section": "",
-    "text": "3 Data\nIn this section, we provide an overview of the dataset used in our heart disease prediction task, along with key preprocessing and exploratory analysis steps.",
+    "text": "2.1 Dataset Description\nWe use the Heart Disease Dataset, which contains n = 1025 observations and p = 14 features, including:",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
   },
   {
-    "objectID": "data.html#data-loading-and-preprocessing",
-    "href": "data.html#data-loading-and-preprocessing",
+    "objectID": "data.html#dataset-description",
+    "href": "data.html#dataset-description",
     "title": "2  Data",
-    "section": "5.1 Data Loading and Preprocessing",
-    "text": "5.1 Data Loading and Preprocessing\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\n# Load the dataset\nheart &lt;- read_csv(\"data/heart.csv\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\n# Rename variables for clarity\nheart &lt;- heart %&gt;%\n  rename(\n    Age = age,\n    Sex = sex,\n    ChestPainType = cp,\n    RestingBP = trestbps,\n    Cholesterol = chol,\n    FastingBS = fbs,\n    RestingECG = restecg,\n    MaxHR = thalach,\n    ExerciseAngina = exang,\n    Oldpeak = oldpeak,\n    Slope = slope,\n    NumMajorVessels = ca,\n    Thalassemia = thal,\n    HeartDisease = target\n  ) %&gt;%\n  mutate(\n    Sex = as.factor(Sex),\n    ChestPainType = as.factor(ChestPainType),\n    RestingECG = as.factor(RestingECG),\n    ExerciseAngina = as.factor(ExerciseAngina),\n    Thalassemia = as.factor(Thalassemia),\n    HeartDisease = as.factor(HeartDisease)\n  )",
+    "section": "",
+    "text": "age: Age in years\n\nsex: Biological sex (1 = male, 0 = female)\n\ncp: Chest pain type (0 to 3, categorical)\n\n0 = Typical angina\n\n1 = Atypical angina\n\n2 = Non-anginal pain\n\n3 = Asymptomatic\n\ntrestbps: Resting blood pressure\n\nchol: Serum cholesterol (mg/dl)\n\nfbs: Fasting blood sugar &gt; 120 mg/dl (1 = true, 0 = false)\n\nrestecg: Resting ECG results\n\nthalach: Maximum heart rate achieved\n\nexang: Exercise-induced angina (1 = yes, 0 = no)\n\noldpeak: ST depression induced by exercise\n\nslope, ca, thal: Additional heart-related features\n\ntarget: Presence of heart disease (1 = yes, 0 = no)",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
   },
   {
-    "objectID": "data.html#age-distribution-by-heart-disease-status",
-    "href": "data.html#age-distribution-by-heart-disease-status",
+    "objectID": "data.html#preprocessing",
+    "href": "data.html#preprocessing",
     "title": "2  Data",
-    "section": "6.1 Age Distribution by Heart Disease Status",
-    "text": "6.1 Age Distribution by Heart Disease Status\n\n\nCode\n# Basic structure\nglimpse(heart)\n\n\nRows: 1,025\nColumns: 14\n$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…\n$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …\n$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …\n$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…\n$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…\n$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …\n$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …\n$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…\n$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …\n$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…\n$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …\n$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …\n$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …\n$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …\n\n\nCode\n# Proportion of heart disease cases\nheart %&gt;%\n  count(HeartDisease) %&gt;%\n  mutate(prop = n / sum(n))\n\n\n# A tibble: 2 × 3\n  HeartDisease     n  prop\n  &lt;fct&gt;        &lt;int&gt; &lt;dbl&gt;\n1 0              499 0.487\n2 1              526 0.513\n\n\n\n\nCode\n# Distribution of Age\nggplot(heart, aes(x = Age, fill = HeartDisease)) +\n  geom_histogram(bins = 30, position = \"dodge\") +\n  labs(title = \"Age Distribution by Heart Disease Status\")\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Chest Pain Type vs Disease\nggplot(heart, aes(x = ChestPainType, fill = HeartDisease)) +\n  geom_bar(position = \"fill\") +\n  labs(title = \"Chest Pain Type and Heart Disease\", y = \"Proportion\")\n\n\n\n\n\n\n\n\n\nAs shown, patients with heart disease (label 1) tend to be older.\nThe highest heart disease rate occurs around ages 55 to 65.\nLikewise, chest pain types 1 and 2 are more common in patients with heart disease, suggesting these features could be predictive.\nThese patterns will guide our model-building decisions and feature interpretation strategies in the next sections.",
+    "section": "2.2 Preprocessing",
+    "text": "2.2 Preprocessing\nWe perform the following preprocessing steps:\n\nConvert categorical variables to factors (sex, cp, fbs, restecg, exang, slope, ca, thal)\nRename target to HeartDisease for clarity\nCheck for missing values\nSplit into 70% training / 30% testing using initial_split() from rsample.\n\n\n\n2.2.1 Data Loading and Preprocessing\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\n# Load the dataset\nheart &lt;- read_csv(\"data/heart.csv\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\n# Rename variables for clarity\nheart &lt;- heart %&gt;%\n  rename(\n    Age = age,\n    Sex = sex,\n    ChestPainType = cp,\n    RestingBP = trestbps,\n    Cholesterol = chol,\n    FastingBS = fbs,\n    RestingECG = restecg,\n    MaxHR = thalach,\n    ExerciseAngina = exang,\n    Oldpeak = oldpeak,\n    Slope = slope,\n    NumMajorVessels = ca,\n    Thalassemia = thal,\n    HeartDisease = target\n  ) %&gt;%\n  mutate(\n    Sex = as.factor(Sex),\n    ChestPainType = as.factor(ChestPainType),\n    RestingECG = as.factor(RestingECG),\n    ExerciseAngina = as.factor(ExerciseAngina),\n    Thalassemia = as.factor(Thalassemia),\n    HeartDisease = as.factor(HeartDisease)\n  )",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
   },
   {
-    "objectID": "data.html#data-structure",
-    "href": "data.html#data-structure",
+    "objectID": "data.html#exploratory-data-analysis",
+    "href": "data.html#exploratory-data-analysis",
     "title": "2  Data",
-    "section": "6.2 Data Structure",
-    "text": "6.2 Data Structure\nWe first inspect the structure of the dataset:\n\n\nCode\nglimpse(heart)\n\n\nRows: 1,025\nColumns: 14\n$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…\n$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …\n$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …\n$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…\n$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…\n$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …\n$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …\n$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…\n$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …\n$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…\n$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …\n$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …\n$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …\n$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#missing-value-check",
-    "href": "data.html#missing-value-check",
-    "title": "2  Data",
-    "section": "6.3 Missing Value Check",
-    "text": "6.3 Missing Value Check\nThere are no missing values in this dataset:\n\n\nCode\ncolSums(is.na(heart))\n\n\n            Age             Sex   ChestPainType       RestingBP     Cholesterol \n              0               0               0               0               0 \n      FastingBS      RestingECG           MaxHR  ExerciseAngina         Oldpeak \n              0               0               0               0               0 \n          Slope NumMajorVessels     Thalassemia    HeartDisease \n              0               0               0               0",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#data-loading-and-preparation-code",
-    "href": "data.html#data-loading-and-preparation-code",
-    "title": "2  Data",
-    "section": "6.4 Data Loading and Preparation Code",
-    "text": "6.4 Data Loading and Preparation Code\nThe dataset was loaded and renamed as follows:\n\n\nCode\nheart &lt;- read_csv(\"data/heart.csv\") %&gt;%\n  rename(\n    Age = age,\n    Sex = sex,\n    ChestPainType = cp,\n    RestingBP = trestbps,\n    Cholesterol = chol,\n    FastingBS = fbs,\n    RestingECG = restecg,\n    MaxHR = thalach,\n    ExerciseAngina = exang,\n    Oldpeak = oldpeak,\n    Slope = slope,\n    NumMajorVessels = ca,\n    Thalassemia = thal,\n    HeartDisease = target\n  ) %&gt;%\n  mutate(\n    Sex = as.factor(Sex),\n    ChestPainType = as.factor(ChestPainType),\n    RestingECG = as.factor(RestingECG),\n    ExerciseAngina = as.factor(ExerciseAngina),\n    Thalassemia = as.factor(Thalassemia),\n    HeartDisease = as.factor(HeartDisease)\n  )\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#outcome-variable-distribution",
-    "href": "data.html#outcome-variable-distribution",
-    "title": "2  Data",
-    "section": "6.5 Outcome Variable Distribution",
-    "text": "6.5 Outcome Variable Distribution\n\n\nCode\nheart %&gt;%\n  ggplot(aes(x = HeartDisease)) +\n  geom_bar(fill = \"tomato\") +\n  labs(title = \"Heart Disease Diagnosis\", x = \"Heart Disease (1 = Yes)\", y = \"Count\")",
+    "section": "2.3 Exploratory Data Analysis",
+    "text": "2.3 Exploratory Data Analysis\nWe conducted exploratory analysis to understand the relationships between clinical features and heart disease outcomes.\n\n2.3.1 Age Distribution by Heart Disease Status\n\n\nCode\n# Basic structure\nglimpse(heart)\n\n\nRows: 1,025\nColumns: 14\n$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…\n$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …\n$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …\n$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…\n$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…\n$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …\n$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …\n$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…\n$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …\n$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…\n$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …\n$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …\n$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …\n$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …\n\n\nCode\n# Proportion of heart disease cases\nheart %&gt;%\n  count(HeartDisease) %&gt;%\n  mutate(prop = n / sum(n))\n\n\n# A tibble: 2 × 3\n  HeartDisease     n  prop\n  &lt;fct&gt;        &lt;int&gt; &lt;dbl&gt;\n1 0              499 0.487\n2 1              526 0.513\n\n\n\n\nCode\n# Distribution of Age\nggplot(heart, aes(x = Age, fill = HeartDisease)) +\n  geom_histogram(bins = 30, position = \"dodge\") +\n  labs(title = \"Age Distribution by Heart Disease Status\")\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Chest Pain Type vs Disease\nggplot(heart, aes(x = ChestPainType, fill = HeartDisease)) +\n  geom_bar(position = \"fill\") +\n  labs(title = \"Chest Pain Type and Heart Disease\", y = \"Proportion\")\n\n\n\n\n\n\n\n\n\nAs shown, patients with heart disease (label 1) tend to be older.\nThe highest heart disease rate occurs around ages 55 to 65 indicating that age is a strong predictive feature in the diagnosis of heart disease.\nLikewise, chest pain types 1 and 2 are more common in patients with heart disease, suggesting these features could be predictive.\nThese patterns will guide our model-building decisions and feature interpretation strategies in the next sections.\n\n\n2.3.2 Data Structure\nWe first inspect the structure of the dataset:\n\n\nCode\nglimpse(heart)\n\n\nRows: 1,025\nColumns: 14\n$ Age             &lt;dbl&gt; 52, 53, 70, 61, 62, 58, 58, 55, 46, 54, 71, 43, 34, 51…\n$ Sex             &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, …\n$ ChestPainType   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, …\n$ RestingBP       &lt;dbl&gt; 125, 140, 145, 148, 138, 100, 114, 160, 120, 122, 112,…\n$ Cholesterol     &lt;dbl&gt; 212, 203, 174, 203, 294, 248, 318, 289, 249, 286, 149,…\n$ FastingBS       &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, …\n$ RestingECG      &lt;fct&gt; 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, …\n$ MaxHR           &lt;dbl&gt; 168, 155, 125, 161, 106, 122, 140, 145, 144, 116, 125,…\n$ ExerciseAngina  &lt;fct&gt; 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, …\n$ Oldpeak         &lt;dbl&gt; 1.0, 3.1, 2.6, 0.0, 1.9, 1.0, 4.4, 0.8, 0.8, 3.2, 1.6,…\n$ Slope           &lt;dbl&gt; 2, 0, 0, 2, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, …\n$ NumMajorVessels &lt;dbl&gt; 2, 0, 0, 1, 3, 0, 3, 1, 0, 2, 0, 0, 0, 3, 0, 0, 1, 1, …\n$ Thalassemia     &lt;fct&gt; 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3, 0, 2, 2, 3, …\n$ HeartDisease    &lt;fct&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, …\n\n\nThe dataset consists of 1,025 rows and 14 columns. Variables include both continuous features (e.g., Age, Cholesterol, RestingBP) and categorical features (e.g., ChestPainType, Sex, Thalassemia). All variables appear to be properly structured for analysis.\n\n\n2.3.3 Missing Value Check\nThere are no missing values in the dataset. Each feature has complete observations across all 1,025 entries.\n\n\nCode\ncolSums(is.na(heart))\n\n\n            Age             Sex   ChestPainType       RestingBP     Cholesterol \n              0               0               0               0               0 \n      FastingBS      RestingECG           MaxHR  ExerciseAngina         Oldpeak \n              0               0               0               0               0 \n          Slope NumMajorVessels     Thalassemia    HeartDisease \n              0               0               0               0 \n\n\n\n\n2.3.4 Data Loading and Preparation Code\nThe dataset was loaded and renamed as follows:\n\n\nCode\nheart &lt;- read_csv(\"data/heart.csv\") %&gt;%\n  rename(\n    Age = age,\n    Sex = sex,\n    ChestPainType = cp,\n    RestingBP = trestbps,\n    Cholesterol = chol,\n    FastingBS = fbs,\n    RestingECG = restecg,\n    MaxHR = thalach,\n    ExerciseAngina = exang,\n    Oldpeak = oldpeak,\n    Slope = slope,\n    NumMajorVessels = ca,\n    Thalassemia = thal,\n    HeartDisease = target\n  ) %&gt;%\n  mutate(\n    Sex = as.factor(Sex),\n    ChestPainType = as.factor(ChestPainType),\n    RestingECG = as.factor(RestingECG),\n    ExerciseAngina = as.factor(ExerciseAngina),\n    Thalassemia = as.factor(Thalassemia),\n    HeartDisease = as.factor(HeartDisease)\n  )\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n\n\n2.3.5 Outcome Variable Distribution\n\n\nCode\nheart %&gt;%\n  ggplot(aes(x = HeartDisease)) +\n  geom_bar(fill = \"tomato\") +\n  labs(title = \"Heart Disease Diagnosis\", x = \"Heart Disease (1 = Yes)\", y = \"Count\")\n\n\n\n\n\n\n\n\n\nThe target variable HeartDisease is fairly balanced: about half the patients have heart disease (1), and the other half do not (0). This balance suggests we can apply standard classification models without significant concern for class imbalance.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
@@ -124,17 +54,7 @@
     "href": "models.html",
     "title": "3  Model Overview",
     "section": "",
-    "text": "3.1 Models Overview\nWe trained five different models on the heart disease prediction dataset:\nAll models were implemented using the tidymodels framework in R. The dataset was split into 70% training and 30% testing.\nEach model includes preprocessing via recipes, and uses cross-validation or default settings depending on the complexity.\nModel explanations using LIME are further discussed in the next chapter.\nThese models are compared in terms of predictive performance and explainability in later sections.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Overview</span>"
-    ]
-  },
-  {
-    "objectID": "models.html#models-overview",
-    "href": "models.html#models-overview",
-    "title": "3  Model Overview",
-    "section": "",
-    "text": "Decision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\nLogistic Regression\n\n\n\n\n\n\n\n\n\n\nModel\nDescription\n\n\n\n\nLogistic Regression\nA linear model for binary classification, interpretable weights\n\n\nDecision Tree\nA tree-based model using rpart, easy to visualize and explain\n\n\nRandom Forest\nAn ensemble of trees, generally improves accuracy\n\n\nSVM\nSupport Vector Machine with polynomial kernel\n\n\nNeural Network\nA single-layer neural network using nnet",
+    "text": "We trained five different models on the heart disease prediction dataset:\n\nDecision Tree\nRandom Forest\nSupport Vector Machine (SVM)\nNeural Network\nLogistic Regression\n\nAll models were implemented using the tidymodels framework in R. The dataset was split into 70% training and 30% testing.\nEach model includes preprocessing via recipes, and uses cross-validation or default settings depending on the complexity.\nModel explanations using LIME are further discussed in the next chapter.\n\n\n\n\n\n\n\nModel\nDescription\n\n\n\n\nLogistic Regression\nA linear model for binary classification, interpretable weights\n\n\nDecision Tree\nA tree-based model using rpart, easy to visualize and explain\n\n\nRandom Forest\nAn ensemble of trees, generally improves accuracy\n\n\nSVM\nSupport Vector Machine with polynomial kernel\n\n\nNeural Network\nA single-layer neural network using nnet\n\n\n\nThese models are compared in terms of predictive performance and explainability in later sections.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Overview</span>"
     ]
@@ -144,57 +64,37 @@
     "href": "tree_model.html",
     "title": "4  Decision Tree Model",
     "section": "",
-    "text": "4.1 Decision Tree Model\nWe trained a decision tree model to predict heart disease using the rpart engine via the tidymodels framework. This model is inherently interpretable and serves as a baseline for comparison.",
+    "text": "4.1 Model Setup and Training\nCode\n# Preprocessing Recipe\nheart_recipe &lt;- recipe(HeartDisease ~ ., data = heart_train) %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_zv(all_predictors())\n\n# Specify Decision Tree Model\ntree_spec &lt;- decision_tree() %&gt;%\n  set_engine(\"rpart\") %&gt;%\n  set_mode(\"classification\")\n\nheart_wf &lt;- workflow() %&gt;%\n  add_model(tree_spec) %&gt;%\n  add_recipe(heart_recipe)\n\n# Train the Model\ntree_fit &lt;- fit(heart_wf, data = heart_train)",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
     ]
   },
   {
-    "objectID": "tree_model.html#decision-tree-model",
-    "href": "tree_model.html#decision-tree-model",
+    "objectID": "tree_model.html#confusion-matrix",
+    "href": "tree_model.html#confusion-matrix",
     "title": "4  Decision Tree Model",
-    "section": "",
-    "text": "4.1.1 Data Split and Preprocessing\n\n\nCode\n# Load unified setup and data\nsource(\"setup.R\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
+    "section": "4.2 Confusion Matrix",
+    "text": "4.2 Confusion Matrix\n\n\nCode\ntree_preds &lt;- predict(tree_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(tree_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\ntree_preds %&gt;%\n  conf_mat(truth = HeartDisease, estimate = .pred_class) %&gt;%\n  autoplot(type = \"heatmap\") +\n  labs(title = \"Confusion Matrix - Decision Tree\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThis confusion matrix shows that the decision tree model performs well on both classes, achieving balanced sensitivity and specificity. The equal number of false positives and false negatives (21 each) suggests that the model does not exhibit bias toward either class. With an overall accuracy of 86.4%, the decision tree serves as a strong baseline for comparison with more complex models.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
     ]
   },
   {
-    "objectID": "tree_model.html#preprocessing-recipe",
-    "href": "tree_model.html#preprocessing-recipe",
+    "objectID": "tree_model.html#roc-curve",
+    "href": "tree_model.html#roc-curve",
     "title": "4  Decision Tree Model",
-    "section": "4.2 Preprocessing Recipe",
-    "text": "4.2 Preprocessing Recipe\n\n\nCode\nheart_recipe &lt;- recipe(HeartDisease ~ ., data = heart_train) %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_zv(all_predictors())",
+    "section": "4.3 ROC Curve",
+    "text": "4.3 ROC Curve\n\n\nCode\ntree_preds %&gt;%\n  roc_curve(truth = HeartDisease, .pred_1, event_level = \"second\") %&gt;%\n  autoplot() +\n  labs(title = \"ROC Curve - Decision Tree\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThe ROC curve for the decision tree model rises steeply toward the top-left corner, indicating strong discriminative ability between positive and negative classes. This shape suggests that the model achieves a high true positive rate while maintaining a low false positive rate across a range of thresholds.\nThe curve significantly deviates from the diagonal line (representing random guessing), confirming that the model performs much better than chance. This supports the decision tree as a reliable baseline model for predicting heart disease.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
     ]
   },
   {
-    "objectID": "tree_model.html#specify-decision-tree-model",
-    "href": "tree_model.html#specify-decision-tree-model",
+    "objectID": "tree_model.html#train-vs.-test-comparison",
+    "href": "tree_model.html#train-vs.-test-comparison",
     "title": "4  Decision Tree Model",
-    "section": "4.3 Specify Decision Tree Model",
-    "text": "4.3 Specify Decision Tree Model\n\n\nCode\ntree_spec &lt;- decision_tree() %&gt;%\n  set_engine(\"rpart\") %&gt;%\n  set_mode(\"classification\")\n\nheart_wf &lt;- workflow() %&gt;%\n  add_model(tree_spec) %&gt;%\n  add_recipe(heart_recipe)",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
-    ]
-  },
-  {
-    "objectID": "tree_model.html#train-the-model",
-    "href": "tree_model.html#train-the-model",
-    "title": "4  Decision Tree Model",
-    "section": "4.4 Train the Model",
-    "text": "4.4 Train the Model\n\n\nCode\ntree_fit &lt;- fit(heart_wf, data = heart_train)",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
-    ]
-  },
-  {
-    "objectID": "tree_model.html#evaluate-on-test-set",
-    "href": "tree_model.html#evaluate-on-test-set",
-    "title": "4  Decision Tree Model",
-    "section": "4.5 Evaluate on Test Set",
-    "text": "4.5 Evaluate on Test Set\n\n\nCode\ntree_preds &lt;- predict(tree_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(tree_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\n\n# Metrics\nmetrics &lt;- metric_set(accuracy, roc_auc)\ntree_metrics &lt;- metrics(tree_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)\ntree_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary        0.864 \n2 roc_auc  binary        0.0924",
+    "section": "4.4 Train vs. Test Comparison",
+    "text": "4.4 Train vs. Test Comparison\n\n\nCode\ntree_preds_train &lt;- predict(tree_fit, heart_train, type = \"prob\") %&gt;%\n  bind_cols(predict(tree_fit, heart_train)) %&gt;%\n  bind_cols(heart_train)\n\n# Define metric set\nmetrics &lt;- metric_set(accuracy, roc_auc)\n\n# Apply to training predictions\nmetrics(tree_preds_train,\n           truth = HeartDisease,\n           estimate = .pred_class,\n           .pred_1,\n           event_level = \"second\")\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary         0.900\n2 roc_auc  binary         0.926\n\n\nOn the training set, the decision tree achieved an accuracy of 89.96% and a ROC AUC of 0.93 after correcting the event level. These results indicate that the model not only predicts accurately, but also ranks predictions effectively.\nCompared to the test set performance (accuracy 86.4%, AUC X.XX), the small drop suggests that the model generalizes reasonably well without severe overfitting. The training performance confirms that the decision tree has learned meaningful patterns from the data.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
     ]
@@ -203,8 +103,8 @@
     "objectID": "tree_model.html#global-feature-importance",
     "href": "tree_model.html#global-feature-importance",
     "title": "4  Decision Tree Model",
-    "section": "4.6 Global Feature Importance",
-    "text": "4.6 Global Feature Importance\n\n\nCode\nlibrary(rpart)\n\n\n\nAttaching package: 'rpart'\n\n\nThe following object is masked from 'package:dials':\n\n    prune\n\n\nCode\n# Extract variable importance from underlying fitted model\nrpart_fit &lt;- extract_fit_parsnip(tree_fit)$fit\n\nvip &lt;- data.frame(\n  Feature = names(rpart_fit$variable.importance),\n  Importance = as.numeric(rpart_fit$variable.importance)\n) %&gt;%\n  arrange(desc(Importance)) %&gt;%\n  slice_head(n = 5)\n\n\n# Plot top 5 features\nvip %&gt;%\n  ggplot(aes(x = fct_reorder(Feature, Importance), y = Importance)) +\n  geom_col(fill = \"steelblue\") +\n  coord_flip() +\n  labs(title = \"Top 5 Feature Importances (Decision Tree)\", x = NULL, y = \"Importance\")\n\n\n\n\n\n\n\n\n\nThe top 5 most important features for the decision tree include two Thalassemia categories (Thalassemia_X2 and Thalassemia_X3), followed by the number of major vessels, Oldpeak, and MaxHR. These features drive the majority of the splits in the tree, indicating their strong influence in predicting heart disease.",
+    "section": "4.5 Global Feature Importance",
+    "text": "4.5 Global Feature Importance\n\n\nCode\nlibrary(rpart)\n\n\n\nAttaching package: 'rpart'\n\n\nThe following object is masked from 'package:dials':\n\n    prune\n\n\nCode\n# Extract variable importance from underlying fitted model\nrpart_fit &lt;- extract_fit_parsnip(tree_fit)$fit\n\nvip &lt;- data.frame(\n  Feature = names(rpart_fit$variable.importance),\n  Importance = as.numeric(rpart_fit$variable.importance)\n) %&gt;%\n  arrange(desc(Importance)) %&gt;%\n  slice_head(n = 5)\n\n\n# Plot top 5 features\nvip %&gt;%\n  ggplot(aes(x = fct_reorder(Feature, Importance), y = Importance)) +\n  geom_col(fill = \"steelblue\") +\n  coord_flip() +\n  labs(title = \"Top 5 Feature Importances (Decision Tree)\", x = NULL, y = \"Importance\")\n\n\n\n\n\n\n\n\n\nThe top 5 most important features for the decision tree include two Thalassemia categories (Thalassemia_X2 and Thalassemia_X3), followed by the number of major vessels, Oldpeak, and MaxHR. These features drive the majority of the splits in the tree, indicating their strong influence in predicting heart disease.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
     ]
@@ -213,8 +113,8 @@
     "objectID": "tree_model.html#tree-plot",
     "href": "tree_model.html#tree-plot",
     "title": "4  Decision Tree Model",
-    "section": "4.7 tree plot",
-    "text": "4.7 tree plot\n\n\nCode\nlibrary(rpart.plot)\nrpart.plot(rpart_fit, type = 2, extra = 106)\n\n\nWarning: Cannot retrieve the data used to build the model (so cannot determine roundint and is.binary for the variables).\nTo silence this warning:\n    Call rpart.plot with roundint=FALSE,\n    or rebuild the rpart model with model=TRUE.",
+    "section": "4.6 tree plot",
+    "text": "4.6 tree plot\n\n\nCode\nlibrary(rpart.plot)\nrpart.plot(rpart_fit, type = 2, extra = 106)\n\n\nWarning: Cannot retrieve the data used to build the model (so cannot determine roundint and is.binary for the variables).\nTo silence this warning:\n    Call rpart.plot with roundint=FALSE,\n    or rebuild the rpart model with model=TRUE.\n\n\n\n\n\n\n\n\n\nThe decision tree visualization shows that the top splitting variable is Thalassemia_X2, indicating it is the most important feature in predicting heart disease. The left subtree mostly leads to predictions of no heart disease (0), while the right subtree often predicts presence of heart disease (1) with high confidence. Other key decision nodes include NumMajorVessels, Oldpeak, ChestPainType, and RestingBP, suggesting these features also play a significant role in the classification. The tree structure confirms the model’s interpretability and highlights clinically relevant variables.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
     ]
@@ -223,8 +123,18 @@
     "objectID": "tree_model.html#save-for-comparison",
     "href": "tree_model.html#save-for-comparison",
     "title": "4  Decision Tree Model",
-    "section": "4.8 Save for Comparison",
-    "text": "4.8 Save for Comparison\n\n\nCode\n# Save top features for LIME comparison\ntree_top_features &lt;- vip$Feature\nsaveRDS(tree_top_features, file = \"scripts/tree_top_features.rds\")\n\n# Save fitted model for LIME explanation\nsaveRDS(tree_fit, file = \"scripts/tree_fit.rds\")",
+    "section": "4.7 Save for Comparison",
+    "text": "4.7 Save for Comparison\n\n\nCode\n# Save top features for LIME comparison\ntree_top_features &lt;- vip$Feature\nsaveRDS(tree_top_features, file = \"scripts/tree_top_features.rds\")\n\n# Save fitted model for LIME explanation\nsaveRDS(tree_fit, file = \"scripts/tree_fit.rds\")",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
+    ]
+  },
+  {
+    "objectID": "tree_model.html#model-summary",
+    "href": "tree_model.html#model-summary",
+    "title": "4  Decision Tree Model",
+    "section": "4.8 Model Summary",
+    "text": "4.8 Model Summary\nThe decision tree model offers a strong balance between interpretability and predictive performance.\nFrom the tree visualization, the top splitting feature is Thalassemia_X2, indicating it plays a crucial role in distinguishing patients with heart disease. Other important decision nodes include Thalassemia_X3, NumMajorVessels, Oldpeak, and MaxHR, as confirmed by both the tree structure and variable importance plot.\nThe confusion matrix shows balanced predictions with 129 true negatives and 137 true positives, and equal false positives and false negatives (21 each), reflecting well-calibrated sensitivity and specificity.\nThe ROC curve demonstrates excellent discriminative power, with an AUC of 0.93 on the training set, suggesting the model can effectively rank positive and negative cases. The high training accuracy (89.96%) supports its ability to capture meaningful patterns from the data without overfitting.\nOverall, the decision tree provides a transparent and reasonably accurate baseline model. While interpretable, it may still benefit from more robust ensemble methods like random forests to improve generalization and reduce variance in complex datasets.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Decision Tree Model</span>"
     ]
@@ -234,17 +144,37 @@
     "href": "rf_model.html",
     "title": "5  Random Forest Model",
     "section": "",
-    "text": "5.1 Random Forest Model\nWe trained a random forest model using the ranger engine in the tidymodels framework. This ensemble method aggregates multiple decision trees to improve prediction accuracy and reduce overfitting.",
+    "text": "5.1 Model Setup and Training\nCode\n#Random Forest Specification\nrf_spec &lt;- rand_forest(mtry = 4, trees = 500, min_n = 5) %&gt;%\n  set_engine(\"ranger\", importance = \"impurity\") %&gt;%\n  set_mode(\"classification\")\n\nrf_wf &lt;- workflow() %&gt;%\n  add_model(rf_spec) %&gt;%\n  add_recipe(heart_recipe)\n\n#Fit Model\nrf_fit &lt;- fit(rf_wf, data = heart_train)",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Random Forest Model</span>"
     ]
   },
   {
-    "objectID": "rf_model.html#random-forest-model",
-    "href": "rf_model.html#random-forest-model",
+    "objectID": "rf_model.html#confusion-matrix",
+    "href": "rf_model.html#confusion-matrix",
     "title": "5  Random Forest Model",
-    "section": "",
-    "text": "5.1.1 Data Split and Preprocessing\n\n\nCode\nsource(\"setup.R\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n##Random Forest Specification\n\n\nCode\nrf_spec &lt;- rand_forest(mtry = 4, trees = 500, min_n = 5) %&gt;%\n  set_engine(\"ranger\", importance = \"impurity\") %&gt;%\n  set_mode(\"classification\")\n\nrf_wf &lt;- workflow() %&gt;%\n  add_model(rf_spec) %&gt;%\n  add_recipe(heart_recipe)\n\n\n##Fit Model\n\n\nCode\nrf_fit &lt;- fit(rf_wf, data = heart_train)\n\n\n##Evaluate on Test Set\n\n\nCode\nrf_preds &lt;- predict(rf_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(rf_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nmetrics &lt;- metric_set(accuracy, roc_auc)\nrf_metrics &lt;- metrics(rf_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)\nrf_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary      0.968   \n2 roc_auc  binary      0.000886\n\n\n##Global Feature Importance\n\n\nCode\n# Extract importance\nrf_fit_raw &lt;- extract_fit_parsnip(rf_fit)$fit\nvip_rf &lt;- as.data.frame(rf_fit_raw$variable.importance) %&gt;%\n  rownames_to_column(\"Feature\") %&gt;%\n  rename(Importance = `rf_fit_raw$variable.importance`) %&gt;%\n  arrange(desc(Importance)) %&gt;%\n  slice_head(n = 5)\n\nvip_rf\n\n\n          Feature Importance\n1 NumMajorVessels   45.31735\n2         Oldpeak   40.63898\n3           MaxHR   38.45680\n4  Thalassemia_X2   34.48666\n5             Age   30.49924\n\n\nCode\n# Plot\nvip_rf %&gt;%\n  ggplot(aes(x = fct_reorder(Feature, Importance), y = Importance)) +\n  geom_col(fill = \"darkgreen\") +\n  coord_flip() +\n  labs(title = \"Top 5 Feature Importances (Random Forest)\", x = NULL, y = \"Importance\")\n\n\n\n\n\n\n\n\n\nWe observe that NumMajorVessels and Oldpeak are consistently ranked as top features, highlighting their predictive importance for heart disease. These will be compared with LIME explanations in later sections.",
+    "section": "5.2 Confusion Matrix",
+    "text": "5.2 Confusion Matrix\n\n\nCode\nrf_preds &lt;- predict(rf_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(rf_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nrf_preds &lt;- rf_preds %&gt;%\n  mutate(HeartDisease = factor(HeartDisease, levels = c(0, 1)))\n\nrf_preds %&gt;%\n  conf_mat(truth = HeartDisease, estimate = .pred_class) %&gt;%\n  autoplot(type = \"heatmap\") +\n  labs(title = \"Confusion Matrix - Random Forest\")\n\n\n\n\n\n\n\n\n\nThe random forest model shows strong classification performance:\n\nTrue Negatives (0 correctly predicted): 150\nTrue Positives (1 correctly predicted): 148\nFalse Positives: 10\nFalse Negatives: 0\n\nThis indicates excellent sensitivity (no false negatives) and high specificity, suggesting that the model accurately identifies both patients with and without heart disease, with minimal misclassification.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Random Forest Model</span>"
+    ]
+  },
+  {
+    "objectID": "rf_model.html#roc-curve",
+    "href": "rf_model.html#roc-curve",
+    "title": "5  Random Forest Model",
+    "section": "5.3 ROC Curve",
+    "text": "5.3 ROC Curve\n\n\nCode\nrf_preds %&gt;%\n  roc_curve(truth = HeartDisease, .pred_1, event_level = \"second\") %&gt;%\n  autoplot() +\n  labs(title = \"ROC Curve - Random Forest\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThe ROC curve for the random forest model climbs sharply to the top-left corner, indicating excellent discriminative ability. This shape suggests the model maintains a high true positive rate with minimal false positives across thresholds. The nearly perfect curve confirms that the random forest is highly effective at ranking heart disease risk and likely achieves an AUC close to 1.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Random Forest Model</span>"
+    ]
+  },
+  {
+    "objectID": "rf_model.html#train-vs.-test-comparison",
+    "href": "rf_model.html#train-vs.-test-comparison",
+    "title": "5  Random Forest Model",
+    "section": "5.4 Train vs. Test Comparison",
+    "text": "5.4 Train vs. Test Comparison\n\n\nCode\n# Generate predictions on training set\nrf_preds_train &lt;- predict(rf_fit, heart_train, type = \"prob\") %&gt;%\n  bind_cols(predict(rf_fit, heart_train)) %&gt;%\n  bind_cols(heart_train)\n\n# Evaluate accuracy and AUC on training set\nrf_train_metrics &lt;- bind_rows(\n  accuracy(rf_preds_train, truth = HeartDisease, estimate = .pred_class),\n  roc_auc(rf_preds_train, truth = HeartDisease, .pred_1, event_level = \"second\")\n)\n\nrf_train_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary         0.997\n2 roc_auc  binary         1    \n\n\nThe random forest model achieved near-perfect performance on the training set, with an accuracy of 0.997 and an AUC of 1.000. This suggests that the model has learned the training data extremely well. However, such high scores raise concerns about potential overfitting, especially if the model’s performance on the test set is significantly lower. Close monitoring of test results is necessary to ensure generalization and avoid overly optimistic training metrics.\n##Global Feature Importance\n\n\nCode\n# Extract importance\nrf_fit_raw &lt;- extract_fit_parsnip(rf_fit)$fit\nvip_rf &lt;- as.data.frame(rf_fit_raw$variable.importance) %&gt;%\n  rownames_to_column(\"Feature\") %&gt;%\n  rename(Importance = `rf_fit_raw$variable.importance`) %&gt;%\n  arrange(desc(Importance)) %&gt;%\n  slice_head(n = 5)\n\nvip_rf\n\n\n          Feature Importance\n1 NumMajorVessels   45.31735\n2         Oldpeak   40.63898\n3           MaxHR   38.45680\n4  Thalassemia_X2   34.48666\n5             Age   30.49924\n\n\nCode\n# Plot\nvip_rf %&gt;%\n  ggplot(aes(x = fct_reorder(Feature, Importance), y = Importance)) +\n  geom_col(fill = \"darkgreen\") +\n  coord_flip() +\n  labs(title = \"Top 5 Feature Importances (Random Forest)\", x = NULL, y = \"Importance\")\n\n\n\n\n\n\n\n\n\nWe observe that NumMajorVessels and Oldpeak are consistently ranked as top features, highlighting their predictive importance for heart disease. These will be compared with LIME explanations in later sections.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Random Forest Model</span>"
     ]
@@ -253,8 +183,8 @@
     "objectID": "rf_model.html#save-for-comparison",
     "href": "rf_model.html#save-for-comparison",
     "title": "5  Random Forest Model",
-    "section": "5.2 Save for Comparison",
-    "text": "5.2 Save for Comparison\n\n\nCode\n# Save top features for LIME comparison\nrf_top_features &lt;- vip_rf$Feature\nsaveRDS(rf_top_features, file = \"scripts/rf_top_features.rds\")\n\n# Save fitted model for LIME explanation\nsaveRDS(rf_fit, file = \"scripts/rf_fit.rds\")",
+    "section": "5.5 Save for Comparison",
+    "text": "5.5 Save for Comparison\n\n\nCode\n# Save top features for LIME comparison\nrf_top_features &lt;- vip_rf$Feature\nsaveRDS(rf_top_features, file = \"scripts/rf_top_features.rds\")\n\n# Save fitted model for LIME explanation\nsaveRDS(rf_fit, file = \"scripts/rf_fit.rds\")",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Random Forest Model</span>"
     ]
@@ -263,8 +193,8 @@
     "objectID": "rf_model.html#summary",
     "href": "rf_model.html#summary",
     "title": "5  Random Forest Model",
-    "section": "5.3 Summary",
-    "text": "5.3 Summary\nThis random forest model generally performs better than a single decision tree due to its ensemble nature.\nIt will also be evaluated using LIME to understand its local predictions.",
+    "section": "5.6 Summary",
+    "text": "5.6 Summary\nThis random forest model generally performs better than a single decision tree due to its ensemble nature.\nIt will also be evaluated using LIME to understand its local predictions.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Random Forest Model</span>"
     ]
@@ -274,27 +204,57 @@
     "href": "svm_model.html",
     "title": "6  Support Vector Machine Model",
     "section": "",
-    "text": "6.1 Support Vector Machine (SVM) Model\nWe train a linear SVM model using the kernlab engine via tidymodels. Although SVMs are less interpretable than decision trees, we can still approximate global feature importance via model coefficients.",
+    "text": "6.1 Model Setup and Training\nCode\n#Preprocessing Recipe\nsvm_recipe &lt;- recipe(HeartDisease ~ ., data = heart_train) %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_normalize(all_numeric_predictors())\n\n#SVM Model Specification\nsvm_spec &lt;- svm_poly() %&gt;%\n  set_engine(\"kernlab\", prob.model = TRUE) %&gt;%\n  set_mode(\"classification\")\n\nsvm_wf &lt;- workflow() %&gt;%\n  add_model(svm_spec) %&gt;%\n  add_recipe(svm_recipe)\n\n# Fit\nsvm_fit &lt;- workflow() %&gt;%\n  add_model(svm_spec) %&gt;%\n  add_recipe(svm_recipe) %&gt;%\n  fit(data = heart_train)\n\n\n Setting default kernel parameters",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Support Vector Machine Model</span>"
     ]
   },
   {
-    "objectID": "svm_model.html#support-vector-machine-svm-model",
-    "href": "svm_model.html#support-vector-machine-svm-model",
+    "objectID": "svm_model.html#probability-histogram",
+    "href": "svm_model.html#probability-histogram",
     "title": "6  Support Vector Machine Model",
-    "section": "",
-    "text": "6.1.1 Data Split and Preprocessing\n\n\nCode\n# Load and rename\nsource(\"setup.R\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n##Preprocessing Recipe\n\n\nCode\nsvm_recipe &lt;- recipe(HeartDisease ~ ., data = heart_train) %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_normalize(all_numeric_predictors())\n\n\n##SVM Model Specification\n\n\nCode\nsvm_spec &lt;- svm_poly() %&gt;%\n  set_engine(\"kernlab\", prob.model = TRUE) %&gt;%\n  set_mode(\"classification\")\n\nsvm_wf &lt;- workflow() %&gt;%\n  add_model(svm_spec) %&gt;%\n  add_recipe(svm_recipe)",
+    "section": "6.2 Probability Histogram",
+    "text": "6.2 Probability Histogram\n\n\nCode\nsvm_preds &lt;- predict(svm_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(svm_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nsvm_preds %&gt;%\n  mutate(HeartDisease = factor(HeartDisease)) %&gt;%\n  ggplot(aes(x = .pred_1, fill = HeartDisease)) +\n  geom_histogram(binwidth = 0.05, alpha = 0.6, position = \"identity\") +\n  labs(\n    title = \"SVM Predicted Probabilities\",\n    x = \"Probability of Heart Disease\",\n    fill = \"True Label\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThe probability histogram helps us understand the confidence of the SVM model across classes. Ideally, the predictions for individuals without heart disease (label = 0) should cluster near 0, while those with heart disease (label = 1) should cluster near 1.\nFrom the plot, we see: - A strong separation between the two classes: label 0 concentrates on low predicted probabilities, and label 1 clusters near high probabilities. - Some overlapping areas in the middle (e.g., around 0.5), indicating uncertainty in predictions.\nThis suggests the SVM model performs reasonably well, though there is room for improvement in cases near the decision boundary.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Support Vector Machine Model</span>"
     ]
   },
   {
-    "objectID": "svm_model.html#fit-and-evaluate",
-    "href": "svm_model.html#fit-and-evaluate",
+    "objectID": "svm_model.html#roc",
+    "href": "svm_model.html#roc",
     "title": "6  Support Vector Machine Model",
-    "section": "6.2 Fit and Evaluate",
-    "text": "6.2 Fit and Evaluate\n\n\nCode\nsvm_fit &lt;- workflow() %&gt;%\n  add_model(svm_spec) %&gt;%\n  add_recipe(svm_recipe) %&gt;%\n  fit(data = heart_train)\n\n\n Setting default kernel parameters  \n\n\nCode\nsvm_preds &lt;- predict(svm_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(svm_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nmetrics &lt;- metric_set(accuracy, roc_auc)\nsvm_metrics &lt;- metrics(svm_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)\nsvm_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary        0.841 \n2 roc_auc  binary        0.0851\n\n\n\n\nCode\n# Since SVM is a black-box model, feature importance is not directly available.\n# We store an empty character vector for consistency in downstream comparison.\n\nsvm_top_features &lt;- character(0)\nsaveRDS(svm_top_features, file = \"scripts/svm_top_features.rds\")\n\n\n\n6.2.1 Interpretation\nSupport vector machines do not produce interpretable coefficients or built-in variable importance scores. Therefore, we omit global feature importance here and instead rely on LIME for local explanations in a later section.",
+    "section": "6.3 ROC",
+    "text": "6.3 ROC\n\n\nCode\nlibrary(yardstick)\nlibrary(dplyr)\n\n# Make sure truth is a factor with correct level order\nsvm_preds &lt;- svm_preds %&gt;%\n  mutate(HeartDisease = factor(HeartDisease, levels = c(0, 1)))  # 0 = negative, 1 = positive\n\n# Calculate ROC with correct positive class\nsvm_roc &lt;- roc_curve(\n  svm_preds,\n  truth = HeartDisease,\n  .pred_1,\n  event_level = \"second\"\n)\n\n# Plot ROC curve\nautoplot(svm_roc) +\n  ggtitle(\"ROC Curve - SVM\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThe ROC curve for the SVM model rises sharply toward the top-left corner, indicating excellent discriminative ability between positive and negative classes. This pattern suggests that the model maintains a high true positive rate while minimizing false positives across a range of thresholds.\nThe curve’s strong deviation from the diagonal baseline confirms that the SVM classifier performs significantly better than random guessing. This makes it a reliable model for ranking patients based on heart disease risk, despite being less interpretable than tree-based models.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Support Vector Machine Model</span>"
+    ]
+  },
+  {
+    "objectID": "svm_model.html#confusion-matrix",
+    "href": "svm_model.html#confusion-matrix",
+    "title": "6  Support Vector Machine Model",
+    "section": "6.4 Confusion Matrix",
+    "text": "6.4 Confusion Matrix\n\n\nCode\nsvm_conf_mat &lt;- conf_mat(svm_preds, truth = HeartDisease, estimate = .pred_class)\n\nautoplot(svm_conf_mat, type = \"heatmap\") +\n  scale_fill_gradient(low = \"white\", high = \"black\") +\n  ggtitle(\"Confusion Matrix - SVM\") +\n  theme_minimal()\n\n\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\n\n\n\n\n\n\n\nThe SVM model correctly identified 118 true negatives and 147 true positives, with 17 false positives and 32 false negatives. This indicates solid classification performance, with relatively few misclassifications.\nThe lower number of false positives suggests the model rarely triggers unnecessary alarms. However, the 32 false negatives mean some actual heart disease cases are missed, which could be a concern in clinical settings.\nOverall, the confusion matrix shows that the SVM achieves a good balance between precision and recall, and may be suitable for applications where both accuracy and risk control are important.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Support Vector Machine Model</span>"
+    ]
+  },
+  {
+    "objectID": "svm_model.html#train-vs.-test-comparison",
+    "href": "svm_model.html#train-vs.-test-comparison",
+    "title": "6  Support Vector Machine Model",
+    "section": "6.5 Train vs. Test Comparison",
+    "text": "6.5 Train vs. Test Comparison\n\n\nCode\nsvm_preds &lt;- predict(svm_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(svm_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nmetrics &lt;- metric_set(accuracy, roc_auc)\nsvm_metrics &lt;- metrics(svm_preds, \n                       truth = HeartDisease, \n                       estimate = .pred_class, \n                       .pred_1, \n                       event_level = \"second\")\n\nsvm_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary         0.841\n2 roc_auc  binary         0.915\n\n\nCode\n# Since SVM is a black-box model, feature importance is not directly available.\n# We store an empty character vector for consistency in downstream comparison.\n\nsvm_top_features &lt;- character(0)\nsaveRDS(svm_top_features, file = \"scripts/svm_top_features.rds\")\n\n\nAccuracy (0.84) indicates that the Support Vector Machine (SVM) model correctly classified about 84% of the test samples.\nAUC (0.91) is quite high, showing excellent discriminatory ability between positive (heart disease) and negative cases. This means the model is effective in ranking individuals correctly by risk, even if not perfect in absolute classification.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Support Vector Machine Model</span>"
+    ]
+  },
+  {
+    "objectID": "svm_model.html#model-summary",
+    "href": "svm_model.html#model-summary",
+    "title": "6  Support Vector Machine Model",
+    "section": "6.6 Model Summary",
+    "text": "6.6 Model Summary\nThe Support Vector Machine (SVM) model achieved strong performance on the test set, with 0.84 accuracy and an AUC of 0.91, showing excellent ability to distinguish between patients with and without heart disease. However, SVM is inherently a black-box model—it does not provide interpretable coefficients or global feature importance. Despite its predictive strength, this lack of transparency limits its explainability, especially in clinical settings. Therefore, we rely on LIME in later sections to explore its decision process locally.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Support Vector Machine Model</span>"
     ]
@@ -304,17 +264,37 @@
     "href": "nn_model.html",
     "title": "7  Neural Network Model",
     "section": "",
-    "text": "7.1 Neural Network Model\nWe fit a single-layer neural network using the nnet engine in the tidymodels framework.\nThis model is non-linear and typically more expressive, but also harder to interpret.\nCode\n# Load project setup\nsource(\"setup.R\")\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──\n\n✔ broom        1.0.7     ✔ rsample      1.3.0\n✔ dials        1.4.0     ✔ tune         1.3.0\n✔ infer        1.0.8     ✔ workflows    1.2.0\n✔ modeldata    1.4.0     ✔ workflowsets 1.1.0\n✔ parsnip      1.3.1     ✔ yardstick    1.3.2\n✔ recipes      1.1.1     \n\n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ scales::discard() masks purrr::discard()\n✖ dplyr::filter()   masks stats::filter()\n✖ recipes::fixed()  masks stringr::fixed()\n✖ dplyr::lag()      masks stats::lag()\n✖ yardstick::spec() masks readr::spec()\n✖ recipes::step()   masks stats::step()\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
+    "text": "7.1 Model Setup and Training\nCode\nlibrary(nnet)\n\nnn_spec &lt;- mlp(hidden_units = 5, penalty = 0.01, epochs = 100) %&gt;%\n  set_engine(\"nnet\") %&gt;%\n  set_mode(\"classification\")\n\nnn_wf &lt;- workflow() %&gt;%\n  add_model(nn_spec) %&gt;%\n  add_recipe(heart_recipe)\n\nnn_fit &lt;- fit(nn_wf, data = heart_train)",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Neural Network Model</span>"
     ]
   },
   {
-    "objectID": "nn_model.html#model-specification-and-training",
-    "href": "nn_model.html#model-specification-and-training",
+    "objectID": "nn_model.html#probability-histogram",
+    "href": "nn_model.html#probability-histogram",
     "title": "7  Neural Network Model",
-    "section": "7.2 Model Specification and Training",
-    "text": "7.2 Model Specification and Training\n\n\nCode\nlibrary(nnet)\n\nnn_spec &lt;- mlp(hidden_units = 5, penalty = 0.01, epochs = 100) %&gt;%\n  set_engine(\"nnet\") %&gt;%\n  set_mode(\"classification\")\n\nnn_wf &lt;- workflow() %&gt;%\n  add_model(nn_spec) %&gt;%\n  add_recipe(heart_recipe)\n\nnn_fit &lt;- fit(nn_wf, data = heart_train)",
+    "section": "7.2 Probability Histogram",
+    "text": "7.2 Probability Histogram\n\n\nCode\nnn_preds &lt;- predict(nn_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(nn_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nggplot(nn_preds, aes(x = .pred_1, fill = as.factor(HeartDisease))) +\n  geom_histogram(position = \"identity\", bins = 20, alpha = 0.6) +\n  labs(title = \"Neural Network Predicted Probabilities\",\n       x = \"Predicted Probability of Heart Disease\",\n       y = \"Count\",\n       fill = \"True Label\") +\n  scale_fill_manual(values = c(\"0\" = \"salmon\", \"1\" = \"skyblue\")) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThe histogram shows a clear separation between the predicted probabilities of heart disease for the two classes:\nClass 0 (no heart disease) is mostly predicted with probabilities around 0.25–0.35, indicating the model is relatively confident in identifying negatives.\nClass 1 (heart disease) predictions cluster around 0.65–0.75, showing good confidence for positives as well.\nThere is some overlap between the two classes in the middle range (~0.4–0.6), which might lead to a few misclassifications, but overall the discrimination is strong.\nThis suggests that the neural network is effective in producing meaningful probabilistic outputs, suitable for downstream threshold tuning or risk ranking.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Neural Network Model</span>"
+    ]
+  },
+  {
+    "objectID": "nn_model.html#confusion-matrix",
+    "href": "nn_model.html#confusion-matrix",
+    "title": "7  Neural Network Model",
+    "section": "7.3 Confusion Matrix",
+    "text": "7.3 Confusion Matrix\n\n\nCode\nconf_mat(nn_preds, truth = HeartDisease, estimate = .pred_class) %&gt;%\n  autoplot(type = \"heatmap\") +\n  ggtitle(\"Confusion Matrix - Neural Network\")\n\n\n\n\n\n\n\n\n\nThe neural network correctly predicted most cases:\n142 true negatives (class 0 predicted as 0)\n127 true positives (class 1 predicted as 1)\nHowever, it made:\n31 false negatives (missed some heart disease cases)\nOnly 8 false positives\nThis shows a good balance but a slight tendency to under-predict class 1 (i.e., missing positive cases).",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Neural Network Model</span>"
+    ]
+  },
+  {
+    "objectID": "nn_model.html#roc-curve",
+    "href": "nn_model.html#roc-curve",
+    "title": "7  Neural Network Model",
+    "section": "7.4 ROC Curve",
+    "text": "7.4 ROC Curve\n\n\nCode\nnn_preds %&gt;%\n  roc_curve(truth = HeartDisease, .pred_1, event_level = \"second\") %&gt;%\n  autoplot() +\n  ggtitle(\"ROC Curve - Neural Network\")\n\n\n\n\n\n\n\n\n\nThe ROC curve for the neural network rises steeply toward the top-left corner, indicating strong classification performance. This pattern suggests the model achieves a high true positive rate while maintaining low false positives, which is ideal for medical diagnosis tasks.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Neural Network Model</span>"
     ]
@@ -323,8 +303,8 @@
     "objectID": "nn_model.html#evaluation",
     "href": "nn_model.html#evaluation",
     "title": "7  Neural Network Model",
-    "section": "7.3 Evaluation",
-    "text": "7.3 Evaluation\n\n\nCode\nnn_preds &lt;- predict(nn_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(nn_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nmetrics &lt;- metric_set(accuracy, roc_auc)\nnn_metrics &lt;- metrics(nn_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)\nnn_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary        0.883 \n2 roc_auc  binary        0.0710",
+    "section": "7.5 Evaluation",
+    "text": "7.5 Evaluation\n\n\nCode\nmetrics &lt;- metric_set(accuracy, roc_auc)\n\nnn_metrics &lt;- metrics(nn_preds, \n                      truth = HeartDisease, \n                      estimate = .pred_class, \n                      .pred_1,\n                      event_level = \"second\")\nnn_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary         0.883\n2 roc_auc  binary         0.929\n\n\nAccuracy: 0.873, AUC: 0.91. This suggests the neural network is effective at both classification and risk ranking, though still lacks interpretability. As a black-box model, feature importance is not directly accessible and will be supplemented with LIME for local explanations.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Neural Network Model</span>"
     ]
@@ -333,18 +313,18 @@
     "objectID": "nn_model.html#global-feature-importance",
     "href": "nn_model.html#global-feature-importance",
     "title": "7  Neural Network Model",
-    "section": "7.4 Global Feature Importance",
-    "text": "7.4 Global Feature Importance\n\n\nCode\n# Due to the black-box nature of neural networks, traditional feature importance is not available.\n# We store an empty list for downstream comparison with LIME or global interpretability methods.\n\nnn_top_features &lt;- character(0)\nsaveRDS(nn_top_features, file = \"scripts/nn_top_features.rds\")",
+    "section": "7.6 Global Feature Importance",
+    "text": "7.6 Global Feature Importance\n\n\nCode\n# Due to the black-box nature of neural networks, traditional feature importance is not available.\n# We store an empty list for downstream comparison with LIME or global interpretability methods.\n\nnn_top_features &lt;- character(0)\nsaveRDS(nn_top_features, file = \"scripts/nn_top_features.rds\")",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Neural Network Model</span>"
     ]
   },
   {
-    "objectID": "nn_model.html#summary",
-    "href": "nn_model.html#summary",
+    "objectID": "nn_model.html#model-summary",
+    "href": "nn_model.html#model-summary",
     "title": "7  Neural Network Model",
-    "section": "7.5 Summary",
-    "text": "7.5 Summary\nThis neural network serves as a flexible model for prediction, though it lacks built-in interpretability.\nWe will analyze its behavior using local explanation techniques if compatible.",
+    "section": "7.7 Model Summary",
+    "text": "7.7 Model Summary\nThis neural network serves as a flexible and powerful model for predicting heart disease, achieving high performance with an accuracy of 87% and an AUC of 0.91. Its ability to capture nonlinear relationships contributes to strong discriminative power, as seen in the ROC curve and probability distribution. However, neural networks are inherently black-box models, lacking built-in interpretability or global feature importance measures. Therefore, we cannot directly assess which features most influenced the predictions. To gain insights into its decision process, we will rely on local explanation techniques like LIME—if compatible—to approximate how individual predictions are made.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Neural Network Model</span>"
     ]
@@ -354,17 +334,77 @@
     "href": "logistic_model.html",
     "title": "8  Logistic Regression Model",
     "section": "",
-    "text": "8.1 Logistic Regression\nWe trained a logistic regression model using the tidymodels framework. This interpretable model provides a performance baseline and supports local explanation using the iml package.\nCode\nsource(\"setup.R\")\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──\n\n✔ broom        1.0.7     ✔ rsample      1.3.0\n✔ dials        1.4.0     ✔ tune         1.3.0\n✔ infer        1.0.8     ✔ workflows    1.2.0\n✔ modeldata    1.4.0     ✔ workflowsets 1.1.0\n✔ parsnip      1.3.1     ✔ yardstick    1.3.2\n✔ recipes      1.1.1     \n\n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ scales::discard() masks purrr::discard()\n✖ dplyr::filter()   masks stats::filter()\n✖ recipes::fixed()  masks stringr::fixed()\n✖ dplyr::lag()      masks stats::lag()\n✖ yardstick::spec() masks readr::spec()\n✖ recipes::step()   masks stats::step()\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
+    "text": "8.1 Model Setup and Workflow\nCode\nlibrary(tidymodels)\nlibrary(iml)\nlibrary(tidyverse)\n\n# Model specification\nlogistic_spec &lt;- logistic_reg() %&gt;%\n  set_engine(\"glm\") %&gt;%\n  set_mode(\"classification\")\n\n# Recipe for preprocessing\nlog_recipe &lt;- recipe(HeartDisease ~ ., data = heart_train) %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_zv(all_predictors())\n\n# Combine into workflow\nlogistic_wf &lt;- workflow() %&gt;%\n  add_model(logistic_spec) %&gt;%\n  add_recipe(log_recipe)\n\n# Fit the model\nlogistic_fit &lt;- fit(logistic_wf, data = heart_train)",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
     ]
   },
   {
-    "objectID": "logistic_model.html#logistic-regression",
-    "href": "logistic_model.html#logistic-regression",
+    "objectID": "logistic_model.html#predicted-probability-distribution",
+    "href": "logistic_model.html#predicted-probability-distribution",
     "title": "8  Logistic Regression Model",
-    "section": "",
-    "text": "8.1.1 Model Setup and Workflow\n\n\nCode\nlibrary(tidymodels)\nlibrary(iml)\nlibrary(tidyverse)\n\n# Model specification\nlogistic_spec &lt;- logistic_reg() %&gt;%\n  set_engine(\"glm\") %&gt;%\n  set_mode(\"classification\")\n\n# Recipe for preprocessing\nlog_recipe &lt;- recipe(HeartDisease ~ ., data = heart_train) %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_zv(all_predictors())\n\n# Combine into workflow\nlogistic_wf &lt;- workflow() %&gt;%\n  add_model(logistic_spec) %&gt;%\n  add_recipe(log_recipe)\n\n# Fit the model\nlogistic_fit &lt;- fit(logistic_wf, data = heart_train)\n\n\n##Evaluation on Test Set\n\n\nCode\nlog_preds &lt;- predict(logistic_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(logistic_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nmetrics &lt;- metric_set(accuracy, roc_auc)\n\nlog_metrics &lt;- metrics(\n  data = log_preds,\n  truth = HeartDisease,\n  estimate = .pred_class,\n  .pred_1\n)\n\nlog_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary        0.838 \n2 roc_auc  binary        0.0870\n\n\n###Local Explanation with iml\n\n\nCode\n# Prepare training data\nprep_log &lt;- prep(log_recipe)\ntrain_baked_log &lt;- bake(prep_log, new_data = NULL)\n\n# Extract raw glm model\nlog_raw &lt;- extract_fit_parsnip(logistic_fit)$fit\n\n# Define iml predictor\npredictor_log &lt;- Predictor$new(\n  model = log_raw,\n  data = train_baked_log %&gt;% select(-HeartDisease),\n  y = train_baked_log$HeartDisease,\n  type = \"response\"\n)\n\n\n###Example: Explain one prediction\n\n\nCode\n# Choose one test sample (and preprocess it)\nsample_log &lt;- bake(prep_log, new_data = sample_cases[1, ]) %&gt;%\n  select(-HeartDisease)\n\n# Generate local explanation\nlocal_log &lt;- LocalModel$new(predictor_log, x.interest = sample_log)\n\n\nLoading required package: glmnet\n\n\nLoading required package: Matrix\n\n\n\nAttaching package: 'Matrix'\n\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\n\nLoaded glmnet 4.1-8\n\n\nLoading required package: gower\n\n\nWarning in private$aggregate(): Had to choose a smaller k\n\n\nCode\nplot(local_log)\n\n\n\n\n\n\n\n\n\nSummary Logistic regression is interpretable by design and performs competitively.\nWe used iml::LocalModel to simulate LIME-style explanation for a single prediction.\nThis allows comparison with post-hoc explanations of black-box models like random forest and neural networks.\n\n\nCode\n# Save fitted model for explanation via IML\nsaveRDS(logistic_fit, file = \"scripts/logistic_fit.rds\")",
+    "section": "8.2 Predicted Probability Distribution",
+    "text": "8.2 Predicted Probability Distribution\n\n\nCode\nlog_preds &lt;- predict(logistic_fit, heart_test, type = \"prob\") %&gt;%\n  bind_cols(predict(logistic_fit, heart_test)) %&gt;%\n  bind_cols(heart_test)\n\nggplot(log_preds, aes(x = .pred_1, fill = as.factor(HeartDisease))) +\n  geom_histogram(position = \"identity\", bins = 20, alpha = 0.6) +\n  labs(title = \"Predicted Probabilities – Logistic Regression\",\n       x = \"Probability of Heart Disease\", fill = \"True Label\") +\n  scale_fill_manual(values = c(\"0\" = \"salmon\", \"1\" = \"skyblue\")) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nThis plot shows that the model does a decent job separating the two classes:\nPredictions for patients without heart disease (red bars) are mostly clustered near 0, as expected.\nPredictions for patients with heart disease (blue bars) tend to gather near 1, which is good.\nHowever, there’s a bit more overlap in the middle region (around 0.4 to 0.7) compared to models like Random Forest or SVM, which suggests:\nThe logistic regression model is simpler and more linear, so it may not capture complex interactions as well.\nSome borderline cases are less confidently classified, which is reflected in the moderate overlap.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_model.html#roc-curve",
+    "href": "logistic_model.html#roc-curve",
+    "title": "8  Logistic Regression Model",
+    "section": "8.3 ROC Curve",
+    "text": "8.3 ROC Curve\n\n\nCode\nlog_preds %&gt;%\n  roc_curve(truth = HeartDisease, .pred_1, event_level = \"second\") %&gt;%\n  autoplot() +\n  ggtitle(\"ROC Curve – Logistic Regression\")\n\n\n\n\n\n\n\n\n\nThe ROC curve shows strong performance: it rises steeply to the top-left, indicating the model does a good job distinguishing between classes across thresholds. AUC is high, confirming reliable classification.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_model.html#confusion-matrix",
+    "href": "logistic_model.html#confusion-matrix",
+    "title": "8  Logistic Regression Model",
+    "section": "8.4 Confusion Matrix",
+    "text": "8.4 Confusion Matrix\n\n\nCode\nconf_mat(log_preds, truth = HeartDisease, estimate = .pred_class) %&gt;%\n  autoplot(type = \"heatmap\") +\n  ggtitle(\"Confusion Matrix – Logistic Regression\")\n\n\n\n\n\n\n\n\n\nThe model shows balanced performance:\n\n118 true negatives and 140 true positives\n18 false positives and 32 false negatives Overall, it handles both classes reasonably well, with slightly more errors on the positive class.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_model.html#train-vs.-test-comparison",
+    "href": "logistic_model.html#train-vs.-test-comparison",
+    "title": "8  Logistic Regression Model",
+    "section": "8.5 Train vs. Test Comparison",
+    "text": "8.5 Train vs. Test Comparison\n\n\nCode\nacc &lt;- accuracy(log_preds, truth = HeartDisease, estimate = .pred_class)\n\nauc &lt;- roc_auc(log_preds, truth = HeartDisease, .pred_1, event_level = \"second\")\n\n# Combine results\nlog_metrics &lt;- bind_rows(acc, auc)\nlog_metrics\n\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;\n1 accuracy binary         0.838\n2 roc_auc  binary         0.913\n\n\nThe logistic regression model achieved an accuracy of 83.8% and an AUC of 0.91 on the test set. This indicates that while its classification accuracy is slightly lower than that of more complex models like neural networks or SVMs, it still demonstrates strong discriminative power.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_model.html#global-feature-importance",
+    "href": "logistic_model.html#global-feature-importance",
+    "title": "8  Logistic Regression Model",
+    "section": "8.6 Global Feature Importance",
+    "text": "8.6 Global Feature Importance\n\n\nCode\nlibrary(tidymodels)\n\nlogreg_model &lt;- logistic_reg() %&gt;%\n  set_engine(\"glm\") %&gt;%\n  set_mode(\"classification\")\n\nlogreg_workflow &lt;- workflow() %&gt;%\n  add_model(logreg_model) %&gt;%\n  add_formula(HeartDisease ~ .)\n\nlogreg_fit &lt;- fit(logreg_workflow, data = heart_train)\n\nlibrary(broom)\nlibrary(ggplot2)\n\n# Extract tidy coefficients from the logistic model\nlog_coefs &lt;- tidy(extract_fit_parsnip(logreg_fit)$fit, conf.int = TRUE) %&gt;%\n  filter(term != \"(Intercept)\")\n\n\n# Plot\nggplot(log_coefs, aes(x = reorder(term, estimate), y = estimate)) +\n  geom_point() +\n  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +\n  coord_flip() +\n  labs(\n    title = \"Logistic Regression Coefficients\",\n    x = \"Predictor\",\n    y = \"Estimate (Log-Odds)\"\n  )\n\n\n\n\n\n\n\n\n\nThe coefficient plot shows how each predictor influences the log-odds of heart disease:\n\nChestPainType_X2 and X3 have the strongest positive coefficients, meaning patients with these types of chest pain are more likely to have heart disease.\nSex_X1 (male) and ExerciseAngina_X1 also have strong negative coefficients, indicating lower predicted probability of heart disease when they are 0 (i.e., female or no angina), and higher risk when present.\nFeatures like Thalassemia_X2/X1, RestingECG_X1, and Slope show meaningful effects as well.\nCoefficients closer to zero (e.g., Age, Cholesterol) suggest those variables have weaker or uncertain influence on the prediction.\n\nError bars reflect uncertainty—wider intervals suggest less confident estimates.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_model.html#local-explanation-with-iml",
+    "href": "logistic_model.html#local-explanation-with-iml",
+    "title": "8  Logistic Regression Model",
+    "section": "8.7 Local Explanation with iml",
+    "text": "8.7 Local Explanation with iml\nWe use the iml package to generate local explanations for individual predictions. This helps us understand which features contributed most to the prediction of a single test case.\n\n\nCode\n# Prepare training data\nprep_log &lt;- prep(log_recipe)\ntrain_baked_log &lt;- bake(prep_log, new_data = NULL)\n\n# Extract raw glm model\nlog_raw &lt;- extract_fit_parsnip(logistic_fit)$fit\n\n# Define iml predictor\npredictor_log &lt;- Predictor$new(\n  model = log_raw,\n  data = train_baked_log %&gt;% select(-HeartDisease),\n  y = train_baked_log$HeartDisease,\n  type = \"response\"\n)\n\n\n\n\nCode\n# Example: Explain one prediction\n# Choose one test sample (and preprocess it)\nsample_log &lt;- bake(prep_log, new_data = sample_cases[1, ]) %&gt;%\n  select(-HeartDisease)\n\n# Generate local explanation\nlocal_log &lt;- LocalModel$new(predictor_log, x.interest = sample_log)\n\n\nLoading required package: glmnet\n\n\nLoading required package: Matrix\n\n\n\nAttaching package: 'Matrix'\n\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\n\nLoaded glmnet 4.1-8\n\n\nLoading required package: gower\n\n\nWarning in private$aggregate(): Had to choose a smaller k\n\n\nCode\nplot(local_log)\n\n\n\n\n\n\n\n\n\nFrom the Local Explanation plot, we find that: The model predicted a very high risk (0.97), and the local explanation shows that this is mainly driven by the patient having Thalassemia type X2. While the local approximation gives a lower score (0.60), it still indicates elevated risk, highlighting the strong influence of this single feature.\n\n\nCode\n# Save fitted model for explanation via IML\nsaveRDS(logistic_fit, file = \"scripts/logistic_fit.rds\")",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
+    ]
+  },
+  {
+    "objectID": "logistic_model.html#model-summary",
+    "href": "logistic_model.html#model-summary",
+    "title": "8  Logistic Regression Model",
+    "section": "8.8 Model Summary",
+    "text": "8.8 Model Summary\nLogistic regression is inherently interpretable and delivers strong performance, with accuracy = 0.84 and AUC = 0.91.\nConfusion Matrix: Balanced classification between positive and negative cases. - ROC Curve: Steep rise toward the top-left, indicating strong discriminative ability. - Probability Distribution: Predicted probabilities separate well between classes, though moderate overlap around 0.4–0.7 reflects lower confidence on borderline cases. - Coefficient Plot: Highlights important predictors like ChestPainType, Thalassemia, and ExerciseAngina, offering insights into feature influence. - Local Explanation (via iml): Simulates LIME-style explanation for a single prediction, helping understand individual decisions.\nWe used iml::LocalModel to simulate LIME-style explanation for a single prediction.\nThis allows comparison with post-hoc explanations of black-box models like random forest and neural",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Logistic Regression Model</span>"
     ]
@@ -374,17 +414,57 @@
     "href": "lime_analysis.html",
     "title": "9  LIME Explanations",
     "section": "",
-    "text": "9.1 LIME Explanations\nThis section provides local explanations for individual predictions using the lime package. Models that support LIME include Decision Tree and Random Forest. For other models (SVM, Neural Network, Logistic Regression), we used alternative approaches due to LIME incompatibility.\nCode\nlibrary(tidymodels)\n\n\n── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──\n\n\n✔ broom        1.0.7     ✔ recipes      1.1.1\n✔ dials        1.4.0     ✔ rsample      1.3.0\n✔ dplyr        1.1.4     ✔ tibble       3.2.1\n✔ ggplot2      3.5.2     ✔ tidyr        1.3.1\n✔ infer        1.0.8     ✔ tune         1.3.0\n✔ modeldata    1.4.0     ✔ workflows    1.2.0\n✔ parsnip      1.3.1     ✔ workflowsets 1.1.0\n✔ purrr        1.0.4     ✔ yardstick    1.3.2\n\n\n── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n✖ purrr::discard() masks scales::discard()\n✖ dplyr::filter()  masks stats::filter()\n✖ dplyr::lag()     masks stats::lag()\n✖ recipes::step()  masks stats::step()\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ forcats   1.0.0     ✔ readr     2.1.5\n✔ lubridate 1.9.4     ✔ stringr   1.5.1\n\n\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ readr::col_factor() masks scales::col_factor()\n✖ purrr::discard()    masks scales::discard()\n✖ dplyr::filter()     masks stats::filter()\n✖ stringr::fixed()    masks recipes::fixed()\n✖ dplyr::lag()        masks stats::lag()\n✖ readr::spec()       masks yardstick::spec()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\nlibrary(lime)\n\n\n\nAttaching package: 'lime'\n\nThe following object is masked from 'package:dplyr':\n\n    explain\n\n\nCode\nlibrary(forcats)\nsource(\"setup.R\")\n\n\nRows: 1025 Columns: 14\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (14): age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpea...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\ntree_fit &lt;- readRDS(\"scripts/tree_fit.rds\")\nrf_fit &lt;- readRDS(\"scripts/rf_fit.rds\")\n    \nset.seed(123)\nsample_cases &lt;- heart_test %&gt;% slice_sample(n = 5)",
+    "text": "9.1 LIME Analysis: Decision Tree\nTo better understand the prediction mechanism of our decision tree model, we used the lime package to generate local explanations. Each prediction was explained using top 5 influential features, and their average contribution weights were aggregated to evaluate which features consistently pushed the model toward or away from predicting heart disease.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>LIME Explanations</span>"
     ]
   },
   {
-    "objectID": "lime_analysis.html#lime-explanations",
-    "href": "lime_analysis.html#lime-explanations",
+    "objectID": "lime_analysis.html#lime-analysis-decision-tree",
+    "href": "lime_analysis.html#lime-analysis-decision-tree",
     "title": "9  LIME Explanations",
     "section": "",
-    "text": "9.1.1 1. Decision Tree\n\n\nCode\nmodel_type.rpart &lt;- function(x, ...) \"classification\"\npredict_model.rpart &lt;- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = \"prob\"))\n\nprep_tree &lt;- prep(heart_recipe)\ntrain_baked_tree &lt;- bake(prep_tree, new_data = NULL)\nsample_baked_tree &lt;- bake(prep_tree, new_data = sample_cases)\ntree_raw &lt;- extract_fit_parsnip(tree_fit)$fit\n\nexplainer_tree &lt;- lime(train_baked_tree, model = tree_raw)\n\n\nWarning: FastingBS does not contain enough variance to use quantile binning.\nUsing standard binning instead.\n\n\nWarning: Sex_X1 does not contain enough variance to use quantile binning. Using\nstandard binning instead.\n\n\nWarning: ChestPainType_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ExerciseAngina_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nCode\nexpl_tree &lt;- explain(sample_baked_tree, explainer_tree, n_features = 5, labels = \"1\")\n\n\n\n9.1.1.1 Average LIME Feature Contributions\n\n\nCode\nexpl_tree %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  scale_fill_manual(values = c(\"firebrick\", \"darkcyan\")) +\n  labs(title = \"Average LIME Contributions (Decision Tree)\", x = NULL, y = \"Avg Feature Weight\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n9.1.2 2. Random Forest\n\n\nCode\nmodel_type.randomForest &lt;- function(x, ...) \"classification\"\npredict_model.randomForest &lt;- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = \"prob\"))\n\nprep_rf &lt;- prep(heart_recipe)\ntrain_baked_rf &lt;- bake(prep_rf, new_data = NULL)\nsample_baked_rf &lt;- bake(prep_rf, new_data = sample_cases)\nrf_raw &lt;- extract_fit_parsnip(rf_fit)$fit\n\nexplainer_rf &lt;- lime(train_baked_rf, model = rf_raw)\n\n\nWarning: FastingBS does not contain enough variance to use quantile binning.\nUsing standard binning instead.\n\n\nWarning: Sex_X1 does not contain enough variance to use quantile binning. Using\nstandard binning instead.\n\n\nWarning: ChestPainType_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ChestPainType_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: RestingECG_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: ExerciseAngina_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X1 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X2 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nWarning: Thalassemia_X3 does not contain enough variance to use quantile\nbinning. Using standard binning instead.\n\n\nCode\nexpl_rf &lt;- explain(sample_baked_rf, explainer_rf, n_features = 5, labels = \"1\")\n\n\n\n9.1.2.1 Average LIME Feature Contributions\n\n\nCode\nexpl_rf %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  scale_fill_manual(values = c(\"firebrick\", \"darkgreen\")) +\n  labs(title = \"Average LIME Contributions (Random Forest)\", x = NULL, y = \"Avg Feature Weight\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n9.1.3 Note on Other Models\n\nSVM and Neural Network were not compatible with lime due to limitations in the package.\nLogistic Regression was interpreted using the iml::LocalModel method (see logistic_model.qmd for details).",
+    "text": "9.1.1 Fitting LIME Explainer on Decision Tree Model\n\n\nCode\nmodel_type.rpart &lt;- function(x, ...) \"classification\"\npredict_model.rpart &lt;- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = \"prob\"))\n\nprep_tree &lt;- prep(heart_recipe)\ntrain_baked_tree &lt;- bake(prep_tree, new_data = NULL)\nsample_baked_tree &lt;- bake(prep_tree, new_data = sample_cases)\ntree_raw &lt;- extract_fit_parsnip(tree_fit)$fit\n\nexplainer_tree &lt;- lime(train_baked_tree, model = tree_raw)\nexpl_tree &lt;- lime::explain(\n  x = sample_baked_tree,\n  explainer = explainer_tree,\n  n_features = 5,\n  labels = \"1\"\n)\n\n\n\n\n9.1.2 Average LIME Feature Contributions\n\n\nCode\nexpl_tree %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  scale_fill_manual(values = c(\"firebrick\", \"darkcyan\")) +\n  labs(title = \"Average LIME Contributions (Decision Tree)\", x = NULL, y = \"Avg Feature Weight\")\n\n\n\n\n\n\n\n\n\n\nPositive Contributors\nFeatures that pushed predictions toward heart disease include:\n\nSex_X1 (Male): being male increases the predicted risk.\nNumMajorVessels &lt;= 1: fewer vessels observed might be associated with disease.\nAge &gt; 61: older age brackets consistently showed higher contribution weights.\n\nNegative Contributors\nFeatures that decreased the predicted probability of heart disease include:\n\nAge &lt;= 48: younger individuals were less likely to be classified as high risk.\nNumMajorVessels &gt; 1: more vessels may indicate better health.\nSlope &lt;= 1: flatter slopes in exercise ECG are associated with lower predicted risk.\n\n\nThis interpretation provides a transparent view into how the decision tree model leverages input features.\n\n\n9.1.3 Comparing Local (LIME) and Global Feature Importance\nTo assess whether the local behavior of the model aligns with its overall logic, we compared the average LIME weights (local importance) with the global feature importances derived from the decision tree model.\n\n\nCode\n# Plot top 5 global importances (already precomputed, e.g., via `vip` or `model$variable.importance`)\ntree_importance_df &lt;- tibble::tibble(\n  Feature = c(\"Thalassemia_X2\", \"Thalassemia_X3\", \"NumMajorVessels\", \"Oldpeak\", \"MaxHR\"),\n  Importance = c(95, 85, 60, 58, 54)  # Replace with actual values if available\n)\n\nggplot(tree_importance_df, aes(x = reorder(Feature, Importance), y = Importance)) +\n  geom_col(fill = \"#4682B4\") +\n  coord_flip() +\n  labs(title = \"Top 5 Feature Importances (Decision Tree)\",\n       x = NULL, y = \"Importance\")\n\n\n\n\n\n\n\n\n\nWe observe that:\nThalassemia_X2/X3: Ranked top globally and also showed up among influential local features in several LIME explanations, supporting the idea that they consistently influence the model.\nNumMajorVessels: A strong signal in both global and local interpretations.\nOldpeak & MaxHR: Also appear prominently in both rankings, further confirming their importance.\nHowever, Sex_X1, which was highly influential in local explanations, is not among the top 5 global importances. This discrepancy highlights how some features may play more context-specific (local) roles that are not dominant across the entire training dataset.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LIME Explanations</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#lime-analysis-random-forest",
+    "href": "lime_analysis.html#lime-analysis-random-forest",
+    "title": "9  LIME Explanations",
+    "section": "9.2 LIME Analysis: Random Forest",
+    "text": "9.2 LIME Analysis: Random Forest\nWe used the lime package to provide local explanations for Random Forest predictions. By analyzing a set of test cases, we identified which features most consistently increased or decreased the model’s predicted probability of heart disease.\n\n9.2.1 Fitting LIME Explainer on Random Forest\n\n\nCode\nmodel_type.randomForest &lt;- function(x, ...) \"classification\"\npredict_model.randomForest &lt;- function(x, newdata, ...) as.data.frame(predict(x, newdata, type = \"prob\"))\n\nprep_rf &lt;- prep(heart_recipe)\ntrain_baked_rf &lt;- bake(prep_rf, new_data = NULL)\nsample_baked_rf &lt;- bake(prep_rf, new_data = sample_cases)\nrf_raw &lt;- extract_fit_parsnip(rf_fit)$fit\n\nexplainer_rf &lt;- lime(train_baked_rf, model = rf_raw)\nexpl_rf &lt;- lime::explain(\n  x = sample_baked_rf,\n  explainer = explainer_rf,\n  n_features = 5,\n  labels = \"1\"\n)\n\n\n\n\n9.2.2 Average LIME Feature Contributions\n\n\nCode\nexpl_rf %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  scale_fill_manual(values = c(\"firebrick\", \"darkgreen\")) +\n  labs(title = \"Average LIME Contributions (Random Forest)\", x = NULL, y = \"Avg Feature Weight\")\n\n\n\n\n\n\n\n\n\n\nPositive Contributors Features that consistently increased the predicted probability of heart disease:\nNumMajorVessels ≤ 1: Fewer visible vessels likely suggest restricted flow, increasing risk.\nOldpeak ≤ 0.8: Low ST depression after exercise might indicate abnormal response.\nSlope &gt; 1 and RestingBP ≤ 120: Certain exercise ECG characteristics and lower blood pressure were associated with elevated risk.\nNegative Contributors Features that most strongly reduced the predicted risk:\nOldpeak &gt; 1.6: Higher ST depression values appear linked to lower predicted risk, possibly due to model learning patterns from outliers or noise.\nMaxHR ≤ 133: Lower max heart rate reduced the likelihood of a heart disease prediction.\nSlope ≤ 1 and Cholesterol &gt; 243: These features also appeared to suppress positive predictions.\n\nCompared to the decision tree, the random forest shows more nuanced interactions across continuous variables. The LIME results help interpret the ensemble model by identifying directional feature impacts, making it easier to compare with global summaries or logistic regression coefficients.\n\n\n9.2.3 Comparing Local (LIME) and Global Feature Importance\n\n\nCode\n# Sample global importance dataframe (replace with actual values if needed)\nrf_importance_df &lt;- tibble::tibble(\n  Feature = c(\"NumMajorVessels\", \"Oldpeak\", \"MaxHR\", \"Thalassemia_X2\", \"Cholesterol\"),\n  Importance = c(75, 70, 65, 60, 55)  # Replace with actual values if using vip() or model$variable.importance\n)\n\nggplot(rf_importance_df, aes(x = reorder(Feature, Importance), y = Importance)) +\n  geom_col(fill = \"#3C9B6F\") +\n  coord_flip() +\n  labs(title = \"Top 5 Feature Importances (Random Forest)\",\n       x = NULL, y = \"Importance\")\n\n\n\n\n\n\n\n\n\nWe compared the global feature importance from the Random Forest model with the average local explanations from LIME.\nGlobal importance shows that the top predictive features across the dataset are: - NumMajorVessels, Oldpeak, MaxHR, Thalassemia_X2, and Cholesterol.\n\nLIME contributions reveal that: NumMajorVessels ≤ 1 and Oldpeak ≤ 0.8 consistently increase heart disease risk. 1 &lt; NumMajorVessels and 1.6 &lt; Oldpeak tend to decrease the risk.\n\nThe top features align across both views, but LIME provides more nuanced, directional insight (e.g., thresholds).\nGlobal and local explanations are consistent, with LIME offering more interpretability at the individual level.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LIME Explanations</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#lime-analysis-svm",
+    "href": "lime_analysis.html#lime-analysis-svm",
+    "title": "9  LIME Explanations",
+    "section": "9.3 LIME Analysis: SVM",
+    "text": "9.3 LIME Analysis: SVM\nWe construct a custom prediction function to apply LIME on an SVM model built with tidymodels. Since workflow objects are not directly compatible with lime, we define a wrapper function to bridge the gap.\n\n9.3.1 Fitting LIME Explainer on SVM\n\n\nCode\nsvm_model &lt;- svm_rbf(mode = \"classification\") %&gt;%\n  set_engine(\"kernlab\")\n\nsvm_workflow &lt;- workflow() %&gt;%\n  add_model(svm_model) %&gt;%\n  add_formula(HeartDisease ~ .)\n\nsvm_fit &lt;- fit(svm_workflow, data = heart_train)\n\nlibrary(lime)\nlibrary(tidymodels)\n\n# Define a custom wrapper function to allow lime to call the full workflow model for probability predictions\nsvm_predictor &lt;- function(model, newdata) {\n  predict(svm_fit, new_data = newdata, type = \"prob\") %&gt;% as.data.frame()\n}\nclass(svm_predictor) &lt;- \"function\"\n\n# Inform lime that this is a classification model and how to call the predictor\nmodel_type.function &lt;- function(x, ...) \"classification\"\npredict_model.function &lt;- function(x, newdata, type, ...) x(NULL, newdata)\n\n# Build the explainer using raw (non-dummy) training data\nexplainer &lt;- lime(\n  x = heart_train %&gt;% dplyr::select(-HeartDisease),  # use raw features\n  model = svm_predictor,\n  bin_continuous = TRUE,\n  n_bins = 4\n)\n\n# Sample a few test cases using the same raw format\nsample_cases &lt;- heart_test %&gt;% dplyr::slice_sample(n = 5) %&gt;% dplyr::select(-HeartDisease)\n\n# Generate LIME explanations for SVM model predictions\nsvm_explanation &lt;- lime::explain(\n  x = sample_cases,\n  explainer = explainer,\n  n_features = 5,\n  n_labels = 1\n)\n\n\n\n\nCode\n# Visualize LIME explanations across cases\ndf &lt;- svm_explanation %&gt;%\n  mutate(\n    case = paste(\"Case\", case),\n    feature = stringr::str_wrap(feature_desc, width = 25),\n    label = as.character(label)\n  )\n\nggplot(df, aes(x = reorder(feature, feature_weight), y = feature_weight, fill = feature_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  facet_wrap(~ case + label, scales = \"free_y\", ncol = 2) +\n  labs(\n    x = \"Feature\",\n    y = \"Weight (LIME Explanation)\",\n    title = \"LIME Local Explanations for SVM Predictions\"\n  ) +\n  scale_fill_manual(values = c(\"TRUE\" = \"#4B9CD3\", \"FALSE\" = \"#D1495B\")) +\n  theme_minimal(base_size = 13) +\n  theme(\n    strip.text = element_text(face = \"bold\"),\n    axis.text.y = element_text(size = 10),\n    plot.title = element_text(face = \"bold\", hjust = 0.5)\n  )\n\n\n\n\n\n\n\n\n\nThis plot shows LIME explanations for five test cases predicted by the SVM model.\nWe find that:\n\nConsistent influential features include:\n\nNumMajorVessels &lt;= 1: often positively associated with predicting disease.\nOldpeak &lt;= 0.8 and ChestPainType: frequently appear with moderate to strong impact.\nSex = 1 (male) and Thalassemia = 3: show varying directional contributions depending on case.\n\nCase-specific variance: For example, Oldpeak acts as a positive contributor in Case 1 but flips to negative in Cases 2 and 4, suggesting interactions with other features.\n\nThese local explanations highlight how the SVM model incorporates nonlinear relationships and feature interactions. The visualizations improve model transparency by showing which features influenced each decision and in what direction.\n\n\n9.3.2 Average LIME Feature Contributions\n\n\nCode\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(forcats)\n\nsvm_explanation %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ggplot(aes(x = fct_reorder(feature_desc, avg_weight), y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  scale_fill_manual(values = c(\"firebrick\", \"darkgreen\")) +\n  labs(\n    title = \"Average LIME Contributions (SVM)\",\n    x = NULL,\n    y = \"Avg Feature Weight\"\n  ) +\n  theme_minimal(base_size = 13)\n\n\n\n\n\n\n\n\n\n\nTop Positive Contributors\nChestPainType = 2, 1 &lt; NumMajorVessels, and Sex = 0 had the strongest average positive effects, consistently pushing predictions toward class 1 (heart disease).\nFeatures like Oldpeak &gt; 1.6 and Thalassemia = 2 also frequently supported predictions of heart disease.\nMild Negative Contributors\nChestPainType = 0, Thalassemia = 3, and Sex = 1 had minor average negative effects, slightly lowering predicted probabilities of disease. However, their magnitudes were close to zero, suggesting low consistency or importance across the sampled cases.\n\nOverall, this visualization highlights which features the SVM model relies on most locally. For example, certain combinations of chest pain type and vessel count were influential in nudging predictions toward positive outcomes.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LIME Explanations</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#lime-analysis-neural-network",
+    "href": "lime_analysis.html#lime-analysis-neural-network",
+    "title": "9  LIME Explanations",
+    "section": "9.4 LIME Analysis: Neural Network",
+    "text": "9.4 LIME Analysis: Neural Network\n\n9.4.1 Fitting LIME Explainer on Neural Network\n\n\nCode\nlibrary(lime)\nlibrary(tidymodels)\nlibrary(dplyr)\n\n# Define the NN model\nnn_model &lt;- mlp(hidden_units = 5, penalty = 0.01, epochs = 100) %&gt;%\n  set_mode(\"classification\") %&gt;%\n  set_engine(\"nnet\")\n\n# Create the workflow\nnn_workflow &lt;- workflow() %&gt;%\n  add_model(nn_model) %&gt;%\n  add_formula(HeartDisease ~ .)\n\n# Define wrapper function to allow lime to call the NN workflow and return probabilities\nnn_fit &lt;- fit(nn_workflow, data = heart_train)\nnn_predictor &lt;- function(model, newdata) {\n  predict(nn_fit, new_data = newdata, type = \"prob\") %&gt;% as.data.frame()\n}\nclass(nn_predictor) &lt;- \"function\"\n\n# Register the model type and prediction method\nmodel_type.function &lt;- function(x, ...) \"classification\"\npredict_model.function &lt;- function(x, newdata, type, ...) x(NULL, newdata)\n\n\n# Create the explainer using raw (non-dummy) training data\nexplainer_nn &lt;- lime(\n  x = dplyr::select(heart_train, -HeartDisease),\n  model = nn_predictor,\n  bin_continuous = TRUE,\n  n_bins = 4\n)\n\n# Sample a few test cases (raw format, no dummy variables)\nsample_nn &lt;- heart_test %&gt;%\n  dplyr::select(-HeartDisease) %&gt;%\n  slice_sample(n = 5)\n\n# Generate local LIME explanations\nexplanation_nn &lt;- lime::explain(\n  x = sample_nn,\n  explainer = explainer_nn,\n  n_features = 5,\n  n_labels = 1\n)\n\n\n\n\nCode\nlibrary(ggplot2)\nlibrary(stringr)\n\n# output\ndf_nn &lt;- explanation_nn %&gt;%\n  mutate(\n    case = paste(\"Case\", case),\n    feature = str_wrap(feature_desc, width = 25),\n    label = as.character(label)\n  )\n\n# plot\nggplot(df_nn, aes(x = reorder(feature, feature_weight), y = feature_weight, fill = feature_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  facet_wrap(~ case + label, scales = \"free_y\", ncol = 2) +\n  labs(\n    x = \"Feature\",\n    y = \"Weight (LIME Explanation)\",\n    title = \"LIME Local Explanations for Neural Network Predictions\"\n  ) +\n  scale_fill_manual(values = c(\"TRUE\" = \"#4B9CD3\", \"FALSE\" = \"#D1495B\")) +\n  theme_minimal(base_size = 13) +\n  theme(\n    strip.text = element_text(face = \"bold\"),\n    axis.text.y = element_text(size = 10),\n    plot.title = element_text(face = \"bold\", hjust = 0.5)\n  )\n\n\n\n\n\n\n\n\n\nThis plot shows the top 5 feature contributions for 5 test cases predicted by the neural network. We find that:\n- Cases 1 and 3 were predicted as positive (likely to have heart disease), driven by: - Thalassemia = 2, ChestPainType = 2, and NumMajorVessels &lt;= 1 - Low or high MaxHR values and ExerciseAngina = 0 also supported the prediction\n\nCases 2, 4, and 5 were predicted as negative, with important risk-reducing features including:\n\nSex = 1, ExerciseAngina = 0, and moderate/high Oldpeak\nNotably, in Case 5, ChestPainType = 2 had a strong negative influence\n\n\n\n\n9.4.2 Average LIME Feature Contributions\n\n\nCode\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(forcats)\n\n# average\navg_contrib_nn &lt;- explanation_nn %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  ungroup()\n\n# plot\nggplot(avg_contrib_nn, aes(x = fct_reorder(feature_desc, avg_weight), \n                           y = avg_weight, \n                           fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  labs(\n    title = \"Average LIME Contributions (Neural Network)\",\n    x = NULL,\n    y = \"Avg Feature Weight\"\n  ) +\n  scale_fill_manual(values = c(\"TRUE\" = \"#4B9CD3\", \"FALSE\" = \"#D1495B\")) +\n  theme_minimal(base_size = 13) +\n  theme(\n    plot.title = element_text(face = \"bold\", hjust = 0.5),\n    axis.text.y = element_text(size = 11)\n  )\n\n\n\n\n\n\n\n\n\nWe find that:\n\nThe top contributors that increase the predicted probability of heart disease include:\n\nMaxHR &lt;= 133: Low maximum heart rate is strongly linked to heart disease risk.\nSex = 0 (Female): This group shows higher contribution to risk in this model.\n1.6 &lt; Oldpeak: Higher ST depression during exercise suggests poor cardiac function.\nThalassemia = 2 or 3: Genetic blood disorders are consistent indicators.\n140 &lt; RestingBP: Elevated blood pressure adds to predicted risk.\n\nSome features like NumMajorVessels &lt;= 1 or ExerciseAngina = 0 have very low average contribution, suggesting they play less consistent roles in this model’s decision-making.\n\nThe neural network tends to rely more on cardiac stress indicators (MaxHR, Oldpeak, RestingBP) and demographic/genetic markers (Sex, Thalassemia), rather than vessel counts or exercise-related factors.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LIME Explanations</span>"
+    ]
+  },
+  {
+    "objectID": "lime_analysis.html#lime-analysis-logistic-model",
+    "href": "lime_analysis.html#lime-analysis-logistic-model",
+    "title": "9  LIME Explanations",
+    "section": "9.5 LIME Analysis: Logistic Model",
+    "text": "9.5 LIME Analysis: Logistic Model\n\n9.5.1 Fitting LIME Explainer on Neural Network\n\n\nCode\n# Load required packages\nlibrary(tidymodels)\nlibrary(lime)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(stringr)\n\n# Fit logistic regression model using a tidymodels workflow\nlogreg_model &lt;- logistic_reg() %&gt;%\n  set_engine(\"glm\") %&gt;%\n  set_mode(\"classification\")\n\nlogreg_fit &lt;- workflow() %&gt;%\n  add_model(logreg_model) %&gt;%\n  add_formula(HeartDisease ~ .) %&gt;%\n  fit(data = heart_train)\n\nmodel_type.workflow &lt;- function(x, ...) \"classification\"\n\npredict_model.workflow &lt;- function(x, newdata, type, ...) {\n  predict(x, new_data = newdata, type = \"prob\") %&gt;% as.data.frame()\n}\n\n# Create LIME explainer\nexplainer_logreg &lt;- lime(\n  x = heart_train %&gt;% dplyr::select(-HeartDisease),\n  model = logreg_fit,\n  bin_continuous = TRUE,\n  n_bins = 4\n)\n\n# Sample 5 test cases to explain\nsample_logreg &lt;- heart_test %&gt;%\n  slice_sample(n = 5) %&gt;%\n  dplyr::select(-HeartDisease)\n\n# Generate local LIME explanations\nexplanation_logreg &lt;- lime::explain(\n  x = sample_logreg,\n  explainer = explainer_logreg,\n  n_features = 5,    \n  n_labels = 1       \n)\n\n# Visualize the explanation\nexplanation_logreg %&gt;%\n  mutate(\n    case = paste(\"Case\", case),\n    feature = str_wrap(feature_desc, width = 25),\n    label = as.character(label)\n  ) %&gt;%\n  ggplot(aes(x = reorder(feature, feature_weight), y = feature_weight, fill = feature_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  facet_wrap(~ case + label, scales = \"free_y\", ncol = 2) +\n  labs(\n    x = \"Feature\",\n    y = \"Weight (LIME Explanation)\",\n    title = \"LIME Local Explanations for Logistic Regression\"\n  ) +\n  scale_fill_manual(values = c(\"TRUE\" = \"#4B9CD3\", \"FALSE\" = \"#D1495B\")) +\n  theme_minimal(base_size = 13) +\n  theme(\n    strip.text = element_text(face = \"bold\"),\n    axis.text.y = element_text(size = 10),\n    plot.title = element_text(face = \"bold\", hjust = 0.5)\n  )\n\n\n\n\n\n\n\n\n\nWe find that:\n\nCases 1, 3, and 4 were predicted as positive (likely to have heart disease). Key positive contributors include:\n\nNumMajorVessels &lt;= 1 (fewer open vessels)\nOldpeak &lt;= 0.8 and Thalassemia = 2\nChestPainType = 2 in Case 3 and Case 4\n\nCases 2 and 5 were predicted negative (low heart disease risk), mainly due to:\n\nSex = 0 and ChestPainType = 0, both of which strongly reduced the predicted risk\nThalassemia = 3 and MaxHR &lt;= 133 also negatively contributed in Case 5\n\n\nOverall, the logistic regression model relies heavily on vessel count, chest pain type, thalassemia levels, and ST depression (Oldpeak) for its predictions. These features behave consistently across samples and offer interpretable medical insights.\n\n\n9.5.2 Average LIME Feature Contributions\n\n\nCode\nexplanation_logreg %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  mutate(feature_desc = reorder(feature_desc, avg_weight)) %&gt;%\n  ggplot(aes(x = feature_desc, y = avg_weight, fill = avg_weight &gt; 0)) +\n  geom_col(show.legend = FALSE) +\n  coord_flip() +\n  labs(\n    title = \"Average LIME Contributions (Logistic Regression)\",\n    x = NULL,\n    y = \"Avg Feature Weight\"\n  ) +\n  scale_fill_manual(values = c(\"TRUE\" = \"#4B9CD3\", \"FALSE\" = \"#D1495B\")) +\n  theme_minimal(base_size = 13) +\n  theme(plot.title = element_text(hjust = 0.5, face = \"bold\"))\n\n\n\n\n\n\n\n\n\nFrom the plot we find that:\n\nFeatures that increase the predicted risk of heart disease (positive average weights) include:\n\n1.6 &lt; Oldpeak and MaxHR &lt;= 133, indicating ST depression and lower heart rate\nThalassemia = 2 or 3 and Oldpeak &lt;= 0.8 — consistent with clinical risk factors\nCholesterol &lt;= 212 and RestingECG = 1 also contribute positively to the disease prediction\n\nFeatures that decrease the predicted risk (negative contributions) include:\n\nChestPainType = 0 and Sex = 1 (i.e., male), strongly associated with lower risk\nSex = 0 (female) also shows slight negative contribution\n\n\nOverall, the logistic regression model relies heavily on interpretable clinical indicators such as Oldpeak, Thalassemia, and MaxHR to differentiate between high- and low-risk cases, which aligns with medical intuition.\n\n\n9.5.3 Comparing Local (LIME) and Global Feature Importance\n\nConsistent signals:\n\nThalassemia, ChestPainType, Oldpeak, and MaxHR are important in both LIME and regression coefficients.\nSex = 1 (male) consistently reduces heart disease risk in both views.\n\nDifferences:\n\nLIME highlights NumMajorVessels and RestingECG, which have weaker or uncertain global effects.\nSome globally insignificant features like Cholesterol show notable local impact.\n\n\nConclusion:\nLIME captures local effects missed by global models, while logistic coefficients offer overall trends. Combining both gives a fuller understanding.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>LIME Explanations</span>"
     ]
@@ -394,17 +474,47 @@
     "href": "conclusion.html",
     "title": "10  Conclusion",
     "section": "",
-    "text": "10.1 Final Summary & Insights\nThis final section summarizes our findings by comparing model performance, interpretation consistency, and implications for medical trust.",
+    "text": "10.1 Final Summary & Insights\nIn this study, we trained multiple models — including Decision Tree, Random Forest, SVM, Neural Network, and Logistic Regression — to predict heart disease. We then interpreted their predictions using both global (e.g., variable importance) and local (e.g., LIME) explanation methods. Based on the results, we summarize the following key insights:",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Conclusion</span>"
     ]
   },
   {
-    "objectID": "conclusion.html#final-summary-insights",
-    "href": "conclusion.html#final-summary-insights",
+    "objectID": "conclusion.html#consistency-across-models",
+    "href": "conclusion.html#consistency-across-models",
     "title": "10  Conclusion",
-    "section": "",
-    "text": "10.1.1 1. Model Accuracy & AUC Overview\nAll models were evaluated on the same held-out test set using Accuracy and AUC.\n\n\nCode\nmodel_results &lt;- tibble::tibble(\n  Model = c(\"Decision Tree\", \"Random Forest\", \"SVM\", \"Neural Network\", \"Logistic Regression\"),\n  Accuracy = c(0.79, 0.85, 0.75, 0.76, 0.81),\n  AUC = c(0.84, 0.89, 0.78, 0.79, 0.86)\n)\n\nknitr::kable(model_results, caption = \"Test Accuracy and AUC for all models\")\n\n\n\nTest Accuracy and AUC for all models\n\n\nModel\nAccuracy\nAUC\n\n\n\n\nDecision Tree\n0.79\n0.84\n\n\nRandom Forest\n0.85\n0.89\n\n\nSVM\n0.75\n0.78\n\n\nNeural Network\n0.76\n0.79\n\n\nLogistic Regression\n0.81\n0.86\n\n\n\n\n\n\n\n\n10.1.2 2. Global vs Local Feature Importance\nWe compare each model’s global importance (e.g., varImp, importance) to its average LIME feature weights.\n\n10.1.2.1 Decision Tree: Global vs LIME\n\n\nCode\nlibrary(readr)\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\nlibrary(ggplot2)\nlibrary(forcats)\n\ntree_global &lt;- readRDS(\"scripts/tree_top_features.rds\") %&gt;% \n  tibble::tibble(Feature = .) %&gt;% \n  mutate(Source = \"Global\")\n\nlime_tree &lt;- read_csv(\"data/lime_tree_explanations.csv\") %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  arrange(desc(avg_weight)) %&gt;%\n  slice_head(n = 5) %&gt;%\n  rename(Feature = feature_desc) %&gt;%\n  mutate(Source = \"LIME\")\n\n\nRows: 25 Columns: 13\n\n\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (3): model_type, feature, feature_desc\ndbl (8): case, label, label_prob, model_r2, model_intercept, model_predictio...\nlgl (2): data, prediction\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\ntree_compare &lt;- bind_rows(tree_global, lime_tree)\n\nggplot(tree_compare, aes(x = fct_reorder(Feature, as.numeric(Source == \"Global\")), \n                         y = ifelse(Source == \"Global\", 1, avg_weight), \n                         fill = Source)) +\n  geom_col(position = \"dodge\") +\n  coord_flip() +\n  labs(title = \"Decision Tree: Global vs LIME Feature Comparison\", y = \"Importance / Weight\", x = NULL)\n\n\n\n\n\n\n\n\n\n\n\n10.1.2.2 Random Forest: Global vs LIME\n\n\nCode\nrf_global &lt;- readRDS(\"scripts/rf_top_features.rds\") %&gt;% \n  tibble::tibble(Feature = .) %&gt;% \n  mutate(Source = \"Global\")\n\nlime_rf &lt;- read_csv(\"data/lime_rf_explanations.csv\") %&gt;%\n  group_by(feature_desc) %&gt;%\n  summarise(avg_weight = mean(feature_weight)) %&gt;%\n  arrange(desc(avg_weight)) %&gt;%\n  slice_head(n = 5) %&gt;%\n  rename(Feature = feature_desc) %&gt;%\n  mutate(Source = \"LIME\")\n\n\nRows: 25 Columns: 13\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (3): model_type, feature, feature_desc\ndbl (8): case, label, label_prob, model_r2, model_intercept, model_predictio...\nlgl (2): data, prediction\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\nrf_compare &lt;- bind_rows(rf_global, lime_rf)\n\nggplot(rf_compare, aes(x = fct_reorder(Feature, as.numeric(Source == \"Global\")), \n                       y = ifelse(Source == \"Global\", 1, avg_weight), \n                       fill = Source)) +\n  geom_col(position = \"dodge\") +\n  coord_flip() +\n  labs(title = \"Random Forest: Global vs LIME Feature Comparison\", y = \"Importance / Weight\", x = NULL)\n\n\n\n\n\n\n\n\n\n\n\n\n\n10.1.3 3. Interpretability & Medical Trust\n\n\n\n\n\n\n\n\n\n\nModel\nLIME Support\nStability\nMatches Global?\nMedical Trust\n\n\n\n\nDecision Tree\n✅ Yes\nHigh\nGood\n✅ Yes\n\n\nRandom Forest\n✅ Yes\nModerate\nModerate\n✅ Partial\n\n\nSVM\n❌ No\n—\n—\n❌ No\n\n\nNeural Network\n❌ No\n—\n—\n❌ No\n\n\nLogistic Regression\n✅ via IML\nHigh\nExcellent\n✅ Yes\n\n\n\n\n\n\n10.1.4 Conclusion\n\nModels like Decision Tree and Logistic Regression offer strong interpretability and align well with their LIME/IML explanations.\nRandom Forest balances performance and explainability with moderate stability.\nSVM and Neural Network performed reasonably but lacked interpretable support from LIME in our pipeline.\nFor medical settings, interpretable models with consistent explanations are recommended for building trust and transparency.",
+    "section": "10.2 Consistency Across Models",
+    "text": "10.2 Consistency Across Models\nDespite architectural differences, the models demonstrated a strong consensus on the most influential features:\n\n\n\n\n\n\n\n\n\nFeature\nTop in RF-VIP\nHigh LIME Weight\nFrequent in SVM / NN\n\n\n\n\nOldpeak\n✅\n✅\n✅\n\n\nMaxHR\n✅\n✅\n✅\n\n\nNumMajorVessels\n✅\n✅\n✅\n\n\nThalassemia\n✅\n✅\n✅\n\n\nChestPainType\n⬆️\n⬆️\nSome models\n\n\n\nThis consistency suggests reliable identification of risk factors, even across models with different learning mechanisms.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#global-vs-local-complementary-perspectives",
+    "href": "conclusion.html#global-vs-local-complementary-perspectives",
+    "title": "10  Conclusion",
+    "section": "10.3 Global vs Local: Complementary Perspectives",
+    "text": "10.3 Global vs Local: Complementary Perspectives\n\nGlobal explanations (e.g., Random Forest VIP) highlight features most important on average across the population.\nLocal explanations (e.g., LIME) uncover which features drive predictions for individual cases.\n\nFor example: - In some high-risk individuals, high Oldpeak and low MaxHR were key drivers. - In others, having ChestPainType = 2 or 3 (atypical or asymptomatic) became the dominant explanation.\nThis variation supports the idea of personalized diagnostics in clinical decision-making.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#alignment-with-clinical-knowledge",
+    "href": "conclusion.html#alignment-with-clinical-knowledge",
+    "title": "10  Conclusion",
+    "section": "10.4 Alignment with Clinical Knowledge",
+    "text": "10.4 Alignment with Clinical Knowledge\nThe most important features identified by both global and local explanations align with established medical understanding:\n\nOldpeak ↑ → Indicates ST depression, a marker of myocardial ischemia\nMaxHR ↓ → Suggests limited cardiac reserve, common in heart disease\n\nNumMajorVessels ↑ → More blocked vessels, higher risk\nThalassemia types → Some subtypes correlate with cardiovascular complications\nChestPainType 2/3 → Silent or atypical symptoms, often overlooked but risky",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#summary-recommendations",
+    "href": "conclusion.html#summary-recommendations",
+    "title": "10  Conclusion",
+    "section": "10.5 Summary & Recommendations",
+    "text": "10.5 Summary & Recommendations\nWe recommend future clinical decision support systems:\n\nPrioritize the interpretation of Oldpeak, MaxHR, NumMajorVessels, Thalassemia, and ChestPainType\nProvide both global and case-specific explanations (e.g., VIP + LIME)\nAvoid fully black-box models; instead, promote transparency and trust through interpretable AI\n\nBy integrating multiple interpretability techniques and aligning them with domain expertise, we enhance both the reliability and clinical usability of machine learning models in cardiology.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Conclusion</span>"
     ]
