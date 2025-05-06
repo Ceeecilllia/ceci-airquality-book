@@ -6,15 +6,13 @@ format:
     code-fold: true
 ---
 
-## Logistic Regression
-
 We trained a logistic regression model using the `tidymodels` framework. This interpretable model provides a performance baseline and supports local explanation using the `iml` package.
 
-```{r}
+```{r include = FALSE}
 source("setup.R")
 ```
 
-### Model Setup and Workflow
+## Model Setup and Workflow
 
 ```{r}
 library(tidymodels)
@@ -40,28 +38,131 @@ logistic_wf <- workflow() %>%
 logistic_fit <- fit(logistic_wf, data = heart_train)
 ```
 
-##Evaluation on Test Set
-
+## Predicted Probability Distribution
 
 ```{r}
 log_preds <- predict(logistic_fit, heart_test, type = "prob") %>%
   bind_cols(predict(logistic_fit, heart_test)) %>%
   bind_cols(heart_test)
 
-metrics <- metric_set(accuracy, roc_auc)
+ggplot(log_preds, aes(x = .pred_1, fill = as.factor(HeartDisease))) +
+  geom_histogram(position = "identity", bins = 20, alpha = 0.6) +
+  labs(title = "Predicted Probabilities – Logistic Regression",
+       x = "Probability of Heart Disease", fill = "True Label") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "skyblue")) +
+  theme_minimal()
+```
 
-log_metrics <- metrics(
-  data = log_preds,
-  truth = HeartDisease,
-  estimate = .pred_class,
-  .pred_1
-)
+This plot shows that the model does a decent job separating the two classes:
 
+Predictions for patients without heart disease (red bars) are mostly clustered near 0, as expected.
+
+Predictions for patients with heart disease (blue bars) tend to gather near 1, which is good.
+
+However, there's a bit more overlap in the middle region (around 0.4 to 0.7) compared to models like Random Forest or SVM, which suggests:
+
+The logistic regression model is simpler and more linear, so it may not capture complex interactions as well.
+
+Some borderline cases are less confidently classified, which is reflected in the moderate overlap.
+
+## ROC Curve
+
+```{r}
+log_preds %>%
+  roc_curve(truth = HeartDisease, .pred_1, event_level = "second") %>%
+  autoplot() +
+  ggtitle("ROC Curve – Logistic Regression")
+
+```
+
+The ROC curve shows strong performance: it rises steeply to the top-left, indicating the model does a good job distinguishing between classes across thresholds.
+AUC is high, confirming reliable classification.
+
+## Confusion Matrix
+
+```{r}
+conf_mat(log_preds, truth = HeartDisease, estimate = .pred_class) %>%
+  autoplot(type = "heatmap") +
+  ggtitle("Confusion Matrix – Logistic Regression")
+
+```
+
+The model shows balanced performance:
+
+- 118 true negatives and 140 true positives
+
+- 18 false positives and 32 false negatives
+Overall, it handles both classes reasonably well, with slightly more errors on the positive class.
+
+## Train vs. Test Comparison
+
+```{r}
+acc <- accuracy(log_preds, truth = HeartDisease, estimate = .pred_class)
+
+auc <- roc_auc(log_preds, truth = HeartDisease, .pred_1, event_level = "second")
+
+# Combine results
+log_metrics <- bind_rows(acc, auc)
 log_metrics
 
 ```
 
-###Local Explanation with iml
+The logistic regression model achieved an accuracy of 83.8% and an AUC of 0.91 on the test set. This indicates that while its classification accuracy is slightly lower than that of more complex models like neural networks or SVMs, it still demonstrates strong discriminative power.
+
+
+## Global Feature Importance
+
+```{r}
+library(tidymodels)
+
+logreg_model <- logistic_reg() %>%
+  set_engine("glm") %>%
+  set_mode("classification")
+
+logreg_workflow <- workflow() %>%
+  add_model(logreg_model) %>%
+  add_formula(HeartDisease ~ .)
+
+logreg_fit <- fit(logreg_workflow, data = heart_train)
+
+library(broom)
+library(ggplot2)
+
+# Extract tidy coefficients from the logistic model
+log_coefs <- tidy(extract_fit_parsnip(logreg_fit)$fit, conf.int = TRUE) %>%
+  filter(term != "(Intercept)")
+
+
+# Plot
+ggplot(log_coefs, aes(x = reorder(term, estimate), y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
+  coord_flip() +
+  labs(
+    title = "Logistic Regression Coefficients",
+    x = "Predictor",
+    y = "Estimate (Log-Odds)"
+  )
+
+```
+
+The coefficient plot shows how each predictor influences the log-odds of heart disease:
+
+- ChestPainType_X2 and X3 have the strongest positive coefficients, meaning patients with these types of chest pain are more likely to have heart disease.
+
+- Sex_X1 (male) and ExerciseAngina_X1 also have strong negative coefficients, indicating lower predicted probability of heart disease when they are 0 (i.e., female or no angina), and higher risk when present.
+
+- Features like Thalassemia_X2/X1, RestingECG_X1, and Slope show meaningful effects as well.
+
+- Coefficients closer to zero (e.g., Age, Cholesterol) suggest those variables have weaker or uncertain influence on the prediction.
+
+Error bars reflect uncertainty—wider intervals suggest less confident estimates.
+
+## Local Explanation with iml
+
+We use the iml package to generate local explanations for individual predictions.
+This helps us understand which features contributed most to the prediction of a single test case.
+
 ```{r}
 # Prepare training data
 prep_log <- prep(log_recipe)
@@ -77,12 +178,11 @@ predictor_log <- Predictor$new(
   y = train_baked_log$HeartDisease,
   type = "response"
 )
-
 ```
 
-###Example: Explain one prediction
 
 ```{r}
+# Example: Explain one prediction
 # Choose one test sample (and preprocess it)
 sample_log <- bake(prep_log, new_data = sample_cases[1, ]) %>%
   select(-HeartDisease)
@@ -93,12 +193,9 @@ plot(local_log)
 
 ```
 
-Summary
-Logistic regression is interpretable by design and performs competitively.
+From the Local Explanation plot, we find that: The model predicted a very high risk (0.97), and the local explanation shows that this is mainly driven by the patient having Thalassemia type X2.
+While the local approximation gives a lower score (0.60), it still indicates elevated risk, highlighting the strong influence of this single feature.
 
-We used iml::LocalModel to simulate LIME-style explanation for a single prediction.
-
-This allows comparison with post-hoc explanations of black-box models like random forest and neural networks.
 
 ```{r}
 # Save fitted model for explanation via IML
@@ -106,4 +203,16 @@ saveRDS(logistic_fit, file = "scripts/logistic_fit.rds")
 
 ```
 
+## Model Summary
 
+Logistic regression is inherently interpretable and delivers strong performance, with accuracy = 0.84 and AUC = 0.91.
+
+**Confusion Matrix:** Balanced classification between positive and negative cases.
+- **ROC Curve:** Steep rise toward the top-left, indicating strong discriminative ability.
+- **Probability Distribution:** Predicted probabilities separate well between classes, though moderate overlap around 0.4–0.7 reflects lower confidence on borderline cases.
+- **Coefficient Plot:** Highlights important predictors like `ChestPainType`, `Thalassemia`, and `ExerciseAngina`, offering insights into feature influence.
+- **Local Explanation (via iml):** Simulates LIME-style explanation for a single prediction, helping understand individual decisions.
+
+We used iml::LocalModel to simulate LIME-style explanation for a single prediction.
+
+This allows comparison with post-hoc explanations of black-box models like random forest and neural 

@@ -6,35 +6,28 @@ format:
     code-fold: true
 ---
 ```{r setup, include=FALSE}
+# Load and rename
+source("setup.R")
+
 library(tidyverse)
 library(tidymodels)
 theme_set(theme_minimal())
-
 ```
 
-
-## Support Vector Machine (SVM) Model
 
 We train a linear SVM model using the `kernlab` engine via `tidymodels`. Although SVMs are less interpretable than decision trees, we can still approximate global feature importance via model coefficients.
 
-### Data Split and Preprocessing
+
+## Model Setup and Training
 
 ```{r}
-# Load and rename
-source("setup.R")
-```
-##Preprocessing Recipe
 
-```{r}
+#Preprocessing Recipe
 svm_recipe <- recipe(HeartDisease ~ ., data = heart_train) %>%
   step_dummy(all_nominal_predictors()) %>%
   step_normalize(all_numeric_predictors())
 
-```
-
-##SVM Model Specification
-
-```{r}
+#SVM Model Specification
 svm_spec <- svm_poly() %>%
   set_engine("kernlab", prob.model = TRUE) %>%
   set_mode("classification")
@@ -43,27 +36,107 @@ svm_wf <- workflow() %>%
   add_model(svm_spec) %>%
   add_recipe(svm_recipe)
 
-```
-
-## Fit and Evaluate
-
-```{r}
+# Fit
 svm_fit <- workflow() %>%
   add_model(svm_spec) %>%
   add_recipe(svm_recipe) %>%
   fit(data = heart_train)
 
+
+```
+## Probability Histogram
+
+```{r}
+svm_preds <- predict(svm_fit, heart_test, type = "prob") %>%
+  bind_cols(predict(svm_fit, heart_test)) %>%
+  bind_cols(heart_test)
+
+svm_preds %>%
+  mutate(HeartDisease = factor(HeartDisease)) %>%
+  ggplot(aes(x = .pred_1, fill = HeartDisease)) +
+  geom_histogram(binwidth = 0.05, alpha = 0.6, position = "identity") +
+  labs(
+    title = "SVM Predicted Probabilities",
+    x = "Probability of Heart Disease",
+    fill = "True Label"
+  ) +
+  theme_minimal()
+
+```
+
+The probability histogram helps us understand the confidence of the SVM model across classes. Ideally, the predictions for individuals **without heart disease (label = 0)** should cluster near 0, while those **with heart disease (label = 1)** should cluster near 1. 
+
+From the plot, we see:
+- A strong separation between the two classes: label 0 concentrates on low predicted probabilities, and label 1 clusters near high probabilities.
+- Some overlapping areas in the middle (e.g., around 0.5), indicating **uncertainty** in predictions.
+
+This suggests the SVM model performs reasonably well, though there is room for improvement in cases near the decision boundary.
+
+## ROC
+
+```{r}
+library(yardstick)
+library(dplyr)
+
+# Make sure truth is a factor with correct level order
+svm_preds <- svm_preds %>%
+  mutate(HeartDisease = factor(HeartDisease, levels = c(0, 1)))  # 0 = negative, 1 = positive
+
+# Calculate ROC with correct positive class
+svm_roc <- roc_curve(
+  svm_preds,
+  truth = HeartDisease,
+  .pred_1,
+  event_level = "second"
+)
+
+# Plot ROC curve
+autoplot(svm_roc) +
+  ggtitle("ROC Curve - SVM") +
+  theme_minimal()
+
+
+```
+
+The ROC curve for the SVM model rises sharply toward the top-left corner, indicating excellent discriminative ability between positive and negative classes. This pattern suggests that the model maintains a high true positive rate while minimizing false positives across a range of thresholds.
+
+The curve's strong deviation from the diagonal baseline confirms that the SVM classifier performs significantly better than random guessing. This makes it a reliable model for ranking patients based on heart disease risk, despite being less interpretable than tree-based models.
+
+
+## Confusion Matrix
+
+```{r}
+svm_conf_mat <- conf_mat(svm_preds, truth = HeartDisease, estimate = .pred_class)
+
+autoplot(svm_conf_mat, type = "heatmap") +
+  scale_fill_gradient(low = "white", high = "black") +
+  ggtitle("Confusion Matrix - SVM") +
+  theme_minimal()
+```
+
+The SVM model correctly identified 118 true negatives and 147 true positives, with 17 false positives and 32 false negatives. This indicates solid classification performance, with relatively few misclassifications.
+
+The lower number of false positives suggests the model rarely triggers unnecessary alarms. However, the 32 false negatives mean some actual heart disease cases are missed, which could be a concern in clinical settings.
+
+Overall, the confusion matrix shows that the SVM achieves a good balance between precision and recall, and may be suitable for applications where both accuracy and risk control are important.
+
+
+## Train vs. Test Comparison
+
+```{r}
 svm_preds <- predict(svm_fit, heart_test, type = "prob") %>%
   bind_cols(predict(svm_fit, heart_test)) %>%
   bind_cols(heart_test)
 
 metrics <- metric_set(accuracy, roc_auc)
-svm_metrics <- metrics(svm_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
+svm_metrics <- metrics(svm_preds, 
+                       truth = HeartDisease, 
+                       estimate = .pred_class, 
+                       .pred_1, 
+                       event_level = "second")
+
 svm_metrics
 
-```
-
-```{r}
 # Since SVM is a black-box model, feature importance is not directly available.
 # We store an empty character vector for consistency in downstream comparison.
 
@@ -72,7 +145,12 @@ saveRDS(svm_top_features, file = "scripts/svm_top_features.rds")
 
 ```
 
-### Interpretation
+Accuracy (0.84) indicates that the Support Vector Machine (SVM) model correctly classified about 84% of the test samples.
 
-Support vector machines do not produce interpretable coefficients or built-in variable importance scores. Therefore, we omit global feature importance here and instead rely on LIME for local explanations in a later section.
+AUC (0.91) is quite high, showing excellent discriminatory ability between positive (heart disease) and negative cases.
+This means the model is effective in ranking individuals correctly by risk, even if not perfect in absolute classification.
 
+
+## Model Summary
+
+The Support Vector Machine (SVM) model achieved strong performance on the test set, with 0.84 accuracy and an AUC of 0.91, showing excellent ability to distinguish between patients with and without heart disease. However, SVM is inherently a black-box model—it does not provide interpretable coefficients or global feature importance. Despite its predictive strength, this lack of transparency limits its explainability, especially in clinical settings. Therefore, we rely on LIME in later sections to explore its decision process locally.

@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jiangnan Wan (jw4638)">
 <meta name="author" content="Jinglei Lou (jl6954)">
-<meta name="dcterms.date" content="2025-05-04">
+<meta name="dcterms.date" content="2025-05-05">
 
-<title>Final Heartlime Book</title>
+<title>Heart Disease Prediction and Explanation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,13 +80,13 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -98,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Final Heartlime Book</a> 
+      <a href="./">Heart Disease Prediction and Explanation</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Ceeecilllia/final-heartlime-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -114,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Heart Disease Prediction and Explanation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -182,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Final Heartlime Book</h1>
+<h1 class="title">Heart Disease Prediction and Explanation</h1>
 <p class="subtitle lead">Model Interpretation with LIME and IML</p>
 </div>
 
@@ -201,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 4, 2025</p>
+      <p class="date">May 5, 2025</p>
     </div>
   </div>
   
@@ -213,8 +213,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="overview" class="level2" data-number="0.1">
-<h2 data-number="0.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">0.1</span> Overview</h2>
+<section id="index" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Index</h1>
 <p>This project explores interpretable machine learning methods to predict the likelihood of heart disease from patient clinical data.</p>
 <p>We build and compare five models:</p>
 <ul>
@@ -225,35 +225,9 @@ ul.task-list li input[type="checkbox"] {
 <li>Logistic Regression</li>
 </ul>
 <p>Our primary goal is <strong>not only to achieve high predictive accuracy</strong>, but also to understand <strong>why</strong> a model makes certain predictions.</p>
-<hr>
-</section>
-<section id="dataset" class="level2" data-number="0.2">
-<h2 data-number="0.2" class="anchored" data-anchor-id="dataset"><span class="header-section-number">0.2</span> Dataset</h2>
-<p>We use the UCI Heart Disease dataset, containing 14 clinical variables (e.g., age, sex, cholesterol, resting blood pressure) and a binary outcome indicating the presence of heart disease, which includes 14 clinical features and a binary target variable:</p>
-<ul>
-<li><code>1</code> = diagnosed with heart disease</li>
-<li><code>0</code> = no heart disease</li>
-</ul>
-<hr>
-</section>
-<section id="methods" class="level2" data-number="0.3">
-<h2 data-number="0.3" class="anchored" data-anchor-id="methods"><span class="header-section-number">0.3</span> Methods</h2>
-<p>We apply the following modeling and explanation techniques:</p>
-<ul>
-<li>🧠 <strong>Model training</strong> via the <code>tidymodels</code> framework</li>
-<li>📈 <strong>Evaluation</strong> using test set Accuracy and AUC</li>
-<li>🔍 <strong>Global feature importance</strong> using built-in tools (e.g., rpart, randomForest, glm)</li>
-<li>🌈 <strong>Local explanations</strong> using <code>lime</code> (for tree-based models) and <code>iml::LocalModel</code> (for logistic regression)</li>
-</ul>
-<hr>
-</section>
-<section id="goals" class="level2" data-number="0.4">
-<h2 data-number="0.4" class="anchored" data-anchor-id="goals"><span class="header-section-number">0.4</span> Goals</h2>
-<ul>
-<li>Compare interpretable vs black-box models</li>
-<li>Evaluate the <strong>stability and reliability</strong> of explanations</li>
-<li>Discuss whether models are <strong>trustworthy for medical use</strong></li>
-</ul>
+<p>The dataset used in this project is the UCI Heart Disease dataset, which contains 14 clinical variables such as age, sex, cholesterol, and resting blood pressure, along with a binary outcome variable indicating the presence or absence of heart disease. In this dataset, a value of 1 means the individual was diagnosed with heart disease, while 0 indicates no heart disease.</p>
+<p>To achieve our objectives, we applied several modeling and explanation techniques. These include model training using the <code>tidymodels</code> framework, evaluation based on test set Accuracy and AUC, and feature importance analysis using built-in tools like <code>rpart</code>, <code>randomForest</code>, and <code>glm</code>. Additionally, we used local explanation methods such as <strong>LIME</strong> for tree-based models and the <code>iml::LocalModel</code> package for logistic regression.</p>
+<p>The broader goals of our project are to compare interpretable models with black-box models, evaluate the stability and reliability of their explanations, and assess whether these models are trustworthy for medical use.</p>
 
 
 </section>
@@ -294,7 +268,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -326,29 +311,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -356,7 +319,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

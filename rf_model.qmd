@@ -7,24 +7,20 @@ format:
 ---
 
 ```{r setup, include=FALSE}
+source("setup.R")
+
 library(tidyverse)
 library(tidymodels)
 theme_set(theme_minimal())
 
 ```
 
-## Random Forest Model
 
 We trained a random forest model using the `ranger` engine in the `tidymodels` framework. This ensemble method aggregates multiple decision trees to improve prediction accuracy and reduce overfitting.
 
-### Data Split and Preprocessing
+## Model Setup and Training
 ```{r}
-source("setup.R")
-```
-
-##Random Forest Specification
-
-```{r}
+#Random Forest Specification
 rf_spec <- rand_forest(mtry = 4, trees = 500, min_n = 5) %>%
   set_engine("ranger", importance = "impurity") %>%
   set_mode("classification")
@@ -33,27 +29,70 @@ rf_wf <- workflow() %>%
   add_model(rf_spec) %>%
   add_recipe(heart_recipe)
 
-```
-
-##Fit Model
-
-```{r}
+#Fit Model
 rf_fit <- fit(rf_wf, data = heart_train)
 
 ```
-
-##Evaluate on Test Set
+## Confusion Matrix
 
 ```{r}
 rf_preds <- predict(rf_fit, heart_test, type = "prob") %>%
   bind_cols(predict(rf_fit, heart_test)) %>%
   bind_cols(heart_test)
 
-metrics <- metric_set(accuracy, roc_auc)
-rf_metrics <- metrics(rf_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
-rf_metrics
+rf_preds <- rf_preds %>%
+  mutate(HeartDisease = factor(HeartDisease, levels = c(0, 1)))
+
+rf_preds %>%
+  conf_mat(truth = HeartDisease, estimate = .pred_class) %>%
+  autoplot(type = "heatmap") +
+  labs(title = "Confusion Matrix - Random Forest")
 
 ```
+The random forest model shows strong classification performance:
+
+- True Negatives (0 correctly predicted): 150
+
+- True Positives (1 correctly predicted): 148
+
+- False Positives: 10
+
+- False Negatives: 0
+
+This indicates excellent sensitivity (no false negatives) and high specificity, suggesting that the model accurately identifies both patients with and without heart disease, with minimal misclassification.
+
+## ROC Curve
+
+```{r}
+rf_preds %>%
+  roc_curve(truth = HeartDisease, .pred_1, event_level = "second") %>%
+  autoplot() +
+  labs(title = "ROC Curve - Random Forest") +
+  theme_minimal()
+
+```
+
+The ROC curve for the random forest model climbs sharply to the top-left corner, indicating excellent discriminative ability. This shape suggests the model maintains a high true positive rate with minimal false positives across thresholds. The nearly perfect curve confirms that the random forest is highly effective at ranking heart disease risk and likely achieves an AUC close to 1.
+
+## Train vs. Test Comparison
+
+```{r}
+# Generate predictions on training set
+rf_preds_train <- predict(rf_fit, heart_train, type = "prob") %>%
+  bind_cols(predict(rf_fit, heart_train)) %>%
+  bind_cols(heart_train)
+
+# Evaluate accuracy and AUC on training set
+rf_train_metrics <- bind_rows(
+  accuracy(rf_preds_train, truth = HeartDisease, estimate = .pred_class),
+  roc_auc(rf_preds_train, truth = HeartDisease, .pred_1, event_level = "second")
+)
+
+rf_train_metrics
+
+```
+
+The random forest model achieved near-perfect performance on the training set, with an accuracy of 0.997 and an AUC of 1.000. This suggests that the model has learned the training data extremely well. However, such high scores raise concerns about potential overfitting, especially if the model's performance on the test set is significantly lower. Close monitoring of test results is necessary to ensure generalization and avoid overly optimistic training metrics.
 
 ##Global Feature Importance
 

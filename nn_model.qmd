@@ -6,17 +6,16 @@ format:
     code-fold: true
 ---
 
-## Neural Network Model
 
 We fit a single-layer neural network using the `nnet` engine in the `tidymodels` framework.  
 This model is non-linear and typically more expressive, but also harder to interpret.
 
-```{r}
+```{r include = FALSE}
 # Load project setup
 source("setup.R")
 ```
 
-## Model Specification and Training
+## Model Setup and Training
 
 ```{r}
 library(nnet)
@@ -32,17 +31,86 @@ nn_wf <- workflow() %>%
 nn_fit <- fit(nn_wf, data = heart_train)
 ```
 
-## Evaluation
+## Probability Histogram
 
 ```{r}
 nn_preds <- predict(nn_fit, heart_test, type = "prob") %>%
   bind_cols(predict(nn_fit, heart_test)) %>%
   bind_cols(heart_test)
 
-metrics <- metric_set(accuracy, roc_auc)
-nn_metrics <- metrics(nn_preds, truth = HeartDisease, estimate = .pred_class, .pred_1)
-nn_metrics
+ggplot(nn_preds, aes(x = .pred_1, fill = as.factor(HeartDisease))) +
+  geom_histogram(position = "identity", bins = 20, alpha = 0.6) +
+  labs(title = "Neural Network Predicted Probabilities",
+       x = "Predicted Probability of Heart Disease",
+       y = "Count",
+       fill = "True Label") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "skyblue")) +
+  theme_minimal()
+
 ```
+
+The histogram shows a clear separation between the predicted probabilities of heart disease for the two classes:
+
+Class 0 (no heart disease) is mostly predicted with probabilities around 0.25–0.35, indicating the model is relatively confident in identifying negatives.
+
+Class 1 (heart disease) predictions cluster around 0.65–0.75, showing good confidence for positives as well.
+
+There is some overlap between the two classes in the middle range (~0.4–0.6), which might lead to a few misclassifications, but overall the discrimination is strong.
+
+This suggests that the neural network is effective in producing meaningful probabilistic outputs, suitable for downstream threshold tuning or risk ranking.
+
+## Confusion Matrix 
+
+```{r}
+conf_mat(nn_preds, truth = HeartDisease, estimate = .pred_class) %>%
+  autoplot(type = "heatmap") +
+  ggtitle("Confusion Matrix - Neural Network")
+
+```
+
+The neural network correctly predicted most cases:
+
+142 true negatives (class 0 predicted as 0)
+
+127 true positives (class 1 predicted as 1)
+
+However, it made:
+
+31 false negatives (missed some heart disease cases)
+
+Only 8 false positives
+
+This shows a good balance but a slight tendency to under-predict class 1 (i.e., missing positive cases).
+
+## ROC Curve
+
+```{r}
+nn_preds %>%
+  roc_curve(truth = HeartDisease, .pred_1, event_level = "second") %>%
+  autoplot() +
+  ggtitle("ROC Curve - Neural Network")
+
+```
+
+The ROC curve for the neural network rises steeply toward the top-left corner, indicating strong classification performance.
+This pattern suggests the model achieves a high true positive rate while maintaining low false positives, which is ideal for medical diagnosis tasks.
+
+## Evaluation
+
+```{r}
+metrics <- metric_set(accuracy, roc_auc)
+
+nn_metrics <- metrics(nn_preds, 
+                      truth = HeartDisease, 
+                      estimate = .pred_class, 
+                      .pred_1,
+                      event_level = "second")
+nn_metrics
+
+```
+
+Accuracy: 0.873, AUC: 0.91. This suggests the neural network is effective at both classification and risk ranking, though still lacks interpretability. As a black-box model, feature importance is not directly accessible and will be supplemented with LIME for local explanations.
+
 
 ## Global Feature Importance
 
@@ -55,7 +123,11 @@ saveRDS(nn_top_features, file = "scripts/nn_top_features.rds")
 ```
 
 
-## Summary
+## Model Summary
 
-This neural network serves as a flexible model for prediction, though it lacks built-in interpretability.  
-We will analyze its behavior using local explanation techniques if compatible.
+This neural network serves as a flexible and powerful model for predicting heart disease, achieving high performance with an accuracy of 87% and an AUC of 0.91.
+Its ability to capture nonlinear relationships contributes to strong discriminative power, as seen in the ROC curve and probability distribution.
+However, neural networks are inherently black-box models, lacking built-in interpretability or global feature importance measures.
+Therefore, we cannot directly assess which features most influenced the predictions.
+To gain insights into its decision process, we will rely on local explanation techniques like LIME—if compatible—to approximate how individual predictions are made.
+

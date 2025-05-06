@@ -6,11 +6,9 @@ format:
     code-fold: true
 ---
 
-# Data
-
 In this section, we provide an overview of the dataset used in our heart disease prediction task, along with key preprocessing and exploratory analysis steps.
 
-# Dataset Description
+## Dataset Description
 
 We use the **Heart Disease Dataset**, which contains `n = 1025` observations and `p = 14` features, including:
 
@@ -32,18 +30,18 @@ We use the **Heart Disease Dataset**, which contains `n = 1025` observations and
 - `target`: Presence of heart disease (1 = yes, 0 = no)
 ---
 
-# Preprocessing
+## Preprocessing
 
 We perform the following preprocessing steps:
 
 - Convert categorical variables to factors (`sex`, `cp`, `fbs`, `restecg`, `exang`, `slope`, `ca`, `thal`)
 - Rename `target` to `HeartDisease` for clarity
 - Check for missing values
-- Split into 70% training / 30% testing using `initial_split()` from **rsample**
+- Split into 70% training / 30% testing using `initial_split()` from **rsample**.
 
 ---
 
-## Data Loading and Preprocessing
+### Data Loading and Preprocessing
 
 ```{r}
 library(tidyverse)
@@ -78,9 +76,11 @@ heart <- heart %>%
   )
 
 ```
-# Exploratory Data Analysis
+## Exploratory Data Analysis
 
-## Age Distribution by Heart Disease Status
+We conducted exploratory analysis to understand the relationships between clinical features and heart disease outcomes.
+
+### Age Distribution by Heart Disease Status
 ```{r}
 # Basic structure
 glimpse(heart)
@@ -108,13 +108,13 @@ ggplot(heart, aes(x = ChestPainType, fill = HeartDisease)) +
 ```
 
 As shown, patients with heart disease (label 1) tend to be older.  
-The highest heart disease rate occurs around ages 55 to 65.
+The highest heart disease rate occurs around ages 55 to 65 indicating that age is a strong predictive feature in the diagnosis of heart disease.
 
 Likewise, chest pain types 1 and 2 are more common in patients with heart disease, suggesting these features could be predictive.
 
 These patterns will guide our model-building decisions and feature interpretation strategies in the next sections.
 
-## Data Structure
+### Data Structure
 
 We first inspect the structure of the dataset:
 
@@ -122,15 +122,17 @@ We first inspect the structure of the dataset:
 glimpse(heart)
 ```
 
-## Missing Value Check
+The dataset consists of 1,025 rows and 14 columns. Variables include both continuous features (e.g., Age, Cholesterol, RestingBP) and categorical features (e.g., ChestPainType, Sex, Thalassemia). All variables appear to be properly structured for analysis.
 
-There are no missing values in this dataset:
+### Missing Value Check
+
+There are no missing values in the dataset. Each feature has complete observations across all 1,025 entries.
 
 ```{r}
 colSums(is.na(heart))
 ```
 
-## Data Loading and Preparation Code
+### Data Loading and Preparation Code
 
 The dataset was loaded and renamed as follows:
 
@@ -162,7 +164,7 @@ heart <- read_csv("data/heart.csv") %>%
   )
 ```
 
-## Outcome Variable Distribution
+### Outcome Variable Distribution
 
 ```{r}
 heart %>%
@@ -170,3 +172,5 @@ heart %>%
   geom_bar(fill = "tomato") +
   labs(title = "Heart Disease Diagnosis", x = "Heart Disease (1 = Yes)", y = "Count")
 ```
+
+The target variable HeartDisease is fairly balanced: about half the patients have heart disease (1), and the other half do not (0). This balance suggests we can apply standard classification models without significant concern for class imbalance.

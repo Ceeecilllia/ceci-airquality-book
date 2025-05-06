@@ -6,7 +6,7 @@ execute:
   echo: true
 
 book:
-  title: "Final Heartlime Book"
+  title: "Heart Disease Prediction and Explanation"
   subtitle: "Model Interpretation with LIME and IML"
   author:
     - Jiangnan Wan (jw4638)
@@ -33,4 +33,10 @@ format:
   html:
     theme: cosmo
     code-fold: true
+<<<<<<< HEAD
     number-sections: false
+=======
+    number-sections: true
+    
+
+>>>>>>> 837ee2a (Update project with final Quarto analysis)

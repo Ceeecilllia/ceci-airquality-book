@@ -3,8 +3,6 @@ title: "Model Overview"
 format: html
 ---
 
-## Models Overview
-
 We trained five different models on the heart disease prediction dataset:
 
 - **Decision Tree**

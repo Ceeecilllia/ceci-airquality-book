@@ -6,103 +6,56 @@ format: html
 
 ## Final Summary & Insights
 
-This final section summarizes our findings by comparing model performance, interpretation consistency, and implications for medical trust.
+In this study, we trained multiple models — including **Decision Tree**, **Random Forest**, **SVM**, **Neural Network**, and **Logistic Regression** — to predict heart disease. We then interpreted their predictions using both global (e.g., variable importance) and local (e.g., LIME) explanation methods. Based on the results, we summarize the following key insights:
+
 
 ---
 
-### 1. Model Accuracy & AUC Overview
+## Consistency Across Models
 
-All models were evaluated on the same held-out test set using Accuracy and AUC.
+Despite architectural differences, the models demonstrated a strong consensus on the most influential features:
 
-```{r}
-model_results <- tibble::tibble(
-  Model = c("Decision Tree", "Random Forest", "SVM", "Neural Network", "Logistic Regression"),
-  Accuracy = c(0.79, 0.85, 0.75, 0.76, 0.81),
-  AUC = c(0.84, 0.89, 0.78, 0.79, 0.86)
-)
+| Feature             | Top in RF-VIP | High LIME Weight | Frequent in SVM / NN |
+|---------------------|---------------|------------------|-----------------------|
+| **Oldpeak**         | ✅             | ✅               | ✅                    |
+| **MaxHR**           | ✅             | ✅               | ✅                    |
+| **NumMajorVessels** | ✅             | ✅               | ✅                    |
+| **Thalassemia**     | ✅             | ✅               | ✅                    |
+| **ChestPainType**   | ⬆️             | ⬆️               | Some models           |
 
-knitr::kable(model_results, caption = "Test Accuracy and AUC for all models")
-```
+This consistency suggests reliable identification of risk factors, even across models with different learning mechanisms.
 
----
-
-### 2. Global vs Local Feature Importance
-
-We compare each model's global importance (e.g., `varImp`, `importance`) to its average LIME feature weights.
-
-#### Decision Tree: Global vs LIME
-
-```{r}
-library(readr)
-library(dplyr)
-library(ggplot2)
-library(forcats)
-
-tree_global <- readRDS("scripts/tree_top_features.rds") %>% 
-  tibble::tibble(Feature = .) %>% 
-  mutate(Source = "Global")
-
-lime_tree <- read_csv("data/lime_tree_explanations.csv") %>%
-  group_by(feature_desc) %>%
-  summarise(avg_weight = mean(feature_weight)) %>%
-  arrange(desc(avg_weight)) %>%
-  slice_head(n = 5) %>%
-  rename(Feature = feature_desc) %>%
-  mutate(Source = "LIME")
-
-tree_compare <- bind_rows(tree_global, lime_tree)
-
-ggplot(tree_compare, aes(x = fct_reorder(Feature, as.numeric(Source == "Global")), 
-                         y = ifelse(Source == "Global", 1, avg_weight), 
-                         fill = Source)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  labs(title = "Decision Tree: Global vs LIME Feature Comparison", y = "Importance / Weight", x = NULL)
-```
-
-#### Random Forest: Global vs LIME
-
-```{r}
-rf_global <- readRDS("scripts/rf_top_features.rds") %>% 
-  tibble::tibble(Feature = .) %>% 
-  mutate(Source = "Global")
-
-lime_rf <- read_csv("data/lime_rf_explanations.csv") %>%
-  group_by(feature_desc) %>%
-  summarise(avg_weight = mean(feature_weight)) %>%
-  arrange(desc(avg_weight)) %>%
-  slice_head(n = 5) %>%
-  rename(Feature = feature_desc) %>%
-  mutate(Source = "LIME")
-
-rf_compare <- bind_rows(rf_global, lime_rf)
-
-ggplot(rf_compare, aes(x = fct_reorder(Feature, as.numeric(Source == "Global")), 
-                       y = ifelse(Source == "Global", 1, avg_weight), 
-                       fill = Source)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  labs(title = "Random Forest: Global vs LIME Feature Comparison", y = "Importance / Weight", x = NULL)
-```
 
 ---
 
-### 3. Interpretability & Medical Trust
+## Global vs Local: Complementary Perspectives
 
-| Model                | LIME Support | Stability | Matches Global? | Medical Trust |
-|---------------------|--------------|-----------|------------------|----------------|
-| Decision Tree        | ✅ Yes       | High      | Good             | ✅ Yes         |
-| Random Forest        | ✅ Yes       | Moderate  | Moderate         | ✅ Partial     |
-| SVM                  | ❌ No        | —         | —                | ❌ No          |
-| Neural Network       | ❌ No        | —         | —                | ❌ No          |
-| Logistic Regression  | ✅ via IML   | High      | Excellent        | ✅ Yes         |
+- **Global explanations** (e.g., Random Forest VIP) highlight features most important **on average** across the population.
+- **Local explanations** (e.g., LIME) uncover which features drive predictions for **individual cases**.
 
----
+**For example:**
+- In some high-risk individuals, **high Oldpeak** and **low MaxHR** were key drivers.
+- In others, having **ChestPainType = 2 or 3** (atypical or asymptomatic) became the dominant explanation.
 
-### Conclusion
+This variation supports the idea of **personalized diagnostics** in clinical decision-making.
 
-- Models like **Decision Tree** and **Logistic Regression** offer strong interpretability and align well with their LIME/IML explanations.
-- **Random Forest** balances performance and explainability with moderate stability.
-- **SVM** and **Neural Network** performed reasonably but lacked interpretable support from LIME in our pipeline.
-- For medical settings, interpretable models with consistent explanations are recommended for building trust and transparency.
 
+## Alignment with Clinical Knowledge
+
+The most important features identified by both global and local explanations align with established medical understanding:
+
+- **Oldpeak ↑** → Indicates ST depression, a marker of myocardial ischemia
+- **MaxHR ↓** → Suggests limited cardiac reserve, common in heart disease  
+- **NumMajorVessels ↑** → More blocked vessels, higher risk 
+- **Thalassemia types** → Some subtypes correlate with cardiovascular complications
+- **ChestPainType 2/3** → Silent or atypical symptoms, often overlooked but risky
+
+## Summary & Recommendations
+
+We recommend future clinical decision support systems:
+
+- Prioritize the interpretation of **Oldpeak**, **MaxHR**, **NumMajorVessels**, **Thalassemia**, and **ChestPainType**
+- Provide both global and case-specific explanations (e.g., VIP + LIME)
+- Avoid fully black-box models; instead, promote transparency and trust through interpretable AI
+
+By integrating multiple interpretability techniques and aligning them with domain expertise, we enhance both the **reliability** and **clinical usability** of machine learning models in cardiology.

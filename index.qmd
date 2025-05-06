@@ -1,14 +1,14 @@
 ---
-title: "Heart Disease Prediction and Explanation"
+title: "Index"
 format:
   html:
     toc: false
     code-fold: false
 ---
 
-## Overview
+# Index
 
-This project explores interpretable machine learning methods to predict the likelihood of heart disease from patient clinical data.
+This project explores interpretable machine learning methods to predict the likelihood of heart disease from patient clinical data. 
 
 We build and compare five models:
 
@@ -20,32 +20,9 @@ We build and compare five models:
 
 Our primary goal is **not only to achieve high predictive accuracy**, but also to understand **why** a model makes certain predictions.
 
----
+The dataset used in this project is the UCI Heart Disease dataset, which contains 14 clinical variables such as age, sex, cholesterol, and resting blood pressure, along with a binary outcome variable indicating the presence or absence of heart disease. In this dataset, a value of 1 means the individual was diagnosed with heart disease, while 0 indicates no heart disease.
 
-## Dataset
+To achieve our objectives, we applied several modeling and explanation techniques. These include model training using the `tidymodels` framework, evaluation based on test set Accuracy and AUC, and feature importance analysis using built-in tools like `rpart`, `randomForest`, and `glm`. Additionally, we used local explanation methods such as **LIME** for tree-based models and the `iml::LocalModel` package for logistic regression.
 
-We use the UCI Heart Disease dataset, containing 14 clinical variables (e.g., age, sex, cholesterol, resting blood pressure) and a binary outcome indicating the presence of heart disease, which includes 14 clinical features and a binary target variable:
-
-- `1` = diagnosed with heart disease
-- `0` = no heart disease
-
----
-
-## Methods
-
-We apply the following modeling and explanation techniques:
-
-- 🧠 **Model training** via the `tidymodels` framework
-- 📈 **Evaluation** using test set Accuracy and AUC
-- 🔍 **Global feature importance** using built-in tools (e.g., rpart, randomForest, glm)
-- 🌈 **Local explanations** using `lime` (for tree-based models) and `iml::LocalModel` (for logistic regression)
-
----
-
-## Goals
-
-- Compare interpretable vs black-box models
-- Evaluate the **stability and reliability** of explanations
-- Discuss whether models are **trustworthy for medical use**
-
+The broader goals of our project are to compare interpretable models with black-box models, evaluate the stability and reliability of their explanations, and assess whether these models are trustworthy for medical use.
 
